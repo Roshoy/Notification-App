@@ -39,6 +39,7 @@ public final class ConnectionProvider {
     }
 
     public static Connection getConnection() {
+        System.out.println("Get connection");
         return connection.orElseThrow(() -> new RuntimeException("Connection is not valid."));
     }
 

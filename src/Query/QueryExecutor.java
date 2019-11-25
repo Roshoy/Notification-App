@@ -62,7 +62,7 @@ public final class QueryExecutor {
         }
     }
 
-    private static int readIdFromResultSet(final ResultSet resultSet) throws SQLException {
+    public static int readIdFromResultSet(final ResultSet resultSet) throws SQLException {
         return resultSet.next() ? resultSet.getInt(1) : -1;
     }
 
@@ -73,8 +73,10 @@ public final class QueryExecutor {
     }
 
     public static ResultSet read(final String sql) throws SQLException {
+        System.out.println("read");
         final Statement statement = ConnectionProvider.getConnection().createStatement();
         final ResultSet resultSet = statement.executeQuery(sql);
+
         LOGGER.info(String.format("Query: %s executed.", sql));
         return resultSet;
     }
