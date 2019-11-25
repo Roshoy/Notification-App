@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="608fdbc8-6f13-4bce-b011-62b1cbf848ac" name="Default Changelist" comment="">
+    <list default="true" id="608fdbc8-6f13-4bce-b011-62b1cbf848ac" name="Default Changelist" comment="JavaFX is working">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/wt_935_lemury.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/sqlite_jdbc_3_27_2_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/sqlite_jdbc_3_27_2_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/data.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Departments/Department.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Departments/Department.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Ticket/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Ticket/Ticket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Users/Administrator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Users/Administrator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Users/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Users/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Query/QueryExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Query/QueryExecutor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/DatabaseTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/DatabaseTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Ticket/TicketStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Ticket/TicketStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/main/Main.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,8 +46,29 @@
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
       </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="data" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
+        <item name="DEPARTMENTS: table" type="3d80ac25:SqliteImplModel$Table" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="data" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
+        <item name="TICKETS: table" type="3d80ac25:SqliteImplModel$Table" />
+      </path>
     </expand>
     <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="FxmlFile" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -66,7 +86,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="true" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../sqlite-jdbc-3.27.2.1.jar!/" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -75,9 +95,15 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Mateusz\LemuryTO2v1\wt-935-lemury\.idea\libraries" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -91,7 +117,20 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.DatabaseTests">
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Model.main.Main" />
+      <module name="wt-935-lemury" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Model.main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="DatabaseTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="wt-935-lemury" />
       <option name="PACKAGE_NAME" value="" />
@@ -101,11 +140,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DatabaseTests.createDepartmentTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DatabaseTests.createCoordinatorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="wt-935-lemury" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="DatabaseTests" />
-      <option name="METHOD_NAME" value="createDepartmentTest" />
+      <option name="METHOD_NAME" value="createCoordinatorTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -116,16 +155,6 @@
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="DatabaseTests" />
       <option name="METHOD_NAME" value="createTicketTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DatabaseTests.createUserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="wt-935-lemury" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="DatabaseTests" />
-      <option name="METHOD_NAME" value="createUserTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -143,11 +172,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.DatabaseTests" />
+        <item itemvalue="JUnit.DatabaseTests.createCoordinatorTest" />
         <item itemvalue="JUnit.DatabaseTests.createTicketTest" />
         <item itemvalue="JUnit.DatabaseTests.uniqueDepartmentNameTest" />
-        <item itemvalue="JUnit.DatabaseTests.createDepartmentTest" />
-        <item itemvalue="JUnit.DatabaseTests.createUserTest" />
       </list>
     </recent_temporary>
   </component>
@@ -172,6 +201,10 @@
       <option name="presentableId" value="Default" />
       <updated>1574677975633</updated>
       <workItem from="1574677980805" duration="10483000" />
+      <workItem from="1574689967626" duration="2106000" />
+      <workItem from="1574692443624" duration="3552000" />
+      <workItem from="1574696050224" duration="2573000" />
+      <workItem from="1574698639744" duration="831000" />
     </task>
     <task id="LOCAL-00001" summary="Added table Departments&#10;Added user and coordinator creation from admin&#10;Added department creation">
       <created>1574686396577</created>
@@ -191,7 +224,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -199,6 +234,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added table Departments&#10;Added user and coordinator creation from admin&#10;Added department creation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added table Departments&#10;Added user and coordinator creation from admin&#10;Added department creation" />
+    <MESSAGE value="JavaFX is working" />
+    <option name="LAST_COMMIT_MESSAGE" value="JavaFX is working" />
   </component>
 </project>

@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="wt-935-lemury">
+    <output-path>$PROJECT_DIR$/out/artifacts/wt_935_lemury</output-path>
+    <root id="root">
+      <element id="archive" name="wt_935_lemury.jar">
+        <element id="module-output" name="wt-935-lemury" />
+      </element>
+    </root>
+  </artifact>
+</component>
