@@ -31,9 +31,11 @@ public class Department {
         return Name;
     }
 
+    /*
     public Ticket CreateNewTicket(){ //Is it SRP friendly?
         return new Ticket();
     }
+    */
 
     public static Optional<Department> create(String name) {
         String insertSql = String.format("INSERT INTO %s (name) VALUES ('%s');", TABLE_NAME, name);

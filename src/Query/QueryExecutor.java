@@ -35,7 +35,18 @@ public final class QueryExecutor {
                     "FOREIGN KEY(department_id) references DEPARTMENTS(id) " +
                     ");");
 
-
+            LOGGER.info("Creating table Tickets");
+            create("CREATE TABLE IF NOT EXISTS TICKETS (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "coordinator_id INTEGER NOT NULL, " +
+                    "user_id INTEGER NOT NULL, " +
+                    "title VARCHAR(128) NOT NULL, " +
+                    "description VARCHAR(500) NOT NULL, " +
+                    "status CHAR(15) NOT NULL, " +
+                    "release_notes VARCHAR(500), " +
+                    "FOREIGN KEY(coordinator_id) references USERS(id), " +
+                    "FOREIGN KEY(user_id) references USERS(id) " +
+                    ");");
         } catch (SQLException e) {
             LOGGER.info("Error during create tables: " + e.getMessage());
             throw new RuntimeException("Cannot create tables");

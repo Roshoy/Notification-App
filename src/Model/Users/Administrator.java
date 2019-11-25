@@ -62,7 +62,7 @@ public class Administrator extends Coordinator {
         String findByIdSql = String.format("SELECT * FROM USERS WHERE id = %d AND USER_TYPE = 'C'", id);
         try {
             ResultSet rs = QueryExecutor.read(findByIdSql);
-            //
+
             return Optional.of(new Coordinator(rs.getInt("id"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"),
                     rs.getString("LOGIN"), rs.getString("PASSWORD"), Department.findById(rs.getInt("DEPARTMENT_ID")).get()));
         } catch (SQLException e) {

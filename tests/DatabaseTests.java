@@ -1,5 +1,6 @@
 import Connection.ConnectionProvider;
 import Model.Departments.Department;
+import Model.Ticket.Ticket;
 import Model.Users.Administrator;
 import Model.Users.Coordinator;
 import Model.Users.User;
@@ -24,6 +25,7 @@ public class DatabaseTests {
     public void setUp() throws SQLException {
         QueryExecutor.delete("DELETE FROM USERS;");
         QueryExecutor.delete("DELETE FROM DEPARTMENTS;");
+        QueryExecutor.delete("DELETE FROM TICKETS;");
     }
 
 
@@ -86,6 +88,28 @@ public class DatabaseTests {
             Assert.assertNotNull(u.lastName());
             Assert.assertNotNull(u.getPassword());
             Assert.assertNotNull(u.getDepartment());
+        });
+    }
+
+    @Test
+    public void createTicketTest() {
+        Optional<Department> department = Department.create("Administracja budynku");
+        Optional<Coordinator> coordinator = Administrator.CreateCoordinatorAccount("pan_kaziu", "Kazimierz",
+                "Kazimierowicz", "12345", department.get().id());
+        Optional<User> user = Administrator.CreateUserAccount("pani_wladzia", "Władysława",
+                "Władysławowicz", "54321");
+
+        Optional<Ticket> ticket = Ticket.create(coordinator.get().id(), user.get().id(), "Awaria w budynku", "Bo światło w piwnicy znowu nie działa, proszę naprawić");
+
+        Assert.assertTrue(ticket.isPresent());
+        ticket.ifPresent(t -> {
+            Assert.assertTrue(t.id() > 0);
+            Assert.assertNotNull(t.owner());
+            Assert.assertEquals(t.owner(), coordinator.get());
+            Assert.assertNotNull(t.submitee());
+            Assert.assertEquals(t.submitee(), user.get());
+            Assert.assertNotNull(t.title());
+            Assert.assertNotNull(t.description());
         });
     }
 
