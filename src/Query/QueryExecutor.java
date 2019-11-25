@@ -16,14 +16,25 @@ public final class QueryExecutor {
 
     static {
         try {
+            LOGGER.info("Creating table Departments");
+            create("CREATE TABLE IF NOT EXISTS DEPARTMENTS (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "name VARCHAR(50) NOT NULL, " +
+                    "UNIQUE (name)" +
+                    ");");
+
             LOGGER.info("Creating table Users");
             create("CREATE TABLE IF NOT EXISTS USERS (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "first_name VARCHAR(50) NOT NULL, " +
                     "last_name VARCHAR(50) NOT NULL, " +
                     "login VARCHAR(50) NOT NULL, " +
-                    "password VARCHAR(50) NOT NULL" +
+                    "password VARCHAR(50) NOT NULL, " +
+                    "department_id INTEGER, " +
+                    "user_type CHAR(1) NOT NULL, " +
+                    "FOREIGN KEY(department_id) references DEPARTMENTS(id) " +
                     ");");
+
 
         } catch (SQLException e) {
             LOGGER.info("Error during create tables: " + e.getMessage());

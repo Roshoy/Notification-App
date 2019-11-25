@@ -1,7 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c5452fc3-9f79-4383-8812-18970c539490" name="Default Changelist" comment="" />
+    <list default="true" id="608fdbc8-6f13-4bce-b011-62b1cbf848ac" name="Default Changelist" comment="Added table Departments&#10;Added user and coordinator creation from admin&#10;Added department creation">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/225f30d8-40c2-4b33-879b-49251493864f.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/e35f58fc-c6e2-4474-85ef-268ca588c9f9.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/data.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/to/Connection/ConnectionProvider.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/to/Model/Departments/Department.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/to/Model/Ticket/Ticket.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/to/Model/Ticket/TicketStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/to/Model/Users/Administrator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/to/Model/Users/Coordinator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/to/Model/Users/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/to/Model/main/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/to/Query/QueryExecutor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/to/Query/QueryHelper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/to/DatabaseTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/to/MoreTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Departments/Department.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Departments/Department.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Users/Administrator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Users/Administrator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Users/Coordinator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Users/Coordinator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Query/QueryExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Query/QueryExecutor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/DatabaseTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/DatabaseTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/to.iml" beforeDir="false" afterPath="$PROJECT_DIR$/wt-935-lemury.iml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,33 +68,24 @@
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
       </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="data" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
-        <item name="USERS: table" type="3d80ac25:SqliteImplModel$Table" />
-      </path>
     </expand>
     <select />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="1" />
   </component>
-  <component name="ProjectId" id="1U5FNzDf7SaEUz4iHabVN7Kkeun" />
+  <component name="ProjectId" id="1U6XN4orSIa0PeuMS9WlFjU7APS" />
   <component name="PropertiesComponent">
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.Annotations" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="add_unversioned_files" value="true" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../sqlite-jdbc-3.27.2.1.jar!/" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -91,9 +112,28 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.DatabaseTests">
+    <configuration name="DatabaseTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="wt-935-lemury" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="DatabaseTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DatabaseTests.createDepartmentTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="wt-935-lemury" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="DatabaseTests" />
+      <option name="METHOD_NAME" value="createDepartmentTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="DatabaseTests.createUserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="to" />
+      <module name="wt-935-lemury" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="DatabaseTests" />
       <option name="METHOD_NAME" value="createUserTest" />
@@ -102,27 +142,65 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="DatabaseTests.uniqueDepartmentNameTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="wt-935-lemury" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="DatabaseTests" />
+      <option name="METHOD_NAME" value="uniqueDepartmentNameTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.DatabaseTests" />
+        <item itemvalue="JUnit.DatabaseTests.uniqueDepartmentNameTest" />
+        <item itemvalue="JUnit.DatabaseTests.createDepartmentTest" />
         <item itemvalue="JUnit.DatabaseTests.createUserTest" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="allServicesViewState">
+      <serviceView>
+        <treeState>
+          <expand />
+          <select />
+        </treeState>
+      </serviceView>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="c5452fc3-9f79-4383-8812-18970c539490" name="Default Changelist" comment="" />
-      <created>1574638513009</created>
+      <changelist id="608fdbc8-6f13-4bce-b011-62b1cbf848ac" name="Default Changelist" comment="" />
+      <created>1574677975633</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1574638513009</updated>
-      <workItem from="1574638515468" duration="2050000" />
+      <updated>1574677975633</updated>
+      <workItem from="1574677980805" duration="8364000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added table Departments&#10;Added user and coordinator creation from admin&#10;Added department creation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added table Departments&#10;Added user and coordinator creation from admin&#10;Added department creation" />
   </component>
 </project>

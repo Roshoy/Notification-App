@@ -15,6 +15,10 @@ public class Coordinator extends User {
         this.department = department;
     }
 
+    public Department getDepartment() {
+        return department;
+    }
+
     public void EditTicket(Ticket ticket){
         //change status of ticket
     }
