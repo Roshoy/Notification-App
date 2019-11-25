@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="Controller.LoggingController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoggingController">
    <children>
-      <Button layoutX="364.0" layoutY="173.0" mnemonicParsing="false" text="Login"
-              fx:id="loginButton" onAction="#handleLoggingAction" />
-      <TextField layoutX="138.0" layoutY="157.0" promptText="Login" fx:id="login"/>
-      <TextField layoutX="138.0" layoutY="200.0" promptText="Password" fx:id="password"/>
+      <Button fx:id="loginButton" layoutX="364.0" layoutY="173.0" mnemonicParsing="false" onAction="#handleLoggingAction" text="Login" />
+      <TextField fx:id="login" layoutX="138.0" layoutY="157.0" promptText="Login" />
+      <TextField fx:id="password" layoutX="138.0" layoutY="200.0" promptText="Password" />
       <Label layoutX="67.0" layoutY="163.0" text="Login" />
       <Label layoutX="50.0" layoutY="205.0" text="Password" />
+      <Label fx:id="informationLabel" layoutX="178.0" layoutY="262.0" text="Information" />
    </children>
 </AnchorPane>

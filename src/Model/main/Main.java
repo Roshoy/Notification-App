@@ -46,10 +46,18 @@ public class Main extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
 
+
+
         } catch (IOException e) {
             // don't do this in common apps
             e.printStackTrace();
         }
+    }
+
+
+    public void setPrimaryStage(Scene scene){
+        this.primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
 }
