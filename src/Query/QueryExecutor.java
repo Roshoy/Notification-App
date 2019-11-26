@@ -28,7 +28,7 @@ public final class QueryExecutor {
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "first_name VARCHAR(50) NOT NULL, " +
                     "last_name VARCHAR(50) NOT NULL, " +
-                    "login VARCHAR(50) NOT NULL, " +
+                    "login VARCHAR(50) NOT NULL UNIQUE, " +
                     "password VARCHAR(50) NOT NULL, " +
                     "department_id INTEGER, " +
                     "user_type CHAR(1) NOT NULL, " +
@@ -51,9 +51,8 @@ public final class QueryExecutor {
             LOGGER.info("Creating table ITTickets");
             create("CREATE TABLE IF NOT EXISTS ITTICKETS (" +
                     "id INTEGER PRIMARY KEY, " +
-                    "FOREIGN KEY(id) references TICKETS(id)," +
-                    "FOREIGN KEY(coordinator_id) references USERS(id), " +
-                    "FOREIGN KEY(user_id) references USERS(id) " +
+                    "computer_no INTEGER NOT NULL," +
+                    "FOREIGN KEY(id) references TICKETS(id)" +
                     ");");
 
 

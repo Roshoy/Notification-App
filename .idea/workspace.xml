@@ -2,23 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="608fdbc8-6f13-4bce-b011-62b1cbf848ac" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Controller/AddUserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/View/AddUserPane.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/AddITTicketController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Departments/ITDepartment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Ticket/ITTicket.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/View/AddITTicketPane.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/data.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AddTicketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AddTicketController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/data.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/LoggingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoggingController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Query/QueryExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Query/QueryExecutor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/AddTicketPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/AddTicketPane.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ManageUsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ManageUsersController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Users/Administrator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Users/Administrator.java" afterDir="false" />
-        <change beforePath="$PROJECT_DIR$/src/Model/Departments/Department.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Departments/Department.java" afterDir="false" />
-        <change beforePath="$PROJECT_DIR$/src/View/ManageUsersPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/ManageUsersPane.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wt-935-lemury.iml" beforeDir="false" afterPath="$PROJECT_DIR$/wt-935-lemury.iml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -61,15 +49,29 @@
         <item name="data" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
+        <item name="ITTICKETS: table" type="3d80ac25:SqliteImplModel$Table" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="data" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
+        <item name="sqlite_master: table" type="3d80ac25:SqliteImplModel$Table" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="data" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
+        <item name="sqlite_sequence: table" type="3d80ac25:SqliteImplModel$Table" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="data" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
         <item name="TICKETS: table" type="3d80ac25:SqliteImplModel$Table" />
       </path>
-        <path>
-            <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-            <item name="data" type="feb32156:DbDataSourceImpl" />
-            <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-            <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
-            <item name="ITTICKETS: table" type="3d80ac25:SqliteImplModel$Table" />
-        </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
         <item name="data" type="feb32156:DbDataSourceImpl" />
@@ -90,6 +92,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="MERGE" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="1" />
@@ -104,7 +107,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="true" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Downloads" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -113,13 +116,14 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Mateusz\LemuryTO2v1\wt-935-lemury" />
       <recent name="C:\Users\Mateusz\LemuryTO2v1\wt-935-lemury\.idea\libraries" />
     </key>
   </component>
@@ -137,11 +141,10 @@
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="13" />
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="Model.main.Main" />
       <module name="wt-935-lemury" />
-      <option name="VM_PARAMETERS" value="--module-path $PROJECT_DIR$/../../javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="Model.main.*" />
@@ -215,12 +218,32 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@120697e5" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@2a1f1907" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@120697e5" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@7931006e" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@2a1f1907" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@72549f06" type="9fbbdea:ServiceModel$ServiceNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@2a1f1907" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@408b2e0f" type="9fbbdea:ServiceModel$ServiceNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@2a1f1907" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@5d04bf32" type="9fbbdea:ServiceModel$ServiceNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@2a1f1907" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@44e9ab11" type="9fbbdea:ServiceModel$ServiceNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@2a1f1907" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@50e0570b" type="9fbbdea:ServiceModel$ServiceNode" />
             </path>
           </expand>
           <select />
@@ -265,12 +288,12 @@
       <option name="project" value="LOCAL" />
       <updated>1574712218792</updated>
     </task>
-    <task id="LOCAL-00004" summary="Added Administrator panel&#10;Logging Controller chooses now which panel show after authentication&#10;Administrator panel is able to read data of users">
-      <created>1574734520950</created>
+    <task id="LOCAL-00004" summary="Added switching to new pane after login">
+      <created>1574722944397</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1574734520950</updated>
+      <updated>1574735918639</updated>
     </task>
     <task id="LOCAL-00005" summary="Added buttons to delete user/coordinator as admin">
       <created>1574735918639</created>
@@ -303,6 +326,8 @@
     <MESSAGE value="JavaFX is working" />
     <MESSAGE value="Added logging in" />
     <MESSAGE value="Added switching to new pane after login" />
+    <MESSAGE value="Adding IT Tickets" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding IT Tickets" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -311,6 +336,11 @@
           <url>file://$PROJECT_DIR$/src/Model/Departments/ITDepartment.java</url>
           <line>2</line>
           <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Model/Departments/Department.java</url>
+          <line>60</line>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Controller/AddTicketController.java</url>
@@ -322,7 +352,5 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <MESSAGE value="Added Administrator panel&#10;Logging Controller chooses now which panel show after authentication&#10;Administrator panel is able to read data of users" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Administrator panel&#10;Logging Controller chooses now which panel show after authentication&#10;Administrator panel is able to read data of users" />
   </component>
 </project>
