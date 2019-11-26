@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controller.ManageUsersController"
+            prefHeight="600.0" prefWidth="800.0">
+    <children>
+        <Label layoutX="15.0" layoutY="15.0" text="Users"/>
+        <TableView prefHeight="150.0" prefWidth="600.0" layoutX="15.0" layoutY="45.0" fx:id="usersTable">
+            <columns>
+                <TableColumn prefWidth="100.0" text="UserID" fx:id="userIDColumn" />
+                <TableColumn prefWidth="100.0" text="FirstName" fx:id="userFirstNameColumn" />
+                <TableColumn prefWidth="100.0" text="LastName" fx:id="userLastNameColumn" />
+                <TableColumn prefWidth="100.0" text="Login" fx:id="userLoginColumn" />
+                <TableColumn prefWidth="100.0" text="password" fx:id="userPasswordColumn" />
+            </columns>
+        </TableView>
+
+        <Label layoutX="15.0" layoutY="215.0" text="Coordinators" />
+        <TableView prefHeight="150.0" prefWidth="600.0" layoutX="15.0" layoutY="245.0" fx:id="coordinatorsTable">
+            <columns>
+                <TableColumn prefWidth="100.0" text="UserID" fx:id="coordinatorIDColumn" />
+                <TableColumn prefWidth="100.0" text="FirstName" fx:id="coordinatorFirstNameColumn" />
+                <TableColumn prefWidth="100.0" text="LastName" fx:id="coordinatorLastNameColumn" />
+                <TableColumn prefWidth="100.0" text="Login" fx:id="coordinatorLoginColumn" />
+                <TableColumn prefWidth="100.0" text="password" fx:id="coordinatorPasswordColumn" />
+                <TableColumn prefWidth="100.0" text="Department" fx:id="coordinatorDepartmentColumn" />
+            </columns>
+        </TableView>
+    </children>
+</AnchorPane>

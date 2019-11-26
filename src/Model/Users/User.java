@@ -1,6 +1,7 @@
 package Model.Users;
 
 import Model.Ticket.Ticket;
+import javafx.collections.ObservableList;
 
 import java.util.List;
 import java.util.Objects;

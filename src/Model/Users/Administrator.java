@@ -2,6 +2,8 @@ package Model.Users;
 
 import Model.Departments.Department;
 import Query.QueryExecutor;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -70,5 +72,40 @@ public class Administrator extends Coordinator {
         }
 
         return Optional.empty();
+    }
+
+    public static ObservableList<User> getUsersList() {
+        ObservableList<User> result = FXCollections.observableArrayList();
+        String sqlQuery = String.format("SELECT * FROM %s WHERE USER_TYPE = 'U';", TABLE_NAME);
+
+        try {
+            ResultSet rs = QueryExecutor.read(sqlQuery);
+            while(rs.next()) {
+                User currentUser = new User(rs.getInt("id"),rs.getString("LOGIN"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"),rs.getString("PASSWORD"));
+                result.add(currentUser);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public static ObservableList<Coordinator> getCoordinatorsList() {
+        ObservableList<Coordinator> result = FXCollections.observableArrayList();
+        String sqlQuery = String.format("SELECT * FROM %s WHERE USER_TYPE = 'C';", TABLE_NAME);
+
+        try {
+            ResultSet rs = QueryExecutor.read(sqlQuery);
+            while(rs.next()) {
+                Coordinator currentCoordinator = new Coordinator(rs.getInt("id"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"),
+                        rs.getString("LOGIN"), rs.getString("PASSWORD"), Department.findById(rs.getInt("DEPARTMENT_ID")).get());
+                result.add(currentCoordinator);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 }

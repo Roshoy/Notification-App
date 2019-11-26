@@ -12,7 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import sun.plugin.javascript.navig.AnchorArray;
+//import sun.plugin.javascript.navig.AnchorArray;
 
 
 public class Main extends Application {
