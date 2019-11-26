@@ -7,7 +7,7 @@
             prefHeight="400.0" prefWidth="600.0"
             fx:controller="Controller.CoordinatorController">
 
-        <TableView prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <TableView prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER" fx:id="ticketsTable">
             <columns>
                 <TableColumn prefWidth="150.0" text="Title" fx:id="titleColumn" />
                 <TableColumn prefWidth="150.0" text="Description" fx:id="descriptionColumn"/>

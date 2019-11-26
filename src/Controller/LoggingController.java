@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Users.Administrator;
+import Model.Users.Coordinator;
 import Model.Users.User;
 import Model.main.Main;
 import Query.QueryExecutor;
@@ -77,7 +78,18 @@ public class LoggingController {
                 appStage.show();
             }
             else if(userType.equals("c")) {
-                // coordinator panel
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CoordinatorPane.fxml"));
+                Parent coordinate = loader.load();
+
+                CoordinatorController controller = loader.getController();
+                controller.setTickets(Coordinator.getUsersList(id));
+//                controller.setUsers(Administrator.getUsersList());
+//                controller.setCoordinators(Administrator.getCoordinatorsList());
+
+                Scene scene = new Scene(coordinate);
+                Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                appStage.setScene(scene);
+                appStage.show();
             }
         }
     }

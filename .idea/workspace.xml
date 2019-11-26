@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="608fdbc8-6f13-4bce-b011-62b1cbf848ac" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="608fdbc8-6f13-4bce-b011-62b1cbf848ac" name="Default Changelist" comment="Merging commits">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/data.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Query/QueryExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Query/QueryExecutor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wt-935-lemury.iml" beforeDir="false" afterPath="$PROJECT_DIR$/wt-935-lemury.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/wt-935-lemury/View/CoordinatorPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/wt-935-lemury/View/CoordinatorPane.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/CoordinatorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CoordinatorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/LoggingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoggingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Ticket/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Ticket/Ticket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Users/Coordinator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Users/Coordinator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Users/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Users/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/CoordinatorPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/CoordinatorPane.fxml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -223,27 +227,7 @@
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
               <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@2a1f1907" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@72549f06" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@2a1f1907" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@408b2e0f" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@2a1f1907" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@5d04bf32" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@2a1f1907" type="7427dc5b:ServiceModel$ServiceGroupNode" />
               <item name="com.intellij.execution.services.ServiceModel$ServiceNode@44e9ab11" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@2a1f1907" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@50e0570b" type="9fbbdea:ServiceModel$ServiceNode" />
             </path>
           </expand>
           <select />
@@ -302,7 +286,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574735918639</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Merged changes">
+      <created>1574757094579</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1574757094579</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -327,7 +318,9 @@
     <MESSAGE value="Added logging in" />
     <MESSAGE value="Added switching to new pane after login" />
     <MESSAGE value="Adding IT Tickets" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding IT Tickets" />
+    <MESSAGE value="Merged changes" />
+    <MESSAGE value="Merging commits" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merging commits" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -341,6 +334,11 @@
           <url>file://$PROJECT_DIR$/src/Model/Departments/Department.java</url>
           <line>60</line>
           <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Model/Users/Coordinator.java</url>
+          <line>51</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Controller/AddTicketController.java</url>

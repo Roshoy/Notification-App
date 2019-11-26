@@ -21,7 +21,7 @@ public class CoordinatorController {
     @FXML
     private TableColumn<Ticket, TicketStatus> statusColumn;
     @FXML
-    private TableColumn<Ticket, User> submiteeColumn;
+    private TableColumn<Ticket, String> submiteeColumn;
 
 
     private ObservableList<Ticket> tickets;
@@ -32,7 +32,9 @@ public class CoordinatorController {
         titleColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().title()));
         descriptionColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().description()));
         statusColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().status()));
-        submiteeColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().submitee()));
+        submiteeColumn.setCellValueFactory(dataValue ->
+                new SimpleObjectProperty<>(dataValue.getValue().submitee().firstName() + " " +
+                        dataValue.getValue().submitee().lastName()));
     }
 
     public void setTickets(ObservableList<Ticket> tickets) {
