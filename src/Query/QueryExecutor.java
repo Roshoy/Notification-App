@@ -47,6 +47,16 @@ public final class QueryExecutor {
                     "FOREIGN KEY(coordinator_id) references USERS(id), " +
                     "FOREIGN KEY(user_id) references USERS(id) " +
                     ");");
+
+            LOGGER.info("Creating table ITTickets");
+            create("CREATE TABLE IF NOT EXISTS ITTICKETS (" +
+                    "id INTEGER PRIMARY KEY, " +
+                    "FOREIGN KEY(id) references TICKETS(id)," +
+                    "FOREIGN KEY(coordinator_id) references USERS(id), " +
+                    "FOREIGN KEY(user_id) references USERS(id) " +
+                    ");");
+
+
         } catch (SQLException e) {
             LOGGER.info("Error during create tables: " + e.getMessage());
             throw new RuntimeException("Cannot create tables");

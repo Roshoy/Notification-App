@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import oracle.jrockit.jfr.events.EventControl;
 
@@ -40,22 +41,20 @@ public class LoggingController {
             informationLabel.setText("Bledny login/haslo");
             informationLabel.setVisible(true);
 
-
-
         }
-
         else if(id != -1) {
             informationLabel.setText("Zalogowano");
             informationLabel.setVisible(true);
 
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/AddTicketPane.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
+            stage.setScene(new Scene((Pane) loader.load()));
+            AddTicketController addTicketController = loader.<AddTicketController>getController();
+            addTicketController.setUserID(id);
+            addTicketController.setLogin(login.getText());
+            stage.show();
 
-
-            Parent addTicket = FXMLLoader.load(getClass().getResource("/View/AddTicketPane.fxml"));
-            Scene scene = new Scene(addTicket);
-            Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            appStage.setScene(scene);
-            appStage.show();
         }
     }
 

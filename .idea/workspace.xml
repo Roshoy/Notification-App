@@ -2,12 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="608fdbc8-6f13-4bce-b011-62b1cbf848ac" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Controller/AddTicketController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/View/AddTicketPane.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/AddITTicketController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/Departments/ITDepartment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/Ticket/ITTicket.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/View/AddITTicketPane.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/data.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AddTicketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AddTicketController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/LoggingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoggingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/LoggingPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/LoggingPane.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Query/QueryExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Query/QueryExecutor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/AddTicketPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/AddTicketPane.fxml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,14 +54,7 @@
         <item name="data" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
-        <item name="TICKETS: table" type="3d80ac25:SqliteImplModel$Table" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="data" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
-        <item name="USERS: table" type="3d80ac25:SqliteImplModel$Table" />
+        <item name="ITTICKETS: table" type="3d80ac25:SqliteImplModel$Table" />
       </path>
     </expand>
     <select />
@@ -95,7 +92,8 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
@@ -187,17 +185,12 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@4a82442c" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@2a1f1907" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@4a82442c" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@60a78655" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@4a82442c" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@29eca427" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@2a1f1907" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@44e9ab11" type="9fbbdea:ServiceModel$ServiceNode" />
             </path>
           </expand>
           <select />
@@ -219,7 +212,8 @@
       <workItem from="1574689967626" duration="2106000" />
       <workItem from="1574692443624" duration="3552000" />
       <workItem from="1574696050224" duration="2573000" />
-      <workItem from="1574698639744" duration="21878000" />
+      <workItem from="1574698639744" duration="35896000" />
+      <workItem from="1574737205869" duration="153000" />
     </task>
     <task id="LOCAL-00001" summary="Added table Departments&#10;Added user and coordinator creation from admin&#10;Added department creation">
       <created>1574686396577</created>
@@ -242,7 +236,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574712218792</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added switching to new pane after login">
+      <created>1574722944397</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1574722944397</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -265,6 +266,26 @@
     <MESSAGE value="Added table Departments&#10;Added user and coordinator creation from admin&#10;Added department creation" />
     <MESSAGE value="JavaFX is working" />
     <MESSAGE value="Added logging in" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added logging in" />
+    <MESSAGE value="Added switching to new pane after login" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added switching to new pane after login" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Model/Departments/ITDepartment.java</url>
+          <line>2</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/Controller/AddTicketController.java</url>
+          <line>24</line>
+          <properties class="Controller.AddTicketController" method="setLogin">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
