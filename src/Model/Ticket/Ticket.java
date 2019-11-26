@@ -57,6 +57,7 @@ public class Ticket {
 
     public TicketStatus status(){return  this.status;}
 
+
     public static Optional<Ticket> create(int coordinatorID, int userID, String title, String description) {
         String insertSql = String.format("INSERT INTO %s (COORDINATOR_ID, USER_ID, TITLE, DESCRIPTION, STATUS) VALUES (%d, %d, '%s', '%s', 'WAITING');", TABLE_NAME,
                 coordinatorID, userID, title, description);
