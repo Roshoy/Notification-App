@@ -1,8 +1,10 @@
 package Controller;
 
+import Model.Users.Administrator;
 import Model.Users.User;
 import Model.main.Main;
 import Query.QueryExecutor;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,7 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import oracle.jrockit.jfr.events.EventControl;
+//import oracle.jrockit.jfr.events.EventControl;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -48,14 +50,31 @@ public class LoggingController {
             informationLabel.setText("Zalogowano");
             informationLabel.setVisible(true);
 
+            String userType = resultSet.getString("user_type").toLowerCase();
 
+            if(userType.equals("u")) {
+                Parent addTicket = FXMLLoader.load(getClass().getResource("/View/AddTicketPane.fxml"));
+                Scene scene = new Scene(addTicket);
+                Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                appStage.setScene(scene);
+                appStage.show();
+            }
+            else if(userType.equals("a")) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/ManageUsersPane.fxml"));
+                Parent manageUsers = loader.load();
 
+                ManageUsersController controller = loader.getController();
+                controller.setUsers(Administrator.getUsersList());
+                controller.setCoordinators(Administrator.getCoordinatorsList());
 
-            Parent addTicket = FXMLLoader.load(getClass().getResource("/View/AddTicketPane.fxml"));
-            Scene scene = new Scene(addTicket);
-            Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            appStage.setScene(scene);
-            appStage.show();
+                Scene scene = new Scene(manageUsers);
+                Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                appStage.setScene(scene);
+                appStage.show();
+            }
+            else if(userType.equals("c")) {
+                // coordinator panel
+            }
         }
     }
 
