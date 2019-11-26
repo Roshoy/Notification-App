@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="608fdbc8-6f13-4bce-b011-62b1cbf848ac" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Controller/AddUserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/View/AddUserPane.fxml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Controller/AddITTicketController.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Model/Departments/ITDepartment.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Model/Ticket/ITTicket.java" afterDir="false" />
@@ -15,7 +17,8 @@
       <change beforePath="$PROJECT_DIR$/src/View/AddTicketPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/AddTicketPane.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ManageUsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ManageUsersController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Users/Administrator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Users/Administrator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/ManageUsersPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/ManageUsersPane.fxml" afterDir="false" />
+        <change beforePath="$PROJECT_DIR$/src/Model/Departments/Department.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Departments/Department.java" afterDir="false" />
+        <change beforePath="$PROJECT_DIR$/src/View/ManageUsersPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/ManageUsersPane.fxml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -134,6 +137,8 @@
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="13" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="Model.main.Main" />
       <module name="wt-935-lemury" />
       <option name="VM_PARAMETERS" value="--module-path $PROJECT_DIR$/../../javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml" />
@@ -186,6 +191,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.DatabaseTests" />
+      <item itemvalue="JUnit.DatabaseTests.createCoordinatorTest" />
+      <item itemvalue="JUnit.DatabaseTests.createTicketTest" />
+      <item itemvalue="JUnit.DatabaseTests.uniqueDepartmentNameTest" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
@@ -203,12 +215,12 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@2a1f1907" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@120697e5" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@2a1f1907" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@44e9ab11" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@120697e5" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@7931006e" type="9fbbdea:ServiceModel$ServiceNode" />
             </path>
           </expand>
           <select />
@@ -260,15 +272,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574734520950</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
-    <task id="LOCAL-00004" summary="Added switching to new pane after login">
-      <created>1574722944397</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
+    <task id="LOCAL-00005" summary="Added buttons to delete user/coordinator as admin">
+      <created>1574735918639</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1574722944397</updated>
+      <updated>1574735918639</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -292,7 +303,6 @@
     <MESSAGE value="JavaFX is working" />
     <MESSAGE value="Added logging in" />
     <MESSAGE value="Added switching to new pane after login" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added switching to new pane after login" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
