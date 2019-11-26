@@ -60,4 +60,15 @@ public class Department {
         }
         return Optional.empty();
     }
+
+    public static int findIdByName(final String name) {
+        String findByIdSql = String.format("SELECT * FROM %s WHERE name = '%s'", TABLE_NAME, name);
+        try {
+            ResultSet rs = QueryExecutor.read(findByIdSql);
+            return rs.getInt("id");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 }

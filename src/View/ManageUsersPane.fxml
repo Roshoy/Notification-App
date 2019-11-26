@@ -40,5 +40,8 @@
         <Button fx:id="deleteCoordinatorButton" maxWidth="175" layoutY="320.0" layoutX="650.0" mnemonicParsing="false"
                 onAction="#handleCoordinatorDeleteAction" text="Delete coordinator" />
 
+        <Button fx:id="addUserButton" maxWidth="175" layoutX="15.0" layoutY="400.0" mnemonicParsing="false"
+                onAction="#handleAddUserAction" text="Add user" />
+
     </children>
 </AnchorPane>

@@ -9,11 +9,17 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.io.IOException;
 
 
 public class ManageUsersController {
@@ -52,6 +58,9 @@ public class ManageUsersController {
     private Button deleteUserButton;
     @FXML
     private Button deleteCoordinatorButton;
+
+    @FXML
+    private Button addUserButton;
 
     @FXML
     private void initialize() {
@@ -100,5 +109,20 @@ public class ManageUsersController {
             Administrator.deleteUserById(coordinator.id());
         }
         this.coordinators.removeAll(toRemove);
+    }
+
+    @FXML
+    private void handleAddUserAction(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/AddUserPane.fxml"));
+        Parent addUser = loader.load();
+
+        AddUserController controller = loader.getController();
+        controller.setCoordinators(coordinators);
+        controller.setUsers(users);
+
+        Scene scene = new Scene(addUser);
+        Stage appStage = new Stage();
+        appStage.setScene(scene);
+        appStage.show();
     }
 }
