@@ -23,6 +23,7 @@ public class CoordinatorController {
     @FXML
     private TableColumn<Ticket, User> submiteeColumn;
 
+
     private ObservableList<Ticket> tickets;
 
 
