@@ -1,8 +1,10 @@
 package Controller;
 
+import Model.Users.Administrator;
 import Model.Users.User;
 import Model.main.Main;
 import Query.QueryExecutor;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -41,20 +43,42 @@ public class LoggingController {
             informationLabel.setText("Bledny login/haslo");
             informationLabel.setVisible(true);
 
+
+
         }
+
         else if(id != -1) {
             informationLabel.setText("Zalogowano");
             informationLabel.setVisible(true);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/AddTicketPane.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            String userType = resultSet.getString("user_type").toLowerCase();
 
-            stage.setScene(new Scene((Pane) loader.load()));
-            AddTicketController addTicketController = loader.<AddTicketController>getController();
-            addTicketController.setUserID(id);
-            addTicketController.setLogin(login.getText());
-            stage.show();
+            if(userType.equals("u")) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/AddTicketPane.fxml"));
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
+                stage.setScene(new Scene((Pane) loader.load()));
+                AddTicketController addTicketController = loader.<AddTicketController>getController();
+                addTicketController.setUserID(id);
+                addTicketController.setLogin(login.getText());
+                stage.show();
+            }
+            else if(userType.equals("a")) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/ManageUsersPane.fxml"));
+                Parent manageUsers = loader.load();
+
+                ManageUsersController controller = loader.getController();
+                controller.setUsers(Administrator.getUsersList());
+                controller.setCoordinators(Administrator.getCoordinatorsList());
+
+                Scene scene = new Scene(manageUsers);
+                Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                appStage.setScene(scene);
+                appStage.show();
+            }
+            else if(userType.equals("c")) {
+                // coordinator panel
+            }
         }
     }
 

@@ -9,9 +9,13 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/data.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/AddTicketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AddTicketController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/data.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/LoggingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoggingController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Query/QueryExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Query/QueryExecutor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/View/AddTicketPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/AddTicketPane.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ManageUsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ManageUsersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Users/Administrator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Users/Administrator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/ManageUsersPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/ManageUsersPane.fxml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -54,7 +58,21 @@
         <item name="data" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
-        <item name="ITTICKETS: table" type="3d80ac25:SqliteImplModel$Table" />
+        <item name="TICKETS: table" type="3d80ac25:SqliteImplModel$Table" />
+      </path>
+        <path>
+            <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+            <item name="data" type="feb32156:DbDataSourceImpl" />
+            <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+            <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
+            <item name="ITTICKETS: table" type="3d80ac25:SqliteImplModel$Table" />
+        </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="data" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
+        <item name="USERS: table" type="3d80ac25:SqliteImplModel$Table" />
       </path>
     </expand>
     <select />
@@ -92,8 +110,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
@@ -119,6 +136,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Model.main.Main" />
       <module name="wt-935-lemury" />
+      <option name="VM_PARAMETERS" value="--module-path $PROJECT_DIR$/../../javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="Model.main.*" />
@@ -212,8 +230,7 @@
       <workItem from="1574689967626" duration="2106000" />
       <workItem from="1574692443624" duration="3552000" />
       <workItem from="1574696050224" duration="2573000" />
-      <workItem from="1574698639744" duration="35896000" />
-      <workItem from="1574737205869" duration="153000" />
+      <workItem from="1574698639744" duration="21878000" />
     </task>
     <task id="LOCAL-00001" summary="Added table Departments&#10;Added user and coordinator creation from admin&#10;Added department creation">
       <created>1574686396577</created>
@@ -236,6 +253,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574712218792</updated>
     </task>
+    <task id="LOCAL-00004" summary="Added Administrator panel&#10;Logging Controller chooses now which panel show after authentication&#10;Administrator panel is able to read data of users">
+      <created>1574734520950</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1574734520950</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <task id="LOCAL-00004" summary="Added switching to new pane after login">
       <created>1574722944397</created>
       <option name="number" value="00004" />
@@ -287,5 +312,7 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <MESSAGE value="Added Administrator panel&#10;Logging Controller chooses now which panel show after authentication&#10;Administrator panel is able to read data of users" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Administrator panel&#10;Logging Controller chooses now which panel show after authentication&#10;Administrator panel is able to read data of users" />
   </component>
 </project>
