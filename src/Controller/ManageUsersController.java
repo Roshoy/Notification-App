@@ -1,13 +1,20 @@
 package Controller;
 
+import Model.Users.Administrator;
 import Model.Users.Coordinator;
 import Model.Users.User;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+
+import javax.swing.*;
+
 
 public class ManageUsersController {
     private ObservableList<User> users;
@@ -42,6 +49,11 @@ public class ManageUsersController {
     private TableColumn<Coordinator, String> coordinatorDepartmentColumn;
 
     @FXML
+    private Button deleteUserButton;
+    @FXML
+    private Button deleteCoordinatorButton;
+
+    @FXML
     private void initialize() {
         userIDColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().id()));
         userFirstNameColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().firstName()));
@@ -55,6 +67,9 @@ public class ManageUsersController {
         coordinatorLoginColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().getLogin()));
         coordinatorPasswordColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().getPassword()));
         coordinatorDepartmentColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().getDepartment().name()));
+
+        deleteUserButton.disableProperty().bind(Bindings.isEmpty(usersTable.getSelectionModel().getSelectedItems()));
+        deleteCoordinatorButton.disableProperty().bind(Bindings.isEmpty(coordinatorsTable.getSelectionModel().getSelectedItems()));
     }
 
     public void setUsers(ObservableList<User> users) {
@@ -65,5 +80,25 @@ public class ManageUsersController {
     public void setCoordinators(ObservableList<Coordinator> coordinators) {
         this.coordinators = coordinators;
         coordinatorsTable.setItems(coordinators);
+    }
+
+    @FXML
+    private void handleUserDeleteAction(ActionEvent actionEvent) {
+        ObservableList<User> toRemove = usersTable.getSelectionModel().getSelectedItems();
+
+        for(User user : toRemove) {
+            Administrator.deleteUserById(user.id());
+        }
+        this.users.removeAll(toRemove);
+    }
+
+    @FXML
+    private void handleCoordinatorDeleteAction(ActionEvent actionEvent) {
+        ObservableList<Coordinator> toRemove = coordinatorsTable.getSelectionModel().getSelectedItems();
+
+        for(Coordinator coordinator : toRemove) {
+            Administrator.deleteUserById(coordinator.id());
+        }
+        this.coordinators.removeAll(toRemove);
     }
 }

@@ -108,4 +108,14 @@ public class Administrator extends Coordinator {
 
         return result;
     }
+
+    public static void deleteUserById(final int id) {
+        String sqlQuery = String.format("DELETE FROM %s WHERE id = %d;", TABLE_NAME, id);
+
+        try {
+            QueryExecutor.delete(sqlQuery);
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -2,17 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="608fdbc8-6f13-4bce-b011-62b1cbf848ac" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/ManageUsersController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/View/ManageUsersPane.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/data.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/LoggingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoggingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ManageUsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ManageUsersController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Users/Administrator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Users/Administrator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Users/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Users/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wt-935-lemury.iml" beforeDir="false" afterPath="$PROJECT_DIR$/wt-935-lemury.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/ManageUsersPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/ManageUsersPane.fxml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -245,7 +240,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574712218792</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added Administrator panel&#10;Logging Controller chooses now which panel show after authentication&#10;Administrator panel is able to read data of users">
+      <created>1574734520950</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1574734520950</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -268,6 +270,7 @@
     <MESSAGE value="Added table Departments&#10;Added user and coordinator creation from admin&#10;Added department creation" />
     <MESSAGE value="JavaFX is working" />
     <MESSAGE value="Added logging in" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added logging in" />
+    <MESSAGE value="Added Administrator panel&#10;Logging Controller chooses now which panel show after authentication&#10;Administrator panel is able to read data of users" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Administrator panel&#10;Logging Controller chooses now which panel show after authentication&#10;Administrator panel is able to read data of users" />
   </component>
 </project>

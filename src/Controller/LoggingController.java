@@ -72,6 +72,9 @@ public class LoggingController {
                 appStage.setScene(scene);
                 appStage.show();
             }
+            else if(userType.equals("c")) {
+                // coordinator panel
+            }
         }
     }
 

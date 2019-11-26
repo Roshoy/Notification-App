@@ -22,6 +22,9 @@
             </columns>
         </TableView>
 
+        <Button fx:id="deleteUserButton" maxWidth="175" layoutY="100" layoutX="675.0" mnemonicParsing="false"
+                onAction="#handleUserDeleteAction" text="Delete user" />
+
         <Label layoutX="15.0" layoutY="215.0" text="Coordinators" />
         <TableView prefHeight="150.0" prefWidth="600.0" layoutX="15.0" layoutY="245.0" fx:id="coordinatorsTable">
             <columns>
@@ -33,5 +36,9 @@
                 <TableColumn prefWidth="100.0" text="Department" fx:id="coordinatorDepartmentColumn" />
             </columns>
         </TableView>
+
+        <Button fx:id="deleteCoordinatorButton" maxWidth="175" layoutY="320.0" layoutX="650.0" mnemonicParsing="false"
+                onAction="#handleCoordinatorDeleteAction" text="Delete coordinator" />
+
     </children>
 </AnchorPane>
