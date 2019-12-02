@@ -61,6 +61,8 @@ public class ManageUsersController {
 
     @FXML
     private Button addUserButton;
+    @FXML
+    private Button logoutButton;
 
     @FXML
     private void initialize() {
@@ -121,6 +123,20 @@ public class ManageUsersController {
         controller.setUsers(users);
 
         Scene scene = new Scene(addUser);
+        Stage appStage = new Stage();
+        appStage.setScene(scene);
+        appStage.show();
+    }
+
+    @FXML
+    public void handleLogoutAction() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoggingPane.fxml"));
+        Parent logging = loader.load();
+        Stage stage = (Stage) logoutButton.getScene().getWindow();
+        stage.close();
+
+        LoggingController loggingController = loader.getController();
+        Scene scene = new Scene(logging);
         Stage appStage = new Stage();
         appStage.setScene(scene);
         appStage.show();

@@ -14,7 +14,7 @@ public class AppUtils extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("My first JavaFX app");
+        this.primaryStage.setTitle("Tickets Application");
         //this.primaryStage.show();
         initRootLayout();
     }

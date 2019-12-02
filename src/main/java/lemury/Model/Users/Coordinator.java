@@ -29,7 +29,7 @@ public class Coordinator extends User {
         //change status of ticket
     }
 
-    public static ObservableList<Ticket> getUsersList(int coordID) {
+    public static ObservableList<Ticket> getTicketsList(int coordID) {
         ObservableList<Ticket> result = FXCollections.observableArrayList();
         String sqlQuery = String.format("SELECT * FROM %s WHERE coordinator_id = %d;", Ticket.TABLE_NAME, coordID);
 

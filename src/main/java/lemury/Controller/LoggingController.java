@@ -61,6 +61,7 @@ public class LoggingController {
                 stage.setScene(new Scene((Pane) loader.load()));
                 AddTicketController addTicketController = loader.<AddTicketController>getController();
                 addTicketController.setUserID(id);
+                addTicketController.setTickets(User.getTicketsList(id));
                 addTicketController.setLogin(login.getText());
                 stage.show();
             }
@@ -82,7 +83,7 @@ public class LoggingController {
                 Parent coordinate = loader.load();
 
                 CoordinatorController controller = loader.getController();
-                controller.setTickets(Coordinator.getUsersList(id));
+                controller.setTickets(Coordinator.getTicketsList(id));
 //                controller.setUsers(Administrator.getUsersList());
 //                controller.setCoordinators(Administrator.getCoordinatorsList());
 

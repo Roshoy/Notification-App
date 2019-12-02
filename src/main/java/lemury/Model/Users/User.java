@@ -1,5 +1,6 @@
 package lemury.Model.Users;
 
+import javafx.collections.FXCollections;
 import lemury.Model.Departments.Department;
 import lemury.Model.Ticket.Ticket;
 import lemury.Query.QueryExecutor;
@@ -67,6 +68,27 @@ public class User {
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, login, password);
     }
+
+    public static ObservableList<Ticket> getTicketsList(int userID) {
+        ObservableList<Ticket> result = FXCollections.observableArrayList();
+        String sqlQuery = String.format("SELECT * FROM %s WHERE user_id = %d;", Ticket.TABLE_NAME, userID);
+
+        try {
+            ResultSet rs = QueryExecutor.read(sqlQuery);
+            while(rs.next()) {
+                Ticket ticket = new Ticket(rs.getInt("id"),
+                        (Coordinator)Coordinator.findById(rs.getInt("coordinator_id")).get(),
+                        User.findById(rs.getInt("user_id")).get(), rs.getString("title"),
+                        rs.getString("description"));
+                result.add(ticket);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
 
     public static Optional<User> findById(final int id) {
         String findByIdSql = String.format("SELECT * FROM %s WHERE id = %d", User.TABLE_NAME, id);
