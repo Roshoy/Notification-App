@@ -2,56 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c1ecc3ab-ccfc-4845-8eeb-0a90accd22ed" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileChanges/last-build.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/5.2.1/gc.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/vcs-1/gc.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lemury/Model/main/AppUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/$PRODUCT_WORKSPACE_FILE$" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/$PRODUCT_WORKSPACE_FILE$" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/wt_935_lemury.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/sqlite_jdbc_3_27_2_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/data.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Connection/ConnectionProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Connection/ConnectionProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AddITTicketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Controller/AddITTicketController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AddTicketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Controller/AddTicketController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AddUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Controller/AddUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CoordinatorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Controller/CoordinatorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/LoggingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Controller/LoggingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ManageUsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Controller/ManageUsersController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Departments/Department.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Model/Departments/Department.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Departments/ITDepartment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Model/Departments/ITDepartment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Ticket/ITTicket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Model/Ticket/ITTicket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Ticket/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Model/Ticket/Ticket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Ticket/TicketStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Model/Ticket/TicketStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Users/Administrator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Model/Users/Administrator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Users/Coordinator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Model/Users/Coordinator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Users/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Model/Users/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Model/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Query/QueryExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Query/QueryExecutor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Query/QueryHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Query/QueryHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/AddITTicketPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/View/AddITTicketPane.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/AddTicketPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/View/AddTicketPane.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/AddUserPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/View/AddUserPane.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/CoordinatorPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/View/CoordinatorPane.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/LoggingPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/View/LoggingPane.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/ManageUsersPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/View/ManageUsersPane.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/DatabaseTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/lemury/DatabaseTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/MoreTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/lemury/MoreTests.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -105,9 +56,15 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/data.db" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -224,8 +181,17 @@
       <workItem from="1575141837432" duration="131000" />
       <workItem from="1575142001097" duration="272000" />
       <workItem from="1575142311013" duration="52000" />
-      <workItem from="1575142387735" duration="1024000" />
+      <workItem from="1575142387735" duration="1209000" />
+      <workItem from="1575239950182" duration="5101000" />
     </task>
+    <task id="LOCAL-00001" summary="Set as Gradle project&#10;Packages moved to structure needed by Gradle&#10;AppUtils created - Gradle did not want main class extending anything">
+      <created>1575143575298</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1575143575298</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -243,5 +209,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Set as Gradle project&#10;Packages moved to structure needed by Gradle&#10;AppUtils created - Gradle did not want main class extending anything" />
+    <option name="LAST_COMMIT_MESSAGE" value="Set as Gradle project&#10;Packages moved to structure needed by Gradle&#10;AppUtils created - Gradle did not want main class extending anything" />
   </component>
 </project>
