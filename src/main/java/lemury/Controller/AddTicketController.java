@@ -53,16 +53,17 @@ public class AddTicketController {
 
     @FXML
     private void handleAddITTicket(ActionEvent event) throws SQLException, IOException {
-        //Parent addTicket = FXMLLoader.load(getClass().getResource("/View/AddITTicketPane.fxml"));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/AddITTicketPane.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Parent addITTicket = loader.load();
 
-        stage.setScene(new Scene((Pane) loader.load()));
-        AddITTicketController addITTicketController = loader.<AddITTicketController>getController();
-        addITTicketController.setUserID(userID);
-        addITTicketController.setLogin(login.getText());
-        stage.show();
+        AddITTicketController controller = loader.getController();
+        controller.setUserID(userID);
+        controller.setLogin(login.getText());
 
+        Scene scene = new Scene(addITTicket);
+        Stage appStage = new Stage();
+        appStage.setScene(scene);
+        appStage.show();
     }
 
     public void setUserID(int userID) {

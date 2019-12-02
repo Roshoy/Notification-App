@@ -1,26 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c1ecc3ab-ccfc-4845-8eeb-0a90accd22ed" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="c1ecc3ab-ccfc-4845-8eeb-0a90accd22ed" name="Default Changelist" comment="Set as Gradle project&#10;Packages moved to structure needed by Gradle&#10;AppUtils created - Gradle did not want main class extending anything&#10;TableView in AddTicketPane&#10;Logout buttons">
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/data.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lemury/Controller/AddTicketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Controller/AddTicketController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lemury/Controller/CoordinatorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Controller/CoordinatorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lemury/Controller/LoggingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Controller/LoggingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lemury/Controller/ManageUsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Controller/ManageUsersController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lemury/Model/Users/Coordinator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Model/Users/Coordinator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lemury/Model/Users/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Model/Users/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lemury/Model/main/AppUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemury/Model/main/AppUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/View/AddTicketPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/View/AddTicketPane.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/View/CoordinatorPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/View/CoordinatorPane.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/View/ManageUsersPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/View/ManageUsersPane.fxml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -300,7 +289,7 @@
       <workItem from="1575142387735" duration="1209000" />
       <workItem from="1575239950182" duration="5101000" />
       <workItem from="1575284369797" duration="255000" />
-      <workItem from="1575284660249" duration="8288000" />
+      <workItem from="1575284660249" duration="8904000" />
     </task>
     <task id="LOCAL-00001" summary="Set as Gradle project&#10;Packages moved to structure needed by Gradle&#10;AppUtils created - Gradle did not want main class extending anything">
       <created>1575143575298</created>
@@ -309,7 +298,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575143575298</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Set as Gradle project&#10;Packages moved to structure needed by Gradle&#10;AppUtils created - Gradle did not want main class extending anything&#10;TableView in AddTicketPane&#10;Logout buttons">
+      <created>1575301337540</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1575301337540</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -330,6 +326,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Set as Gradle project&#10;Packages moved to structure needed by Gradle&#10;AppUtils created - Gradle did not want main class extending anything" />
-    <option name="LAST_COMMIT_MESSAGE" value="Set as Gradle project&#10;Packages moved to structure needed by Gradle&#10;AppUtils created - Gradle did not want main class extending anything" />
+    <MESSAGE value="Set as Gradle project&#10;Packages moved to structure needed by Gradle&#10;AppUtils created - Gradle did not want main class extending anything&#10;TableView in AddTicketPane&#10;Logout buttons" />
+    <option name="LAST_COMMIT_MESSAGE" value="Set as Gradle project&#10;Packages moved to structure needed by Gradle&#10;AppUtils created - Gradle did not want main class extending anything&#10;TableView in AddTicketPane&#10;Logout buttons" />
   </component>
 </project>
