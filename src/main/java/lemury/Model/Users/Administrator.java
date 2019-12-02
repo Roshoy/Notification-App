@@ -81,7 +81,7 @@ public class Administrator extends Coordinator {
         try {
             ResultSet rs = QueryExecutor.read(sqlQuery);
             while(rs.next()) {
-                User currentUser = new User(rs.getInt("id"),rs.getString("LOGIN"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"),rs.getString("PASSWORD"));
+                User currentUser = new User(rs.getInt("id"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"), rs.getString("LOGIN"), rs.getString("PASSWORD"));
                 result.add(currentUser);
             }
         } catch(SQLException e) {
