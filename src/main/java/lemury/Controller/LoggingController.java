@@ -67,8 +67,8 @@ public class LoggingController {
                 Parent manageUsers = loader.load();
 
                 ManageUsersController controller = loader.getController();
-                controller.setUsers(Administrator.getUsersList());
-                controller.setCoordinators(Administrator.getCoordinatorsList());
+                controller.setUsers(User.getUsersList());
+                controller.setCoordinators(Coordinator.getCoordinatorsList());
 
                 Scene scene = new Scene(manageUsers);
                 Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();

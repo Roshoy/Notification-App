@@ -19,7 +19,7 @@ public class ITTicket extends Ticket {
         QueryExecutor.createAndObtainId(sqlInsertIT);
     }
 
-    public ITTicket(int id, Coordinator owner, User submitee, String title, String description, int computerNo){
+    private ITTicket(int id, Coordinator owner, User submitee, String title, String description, int computerNo){
         super(id, owner, submitee, title, description);
         this.computerNo = computerNo;
     }

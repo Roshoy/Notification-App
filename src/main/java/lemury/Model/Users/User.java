@@ -24,7 +24,7 @@ public class User {
     private List<Ticket> submittedTickets;
 
 
-    public User(int id, String firstName, String lastName, String login, String password) {
+    protected User(int id, String firstName, String lastName, String login, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -116,6 +116,34 @@ public class User {
             e.printStackTrace();
         }
         return Optional.empty();
+    }
+
+    public static void deleteUserById(final int id) {
+        String sqlQuery = String.format("DELETE FROM %s WHERE id = %d;", TABLE_NAME, id);
+
+        try {
+            QueryExecutor.delete(sqlQuery);
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static ObservableList<User> getUsersList() {
+        ObservableList<User> result = FXCollections.observableArrayList();
+        String sqlQuery = String.format("SELECT * FROM %s WHERE USER_TYPE = 'U';", TABLE_NAME);
+
+        try {
+            ResultSet rs = QueryExecutor.read(sqlQuery);
+            while(rs.next()) {
+                User currentUser = new User(rs.getInt("id"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"), rs.getString("LOGIN"), rs.getString("PASSWORD"));
+                result.add(currentUser);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 }
 

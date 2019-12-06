@@ -98,7 +98,7 @@ public class ManageUsersController extends CoordinatorController {
         ObservableList<User> toRemove = usersTable.getSelectionModel().getSelectedItems();
 
         for(User user : toRemove) {
-            Administrator.deleteUserById(user.id());
+            User.deleteUserById(user.id());
         }
         this.users.removeAll(toRemove);
     }
@@ -108,7 +108,7 @@ public class ManageUsersController extends CoordinatorController {
         ObservableList<Coordinator> toRemove = coordinatorsTable.getSelectionModel().getSelectedItems();
 
         for(Coordinator coordinator : toRemove) {
-            Administrator.deleteUserById(coordinator.id());
+            User.deleteUserById(coordinator.id());
         }
         this.coordinators.removeAll(toRemove);
     }

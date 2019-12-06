@@ -78,9 +78,6 @@ public class Ticket {
         //return Optional.empty();
     }
 
-
-
-
     public static Optional<Ticket> findTicketById(final int id) {
         String findBySql = String.format("SELECT * FROM %s WHERE id = %d;", TABLE_NAME, id);
         try {

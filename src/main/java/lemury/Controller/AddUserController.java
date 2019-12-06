@@ -59,7 +59,7 @@ public class AddUserController {
 
         }
         else if(coordinatorRadioButton.isSelected()) {
-            Optional<Coordinator> newCoordinator = Administrator.CreateCoordinatorAccount(loginTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), passwordTextField.getText(),
+            Optional<Coordinator> newCoordinator = Administrator.createCoordinatorAccount(loginTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), passwordTextField.getText(),
                     Department.findIdByName(departmentTextField.getText()));
             this.coordinators.add(newCoordinator.get());
         }

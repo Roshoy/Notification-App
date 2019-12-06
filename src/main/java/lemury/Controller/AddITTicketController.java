@@ -43,7 +43,7 @@ public class AddITTicketController {
     private int userID;
 
 
-    @FXML // trxeba zmienic
+    @FXML // zmienione
     private void handleAddTicket(ActionEvent event) throws SQLException, IOException {
         int compNo = Integer.parseInt(computerNo.getText());
         int departmentID = Department.findIdByName(ITTicket.getDepartment());
