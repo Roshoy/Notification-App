@@ -54,7 +54,7 @@ public class AddUserController {
     @FXML
     private void handleAddAction(ActionEvent actionEvent) {
         if(standardUserRadioButton.isSelected()) {
-            Optional<User> newUser = Administrator.CreateUserAccount(loginTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), passwordTextField.getText());
+            Optional<User> newUser = User.createUserAccount(loginTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), passwordTextField.getText());
             this.users.add(newUser.get());
 
         }

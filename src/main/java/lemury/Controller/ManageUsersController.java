@@ -22,7 +22,7 @@ import javax.swing.*;
 import java.io.IOException;
 
 
-public class ManageUsersController {
+public class ManageUsersController extends CoordinatorController {
     private ObservableList<User> users;
     private ObservableList<Coordinator> coordinators;
 
@@ -128,6 +128,7 @@ public class ManageUsersController {
         appStage.show();
     }
 
+    /*
     @FXML
     public void handleLogoutAction() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoggingPane.fxml"));
@@ -141,4 +142,6 @@ public class ManageUsersController {
         appStage.setScene(scene);
         appStage.show();
     }
+
+     */
 }

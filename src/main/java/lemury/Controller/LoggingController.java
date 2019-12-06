@@ -3,11 +3,8 @@ package lemury.Controller;
 import lemury.Model.Users.Administrator;
 import lemury.Model.Users.Coordinator;
 import lemury.Model.Users.User;
-import lemury.Model.main.Main;
 import lemury.Query.QueryExecutor;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -55,14 +52,14 @@ public class LoggingController {
             String userType = resultSet.getString("user_type").toLowerCase();
 
             if(userType.equals("u")) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/AddTicketPane.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/UserPane.fxml"));
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
                 stage.setScene(new Scene((Pane) loader.load()));
-                AddTicketController addTicketController = loader.<AddTicketController>getController();
-                addTicketController.setUserID(id);
-                addTicketController.setTickets(User.getTicketsList(id));
-                addTicketController.setLogin(login.getText());
+                UserController userController = loader.<UserController>getController();
+                userController.setUserID(id);
+                userController.setTickets(User.getTicketsList(id));
+                userController.setLogin(login.getText());
                 stage.show();
             }
             else if(userType.equals("a")) {

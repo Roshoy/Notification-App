@@ -1,6 +1,9 @@
 package lemury.Controller;
 
+import lemury.Model.Departments.Department;
+import lemury.Model.Ticket.ITTicket;
 import lemury.Model.Ticket.Ticket;
+import lemury.Model.Ticket.TicketStatus;
 import lemury.Model.Users.Coordinator;
 import lemury.Model.Users.User;
 import lemury.Query.QueryExecutor;
@@ -39,23 +42,30 @@ public class AddITTicketController {
 
     private int userID;
 
-    @FXML
+
+    @FXML // trxeba zmienic
     private void handleAddTicket(ActionEvent event) throws SQLException, IOException {
         int compNo = Integer.parseInt(computerNo.getText());
-        String findCoordinator = String.format("SELECT * FROM USERS WHERE user_type = 'C'",
-                          Coordinator.TABLE_NAME, Ticket.TABLE_NAME);
-        ResultSet resultSet = QueryExecutor.read(findCoordinator);
-        int coordinatorID = QueryExecutor.readIdFromResultSet(resultSet);
+        int departmentID = Department.findIdByName(ITTicket.getDepartment());
+
+        if (departmentID < 0){
+            System.out.println("Bledny ticket");
+            return;
+        }
+
+        //String findCoordinator = String.format("SELECT * FROM USERS WHERE user_type = 'C'",
+        //                  Coordinator.TABLE_NAME, Ticket.TABLE_NAME);
+        //ResultSet resultSet = QueryExecutor.read(findCoordinator);
+
+        int coordinatorID = Coordinator.findCoordinatorByDepartmentNo(departmentID);
         if(coordinatorID < 0){
             System.out.println("Brak dostepnych koordynatorów");
             return;
         }
 
-        String sqlInsert = String.format("INSERT INTO '%s'(coordinator_id, user_id, title, description, status, release_notes) VALUES('%d', '%d', '%s', '%s', '%s', '%s')", Ticket.TABLE_NAME,
-                coordinatorID, userID, title.getText(), description.getText(), "WAITING" , null);
-        int ticketID  = QueryExecutor.createAndObtainId(sqlInsert);
-        String sqlInsertIT = String.format("INSERT INTO ITTICKETS(id, computer_no) VALUES ('%d', '%d')", ticketID, compNo );
-        QueryExecutor.createAndObtainId(sqlInsertIT);
+        int ticketID = Ticket.create(coordinatorID, userID, title.getText(), description.getText());
+        ITTicket.create(ticketID, compNo);
+
 
     }
 

@@ -20,7 +20,7 @@ import lemury.Model.Ticket.TicketStatus;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class AddTicketController {
+public class UserController {
     @FXML
     private Label login = new Label();
     @FXML

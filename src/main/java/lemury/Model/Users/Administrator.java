@@ -20,19 +20,6 @@ public class Administrator extends Coordinator {
 
 
 //Optional<Student>
-    public static Optional<User> CreateUserAccount(String login, String firstName, String lastName, String password){
-        String insertSql = String.format("INSERT INTO %s (LOGIN, FIRST_NAME, LAST_NAME, PASSWORD, USER_TYPE) VALUES ('%s', '%s', '%s', '%s', '%s');", TABLE_NAME, login,firstName
-        , lastName, password, "U");
-
-        try {
-            int id = QueryExecutor.createAndObtainId(insertSql);
-            return findUserById(id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return Optional.empty();
-    }
 
     public static Optional<User> findUserById(final int id) {
         String findByIdSql = String.format("SELECT * FROM USERS WHERE id = %d AND USER_TYPE = 'U'", id);
@@ -44,6 +31,7 @@ public class Administrator extends Coordinator {
         }
         return Optional.empty();
     }
+
 
     // maybe it could be done better with different type in Optional
     public static Optional<Coordinator> CreateCoordinatorAccount(String login, String firstName, String lastName, String password, int departmentId){

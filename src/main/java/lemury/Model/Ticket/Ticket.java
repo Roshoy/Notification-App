@@ -59,26 +59,34 @@ public class Ticket {
         return this.status;
     }
 
-    public static Optional<Ticket> create(int coordinatorID, int userID, String title, String description) {
-        String insertSql = String.format("INSERT INTO %s (COORDINATOR_ID, USER_ID, TITLE, DESCRIPTION, STATUS) VALUES (%d, %d, '%s', '%s', 'WAITING');", TABLE_NAME,
-                coordinatorID, userID, title, description);
+    //Changet type of returning value from Oprional<Ticket> to int
+    public static int create(int coordinatorID, int userID, String title, String description) {
+        String insertSql = String.format("INSERT INTO %s (COORDINATOR_ID, USER_ID, TITLE, DESCRIPTION, STATUS) VALUES (%d, %d, '%s', '%s', 'WAITING');",
+                TABLE_NAME, coordinatorID, userID, title, description);
+        int ticketID = 0;
 
         try {
-            int id = QueryExecutor.createAndObtainId(insertSql);
-            return findTicketById(id);
+            ticketID = QueryExecutor.createAndObtainId(insertSql);
+
+            //return findTicketById(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return Optional.empty();
+        return ticketID;
+
+        //return Optional.empty();
     }
+
+
+
 
     public static Optional<Ticket> findTicketById(final int id) {
         String findBySql = String.format("SELECT * FROM %s WHERE id = %d;", TABLE_NAME, id);
         try {
             ResultSet rs = QueryExecutor.read(findBySql);
             return Optional.of(new Ticket(id, Administrator.findCoordinatorById(rs.getInt("coordinator_id")).get(),
-                    Administrator.findUserById(rs.getInt("user_id")).get(),
+                    User.findById(rs.getInt("user_id")).get(),
                     rs.getString("title"),
                     rs.getString("description")));
         } catch (SQLException e) {

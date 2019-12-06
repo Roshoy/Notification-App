@@ -18,7 +18,7 @@ import sun.rmi.runtime.Log;
 import java.io.IOException;
 
 
-public class CoordinatorController {
+public class CoordinatorController extends UserController {
 
     @FXML
     private TableView<Ticket> ticketsTable;
@@ -53,6 +53,7 @@ public class CoordinatorController {
     }
 
 
+    /*
     @FXML
     public void handleLogoutAction() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoggingPane.fxml"));
@@ -66,4 +67,6 @@ public class CoordinatorController {
         appStage.setScene(scene);
         appStage.show();
     }
+
+     */
 }

@@ -34,7 +34,22 @@ public class User {
 
     }
 
-        public int id() {
+    public static Optional<User> createUserAccount(String login, String firstName, String lastName, String password){
+        String insertSql = String.format("INSERT INTO %s (LOGIN, FIRST_NAME, LAST_NAME, PASSWORD, USER_TYPE) VALUES ('%s', '%s', '%s', '%s', '%s');", TABLE_NAME, login,firstName
+                , lastName, password, "U");
+
+        try {
+            int id = QueryExecutor.createAndObtainId(insertSql);
+            return findById(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
+    }
+
+
+    public int id() {
         return id;
     }
 
