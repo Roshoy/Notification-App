@@ -1,5 +1,7 @@
 package lemury.Model.Ticket;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import lemury.Model.Users.Administrator;
 import lemury.Model.Users.Coordinator;
 import lemury.Model.Users.User;
@@ -92,4 +94,36 @@ public class Ticket {
 
         return Optional.empty();
     }
+
+    public static ObservableList<Ticket> getTicketsList(User user) {
+        ObservableList<Ticket> result = FXCollections.observableArrayList();
+        String sqlQuery = String.format("SELECT * FROM %s WHERE user_id = %d;", Ticket.TABLE_NAME, user.id());
+        return getTickets((ObservableList<Ticket>) result, sqlQuery);
+    }
+
+    public static ObservableList<Ticket> getTicketsListOfCoordinator(Coordinator coordinator) {
+        ObservableList<Ticket> result = FXCollections.observableArrayList();
+        String sqlQuery = String.format("SELECT * FROM %s WHERE coordinator_id = %d;", Ticket.TABLE_NAME, coordinator.id());
+
+        return getTickets((ObservableList<Ticket>) result, sqlQuery);
+    }
+
+    public static ObservableList<Ticket> getTickets(ObservableList<Ticket> result, String sqlQuery) {
+        try {
+            ResultSet rs = QueryExecutor.read(sqlQuery);
+            while(rs.next()) {
+                Ticket ticket = new Ticket(rs.getInt("id"),
+                        (Coordinator)Coordinator.findById(rs.getInt("coordinator_id")).get(),
+                        User.findById(rs.getInt("user_id")).get(), rs.getString("title"),
+                        rs.getString("description"));
+                result.add(ticket);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+
 }

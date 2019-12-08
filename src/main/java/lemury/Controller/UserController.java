@@ -16,6 +16,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import lemury.Model.Ticket.Ticket;
 import lemury.Model.Ticket.TicketStatus;
+import lemury.Model.Users.Administrator;
+import lemury.Model.Users.Coordinator;
 import lemury.Model.Users.User;
 
 import java.io.IOException;
@@ -27,6 +29,10 @@ public class UserController {
     @FXML
     private Button addITTicketButton;
     @FXML
+    private Button menageUsersButton;
+    @FXML
+    private Button viewTicketButton;
+    @FXML
     private TableView<Ticket> ticketsTable;
     @FXML
     private TableColumn<Ticket, String> titleColumn;
@@ -34,14 +40,15 @@ public class UserController {
     private TableColumn<Ticket, String> descriptionColumn;
     @FXML
     private TableColumn<Ticket, TicketStatus> statusColumn;
+    @FXML
+    private TableColumn<Ticket, String> submiteeColumn;
 
     @FXML
     private Button logoutButton;
+    protected User user;
 
     @FXML
     protected Button updateButton;
-
-    protected int userID;
 
     private ObservableList<Ticket> tickets;
 
@@ -54,6 +61,7 @@ public class UserController {
         this.titleColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().title()));
         descriptionColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().description()));
         statusColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().status()));
+        submiteeColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().submitee().getFullName()));
     }
 
     @FXML
@@ -62,7 +70,7 @@ public class UserController {
         Parent addITTicket = loader.load();
 
         AddITTicketController controller = loader.getController();
-        controller.setUserID(userID);
+        controller.setUserID(user.id());
         controller.setLogin(login.getText());
 
         Scene scene = new Scene(addITTicket);
@@ -71,8 +79,9 @@ public class UserController {
         appStage.show();
     }
 
-    public void setUserID(int id) {
-        this.userID = id;
+    public void setUser(User user) {
+        this.user = user;
+        this.login.setText(user.getLogin());
     }
 
     public void setTickets(ObservableList<Ticket> tickets) {
@@ -98,7 +107,7 @@ public class UserController {
         appStage.show();
     }
     @FXML
-    public void handleUpdateAction(){
+    public void handleUpdateAction() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/UserPane.fxml"));
         Stage stage = (Stage) updateButton.getScene().getWindow();
         stage.close();
@@ -106,6 +115,33 @@ public class UserController {
         setTickets(User.getTicketsList(userID));
         initialize();
         stage.show();
+    }
 
+    @FXML
+    public void handleManageUsers(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/ManageUsersPane.fxml"));
+        Parent manageUsers = loader.load();
+
+        ManageUsersController menageUsers = loader.getController();
+        menageUsers.setAdministrator(user);
+
+        Scene scene = new Scene(manageUsers);
+        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appStage.setScene(scene);
+        appStage.show();
+    }
+
+    @FXML
+    public void handleViewTicket(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CoordinatorPane.fxml"));
+        Parent coordinate = loader.load();
+
+        CoordinatorController controller = loader.getController();
+        controller.setUser(user);
+
+        Scene scene = new Scene(coordinate);
+        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appStage.setScene(scene);
+        appStage.show();
     }
 }

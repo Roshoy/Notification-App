@@ -53,8 +53,8 @@ public class CoordinatorController extends UserController {
     }
 
     public void setTickets(ObservableList<Ticket> tickets) {
-        this.tickets = tickets;
-        ticketsTable.setItems(tickets);
+        this.tickets = Ticket.getTicketsListOfCoordinator((Coordinator)user);
+        ticketsTable.setItems(this.tickets);
     }
     @FXML
     public void handleRefreshAction(){

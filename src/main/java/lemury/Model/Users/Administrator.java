@@ -14,8 +14,9 @@ public class Administrator extends Coordinator {
     //static final Department department = InternalDepartment;
 
 
-    private Administrator(int id, String firstName, String lastName, String login, String password, Department department) {
-        super(id, firstName, lastName, login, password, department);
+    private Administrator(int id, String firstName, String lastName, String login, String password,
+                          Department department, String userType) {
+        super(id, firstName, lastName, login, password, department, userType);
     }
 
 

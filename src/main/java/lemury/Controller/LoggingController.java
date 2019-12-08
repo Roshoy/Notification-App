@@ -1,5 +1,6 @@
 package lemury.Controller;
 
+import lemury.Model.Ticket.Ticket;
 import lemury.Model.Users.Administrator;
 import lemury.Model.Users.Coordinator;
 import lemury.Model.Users.User;
@@ -20,6 +21,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class LoggingController {
     @FXML
@@ -34,67 +36,39 @@ public class LoggingController {
 
     @FXML
     private void handleLoggingAction(ActionEvent event) throws SQLException, IOException {
-        String findByLoginSql = String.format("SELECT * FROM '%s' WHERE login='%s' AND password='%s'", User.TABLE_NAME, login.getText(), password.getText());
-        ResultSet resultSet = QueryExecutor.read(findByLoginSql);
-        int id = QueryExecutor.readIdFromResultSet(resultSet);
-        if(id == -1){
+        Optional<User> optionalUser = User.findByLogin(login.getText(), password.getText());
+
+        if(!optionalUser.isPresent()){
             informationLabel.setText("Bledny login/haslo");
             informationLabel.setVisible(true);
-
-
-
         }
-
-        else if(id != -1) {
+        else{
             informationLabel.setText("Zalogowano");
             informationLabel.setVisible(true);
-
-            String userType = resultSet.getString("user_type").toLowerCase();
-
-            if(userType.equals("u")) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/UserPane.fxml"));
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-                stage.setScene(new Scene((Pane) loader.load()));
-                UserController userController = loader.<UserController>getController();
-                userController.setUserID(id);
-                userController.setTickets(User.getTicketsList(id));
-                userController.setLogin(login.getText());
-                stage.show();
+            User user = optionalUser.get();
+            String userType = user.getUserType();
+            if(userType.equalsIgnoreCase("a")) {
+                Optional<User> optUser = Administrator.findById(user.id());
+                if(!optUser.isPresent()){
+                    throw new SQLException("Could not find administrator with given id");
+                }
+                user = optUser.get();
             }
-            else if(userType.equals("a")) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/ManageUsersPane.fxml"));
-                Parent manageUsers = loader.load();
-
-                ManageUsersController controller = loader.getController();
-                controller.setUsers(User.getUsersList());
-                controller.setCoordinators(Coordinator.getCoordinatorsList());
-
-                Scene scene = new Scene(manageUsers);
-                Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                appStage.setScene(scene);
-                appStage.show();
+            else if(userType.equalsIgnoreCase("c")) {
+                Optional<User> optUser = Coordinator.findById(user.id());
+                if(!optUser.isPresent()){
+                    throw new SQLException("Could not find coordinator with given id");
+                }
+                user = optUser.get();
             }
-            else if(userType.equals("c")) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CoordinatorPane.fxml"));
-                Parent coordinate = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/UserPane.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-                CoordinatorController controller = loader.getController();
-                controller.setTickets(Coordinator.getTicketsList(id));
-                controller.setUserID(id);
-                controller.setLogin(login.getText());
-//                controller.setUsers(Administrator.getUsersList());
-//                controller.setCoordinators(Administrator.getCoordinatorsList());
-
-                Scene scene = new Scene(coordinate);
-                Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                appStage.setScene(scene);
-                appStage.show();
-            }
+            stage.setScene(new Scene((Pane) loader.load()));
+            UserController userController = loader.<UserController>getController();
+            userController.setUser(user);
+            userController.setTickets(Ticket.getTicketsList(user));
+            userController.setLogin(login.getText());
+            stage.show();
         }
-    }
-
-
-
-
-}
+    }}

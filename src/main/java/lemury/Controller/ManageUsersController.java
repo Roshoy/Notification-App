@@ -25,6 +25,7 @@ import java.io.IOException;
 public class ManageUsersController extends CoordinatorController {
     private ObservableList<User> users;
     private ObservableList<Coordinator> coordinators;
+    private Administrator administrator;
 
     @FXML
     private TableView<User> usersTable;
@@ -81,6 +82,12 @@ public class ManageUsersController extends CoordinatorController {
 
         deleteUserButton.disableProperty().bind(Bindings.isEmpty(usersTable.getSelectionModel().getSelectedItems()));
         deleteCoordinatorButton.disableProperty().bind(Bindings.isEmpty(coordinatorsTable.getSelectionModel().getSelectedItems()));
+
+        users = User.getUsersList();
+        usersTable.setItems(users);
+
+        coordinators = Coordinator.getCoordinatorsList();
+        coordinatorsTable.setItems(coordinators);
     }
 
     public void setUsers(ObservableList<User> users) {
@@ -91,6 +98,10 @@ public class ManageUsersController extends CoordinatorController {
     public void setCoordinators(ObservableList<Coordinator> coordinators) {
         this.coordinators = coordinators;
         coordinatorsTable.setItems(coordinators);
+    }
+
+    public void setAdministrator(User administrator){
+        this.administrator = (Administrator)Administrator.findById(administrator.id()).get();
     }
 
     @FXML
