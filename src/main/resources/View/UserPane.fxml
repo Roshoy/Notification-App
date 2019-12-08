@@ -19,6 +19,7 @@
         </columns>
       </TableView>
       <Label layoutX="494.0" layoutY="14.0" text="User" />
-      <Button fx:id="logoutButton" layoutX="377.0" layoutY="33.0" mnemonicParsing="false" onAction="#handleLogoutAction" text="Log out" />
+       <Button fx:id="updateButton" layoutX="377.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleUpdateAction" text="Update" />
+       <Button fx:id="logoutButton" layoutX="377.0" layoutY="38.0" mnemonicParsing="false" onAction="#handleLogoutAction" text="Log out" />
    </children>
 </AnchorPane>

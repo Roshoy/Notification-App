@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import lemury.Model.Ticket.Ticket;
 import lemury.Model.Ticket.TicketStatus;
+import lemury.Model.Users.User;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -36,6 +37,10 @@ public class UserController {
 
     @FXML
     private Button logoutButton;
+
+    @FXML
+    private Button updateButton;
+
     protected int userID;
 
     private ObservableList<Ticket> tickets;
@@ -91,5 +96,16 @@ public class UserController {
         Stage appStage = new Stage();
         appStage.setScene(scene);
         appStage.show();
+    }
+    @FXML
+    public void handleUpdateAction(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/UserPane.fxml"));
+        Stage stage = (Stage) updateButton.getScene().getWindow();
+        stage.close();
+
+        setTickets(User.getTicketsList(userID));
+        initialize();
+        stage.show();
+
     }
 }
