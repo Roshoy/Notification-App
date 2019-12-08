@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import lemury.Model.Ticket.Ticket;
 import lemury.Model.Ticket.TicketStatus;
+import lemury.Model.Users.Coordinator;
 import lemury.Model.Users.User;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
@@ -34,6 +35,8 @@ public class CoordinatorController extends UserController {
     private TableColumn<Ticket, String> submiteeColumn;
     @FXML
     private Button logoutButton;
+    @FXML
+    private Button refreshButton;
 
 
     private ObservableList<Ticket> tickets;
@@ -52,6 +55,17 @@ public class CoordinatorController extends UserController {
     public void setTickets(ObservableList<Ticket> tickets) {
         this.tickets = tickets;
         ticketsTable.setItems(tickets);
+    }
+    @FXML
+    public void handleRefreshAction(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CoordinatorPane.fxml"));
+        Stage stage = (Stage) refreshButton.getScene().getWindow();
+        stage.close();
+
+        setTickets(Coordinator.getTicketsList(userID));
+        initialize();
+        stage.show();
+
     }
 
     /*

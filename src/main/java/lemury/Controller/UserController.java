@@ -39,7 +39,7 @@ public class UserController {
     private Button logoutButton;
 
     @FXML
-    private Button updateButton;
+    protected Button updateButton;
 
     protected int userID;
 
