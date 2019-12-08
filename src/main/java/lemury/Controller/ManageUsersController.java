@@ -4,7 +4,6 @@ import lemury.Model.Users.Administrator;
 import lemury.Model.Users.Coordinator;
 import lemury.Model.Users.User;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

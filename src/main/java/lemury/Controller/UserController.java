@@ -12,12 +12,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import lemury.Model.Ticket.Ticket;
 import lemury.Model.Ticket.TicketStatus;
-import lemury.Model.Users.Administrator;
-import lemury.Model.Users.Coordinator;
 import lemury.Model.Users.User;
 
 import java.io.IOException;
@@ -116,7 +113,7 @@ public class UserController {
         Stage stage = (Stage) updateButton.getScene().getWindow();
         stage.close();
 
-        setTickets(User.getTicketsList(userID));
+        setTickets(Ticket.getTicketsList(user));
         initialize();
         stage.show();
     }

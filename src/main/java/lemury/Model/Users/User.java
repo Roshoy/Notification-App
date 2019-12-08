@@ -1,7 +1,6 @@
 package lemury.Model.Users;
 
 import javafx.collections.FXCollections;
-import lemury.Model.Departments.Department;
 import lemury.Model.Ticket.Ticket;
 import lemury.Query.QueryExecutor;
 import javafx.collections.ObservableList;

@@ -1,9 +1,6 @@
 package lemury.Controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import lemury.Model.Ticket.Ticket;
@@ -15,10 +12,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import sun.rmi.runtime.Log;
-
-import java.io.IOException;
-import java.sql.SQLException;
 
 
 public class CoordinatorController extends UserController {
@@ -62,7 +55,7 @@ public class CoordinatorController extends UserController {
         Stage stage = (Stage) refreshButton.getScene().getWindow();
         stage.close();
 
-        setTickets(Coordinator.getTicketsList(userID));
+        setTickets(Ticket.getTicketsListOfCoordinator((Coordinator) user));
         initialize();
         stage.show();
 
