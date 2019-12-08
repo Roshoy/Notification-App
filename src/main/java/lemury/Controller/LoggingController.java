@@ -81,6 +81,8 @@ public class LoggingController {
 
                 CoordinatorController controller = loader.getController();
                 controller.setTickets(Coordinator.getTicketsList(id));
+                controller.setUserID(id);
+                controller.setLogin(login.getText());
 //                controller.setUsers(Administrator.getUsersList());
 //                controller.setCoordinators(Administrator.getCoordinatorsList());
 

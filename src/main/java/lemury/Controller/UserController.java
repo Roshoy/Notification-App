@@ -22,7 +22,7 @@ import java.sql.SQLException;
 
 public class UserController {
     @FXML
-    private Label login = new Label();
+    protected Label login = new Label();
     @FXML
     private Button addITTicketButton;
     @FXML
@@ -36,7 +36,7 @@ public class UserController {
 
     @FXML
     private Button logoutButton;
-    private int userID;
+    protected int userID;
 
     private ObservableList<Ticket> tickets;
 
@@ -66,8 +66,8 @@ public class UserController {
         appStage.show();
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setUserID(int id) {
+        this.userID = id;
     }
 
     public void setTickets(ObservableList<Ticket> tickets) {
