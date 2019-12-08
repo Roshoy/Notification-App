@@ -46,25 +46,11 @@ public class LoggingController {
             informationLabel.setText("Zalogowano");
             informationLabel.setVisible(true);
             User user = optionalUser.get();
-            String userType = user.getUserType();
-            if(userType.equalsIgnoreCase("a")) {
-                Optional<User> optUser = Administrator.findById(user.id());
-                if(!optUser.isPresent()){
-                    throw new SQLException("Could not find administrator with given id");
-                }
-                user = optUser.get();
-            }
-            else if(userType.equalsIgnoreCase("c")) {
-                Optional<User> optUser = Coordinator.findById(user.id());
-                if(!optUser.isPresent()){
-                    throw new SQLException("Could not find coordinator with given id");
-                }
-                user = optUser.get();
-            }
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/UserPane.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            stage.setScene(new Scene((Pane) loader.load()));
+            stage.setScene(new Scene(loader.load()));
             UserController userController = loader.<UserController>getController();
             userController.setUser(user);
             userController.setTickets(Ticket.getTicketsList(user));

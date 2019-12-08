@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -12,7 +11,7 @@
                    <TableColumn fx:id="titleColumn" prefWidth="150.0" text="Title" />
                    <TableColumn fx:id="descriptionColumn" prefWidth="150.0" text="Description" />
                    <TableColumn fx:id="statusColumn" prefWidth="150.0" text="Status" />
-                   <TableColumn fx:id="submiteeColumn" prefWidth="146.0" text="submitee" />
+                   <TableColumn fx:id="submitterColumn" prefWidth="146.0" text="submitter" />
                </columns>
            </TableView>
       <Button fx:id = "logoutButton" layoutX="511.0" layoutY="21.0" mnemonicParsing="false" text="Log out" onAction="#handleLogoutAction" />

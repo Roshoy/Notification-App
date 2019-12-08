@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.Controller.UserController">
+<AnchorPane prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.Controller.UserController">
    <children>
       <Label fx:id="login" layoutX="587.0" layoutY="35.0" prefHeight="21.0" prefWidth="66.0" textAlignment="CENTER" />
       <Button fx:id="addITTicketButton" layoutX="14.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleAddITTicket" prefHeight="26.0" prefWidth="101.0" text="Add IT Ticket" AnchorPane.topAnchor="73.0" />
@@ -14,14 +12,20 @@
         <columns>
           <TableColumn fx:id="titleColumn" prefWidth="127.20001220703125" text="Title" />
           <TableColumn fx:id="descriptionColumn" prefWidth="278.4000244140625" text="Description" />
-            <TableColumn fx:id="submiteeColumn" prefWidth="115.99993896484375" text="Submited by" />
+            <TableColumn fx:id="ownerColumn" prefWidth="115.99993896484375" text="Owner" />
             <TableColumn fx:id="statusColumn" prefWidth="86.39993896484373" text="Status" />
         </columns>
       </TableView>
       <Label layoutX="608.0" layoutY="17.0" text="User" />
       <Button fx:id="logoutButton" layoutX="669.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleLogoutAction" prefHeight="26.0" prefWidth="66.0" text="Log out" />
-      <Button fx:id="menageUsersButton" layoutX="14.0" layoutY="145.0" mnemonicParsing="false" onAction="#handleManageUsers" prefHeight="26.0" prefWidth="101.0" text="Manage Users" AnchorPane.topAnchor="145.0" />
+      <Button fx:id="menageUsersButton" layoutX="14.0" layoutY="209.0" mnemonicParsing="false" onAction="#handleManageUsers" prefHeight="26.0" prefWidth="101.0" text="Manage Users" AnchorPane.topAnchor="209.0" />
       <Button fx:id="viewTicketButton" layoutX="14.0" layoutY="109.0" mnemonicParsing="false" onAction="#handleViewTicket" prefHeight="26.0" prefWidth="101.0" text="View Ticket" AnchorPane.topAnchor="109.0" />
+      <Button fx:id="viewOwnedTicketsButton" layoutX="14.0" layoutY="144.0" mnemonicParsing="false" onAction="#handleViewOwnedTickets" prefHeight="56.0" prefWidth="101.0" text="View Owned Tickets" textAlignment="CENTER" wrapText="true" />
+      <Label layoutX="125.0" layoutY="26.0" text="Submitted tickets">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
        <Button fx:id="updateButton" layoutX="377.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleUpdateAction" text="Update" />
    </children>
 </AnchorPane>

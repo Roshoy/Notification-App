@@ -32,7 +32,7 @@ public class CoordinatorController extends UserController {
     @FXML
     private TableColumn<Ticket, TicketStatus> statusColumn;
     @FXML
-    private TableColumn<Ticket, String> submiteeColumn;
+    private TableColumn<Ticket, String> submitterColumn;
     @FXML
     private Button logoutButton;
     @FXML
@@ -47,9 +47,9 @@ public class CoordinatorController extends UserController {
         titleColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().title()));
         descriptionColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().description()));
         statusColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().status()));
-        submiteeColumn.setCellValueFactory(dataValue ->
-                new SimpleObjectProperty<>(dataValue.getValue().submitee().firstName() + " " +
-                        dataValue.getValue().submitee().lastName()));
+        submitterColumn.setCellValueFactory(dataValue ->
+                new SimpleObjectProperty<>(dataValue.getValue().submitter().firstName() + " " +
+                        dataValue.getValue().submitter().lastName()));
     }
 
     public void setTickets(ObservableList<Ticket> tickets) {
@@ -68,20 +68,7 @@ public class CoordinatorController extends UserController {
 
     }
 
-    /*
-    @FXML
-    public void handleLogoutAction() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoggingPane.fxml"));
-        Parent logging = loader.load();
-        Stage stage = (Stage) logoutButton.getScene().getWindow();
-        stage.close();
-
-        LoggingController loggingController = loader.getController();
-        Scene scene = new Scene(logging);
-        Stage appStage = new Stage();
-        appStage.setScene(scene);
-        appStage.show();
+    public void setUser(User user){
+        this.user = Coordinator.findCoordinatorById(user.id()).get();
     }
-
-     */
 }

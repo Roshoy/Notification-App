@@ -108,8 +108,8 @@ public class DatabaseTests {
             Assert.assertTrue(t.id() > 0);
             Assert.assertNotNull(t.owner());
             Assert.assertEquals(t.owner(), coordinator.get());
-            Assert.assertNotNull(t.submitee());
-            Assert.assertEquals(t.submitee(), user.get());
+            Assert.assertNotNull(t.submitter());
+            Assert.assertEquals(t.submitter(), user.get());
             Assert.assertNotNull(t.title());
             Assert.assertNotNull(t.description());
         });

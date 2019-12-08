@@ -14,10 +14,10 @@ import java.util.Optional;
 
 public class Ticket {
     private final int id;
-    public static final String TABLE_NAME = "TICKETS";
+    private static final String TABLE_NAME = "TICKETS";
 
     private Coordinator owner; //if feels wierd, change (guy who takes care of this ticket, coordinator)
-    private User submitee;
+    private User submitter;
 
     private String title;
     private String description;
@@ -26,10 +26,10 @@ public class Ticket {
     //date etc
 
 
-    public Ticket(int id, Coordinator owner, User submitee, String title, String description) {
+    public Ticket(int id, Coordinator owner, User submitter, String title, String description) {
         this.id = id;
         this.owner = owner;
-        this.submitee = submitee;
+        this.submitter = submitter;
         this.title = title;
         this.description = description;
         this.status = TicketStatus.WAITING;
@@ -45,8 +45,8 @@ public class Ticket {
         return this.owner;
     }
 
-    public User submitee() {
-        return this.submitee;
+    public User submitter() {
+        return this.submitter;
     }
 
     public String title() {
@@ -98,17 +98,17 @@ public class Ticket {
     public static ObservableList<Ticket> getTicketsList(User user) {
         ObservableList<Ticket> result = FXCollections.observableArrayList();
         String sqlQuery = String.format("SELECT * FROM %s WHERE user_id = %d;", Ticket.TABLE_NAME, user.id());
-        return getTickets((ObservableList<Ticket>) result, sqlQuery);
+        return getTickets(result, sqlQuery);
     }
 
     public static ObservableList<Ticket> getTicketsListOfCoordinator(Coordinator coordinator) {
         ObservableList<Ticket> result = FXCollections.observableArrayList();
         String sqlQuery = String.format("SELECT * FROM %s WHERE coordinator_id = %d;", Ticket.TABLE_NAME, coordinator.id());
 
-        return getTickets((ObservableList<Ticket>) result, sqlQuery);
+        return getTickets(result, sqlQuery);
     }
 
-    public static ObservableList<Ticket> getTickets(ObservableList<Ticket> result, String sqlQuery) {
+    private static ObservableList<Ticket> getTickets(ObservableList<Ticket> result, String sqlQuery) {
         try {
             ResultSet rs = QueryExecutor.read(sqlQuery);
             while(rs.next()) {

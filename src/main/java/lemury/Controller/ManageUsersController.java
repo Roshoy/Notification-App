@@ -100,8 +100,8 @@ public class ManageUsersController extends CoordinatorController {
         coordinatorsTable.setItems(coordinators);
     }
 
-    public void setAdministrator(User administrator){
-        this.administrator = (Administrator)Administrator.findById(administrator.id()).get();
+    protected void setAdministrator(User administrator){
+        this.administrator = Administrator.findAdministratorById(administrator.id()).get();
     }
 
     @FXML
@@ -138,21 +138,4 @@ public class ManageUsersController extends CoordinatorController {
         appStage.setScene(scene);
         appStage.show();
     }
-
-    /*
-    @FXML
-    public void handleLogoutAction() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoggingPane.fxml"));
-        Parent logging = loader.load();
-        Stage stage = (Stage) logoutButton.getScene().getWindow();
-        stage.close();
-
-        LoggingController loggingController = loader.getController();
-        Scene scene = new Scene(logging);
-        Stage appStage = new Stage();
-        appStage.setScene(scene);
-        appStage.show();
-    }
-
-     */
 }

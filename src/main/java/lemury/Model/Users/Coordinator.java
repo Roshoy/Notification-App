@@ -40,7 +40,7 @@ public class Coordinator extends User {
     }
 
     public static Optional<Coordinator> findCoordinatorById(final int id) {
-        String findByIdSql = String.format("SELECT * FROM USERS WHERE id = %d AND USER_TYPE = 'C'", id);
+        String findByIdSql = String.format("SELECT * FROM USERS WHERE id = %d AND (USER_TYPE = 'C' OR USER_TYPE = 'A')", id);
         try {
             ResultSet rs = QueryExecutor.read(findByIdSql);
             return Optional.of(new Coordinator(rs.getInt("id"), rs.getString("FIRST_NAME"),
@@ -93,11 +93,7 @@ public class Coordinator extends User {
     public static int findCoordinatorByDepartmentNo(int departmentNo) throws SQLException {
         String findCoordinator = String.format("SELECT * FROM USERS WHERE user_type = 'C' and department_id = '%d'", departmentNo);
         ResultSet resultSet = QueryExecutor.read(findCoordinator);
-        //String numOfCoordinatorsSQL = String.format("SELECT COUNT(*) FROM USERS WHERE user_type = 'C'");
-        int result = QueryExecutor.readIdFromResultSet(resultSet);
-        return result;
-
-
+        return QueryExecutor.readIdFromResultSet(resultSet);
     }
 
 
