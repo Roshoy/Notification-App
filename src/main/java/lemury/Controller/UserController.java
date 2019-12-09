@@ -12,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import lemury.Model.Ticket.Ticket;
 import lemury.Model.Ticket.TicketStatus;
@@ -27,21 +26,29 @@ public class UserController {
     @FXML
     private Button addITTicketButton;
     @FXML
+    private Button menageUsersButton;
+    @FXML
+    private Button viewTicketButton;
+    @FXML
+    private Button viewOwnedTicketsButton;
+
+    @FXML
     private TableView<Ticket> ticketsTable;
     @FXML
-    private TableColumn<Ticket, String> titleColumn;
+    protected TableColumn<Ticket, String> titleColumn;
     @FXML
-    private TableColumn<Ticket, String> descriptionColumn;
+    protected TableColumn<Ticket, String> descriptionColumn;
     @FXML
-    private TableColumn<Ticket, TicketStatus> statusColumn;
+    protected TableColumn<Ticket, TicketStatus> statusColumn;
+    @FXML
+    private TableColumn<Ticket, String> userColumn;
 
     @FXML
     private Button logoutButton;
+    protected User user;
 
     @FXML
     protected Button updateButton;
-
-    protected int userID;
 
     private ObservableList<Ticket> tickets;
 
@@ -54,6 +61,8 @@ public class UserController {
         this.titleColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().title()));
         descriptionColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().description()));
         statusColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().status()));
+        userColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().owner().getFullName()));
+        userColumn.setText("Owner");
     }
 
     @FXML
@@ -62,7 +71,7 @@ public class UserController {
         Parent addITTicket = loader.load();
 
         AddITTicketController controller = loader.getController();
-        controller.setUserID(userID);
+        controller.setUser(user);
         controller.setLogin(login.getText());
 
         Scene scene = new Scene(addITTicket);
@@ -71,8 +80,10 @@ public class UserController {
         appStage.show();
     }
 
-    public void setUserID(int id) {
-        this.userID = id;
+    public void setUser(User user) {
+        this.user = user;
+        this.login.setText(user.getLogin());
+        setButtonsVisibility();
     }
 
     public void setTickets(ObservableList<Ticket> tickets) {
@@ -98,14 +109,55 @@ public class UserController {
         appStage.show();
     }
     @FXML
-    public void handleUpdateAction(){
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/UserPane.fxml"));
-        Stage stage = (Stage) updateButton.getScene().getWindow();
-        stage.close();
-
-        setTickets(User.getTicketsList(userID));
+    public void handleUpdateAction() {
+        setTickets(Ticket.getTicketsList(user));
         initialize();
-        stage.show();
+    }
+
+    @FXML
+    public void handleManageUsers(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/ManageUsersPane.fxml"));
+        Parent manageUsers = loader.load();
+
+        ManageUsersController menageUsers = loader.getController();
+        menageUsers.setAdministrator(user);
+
+        Scene scene = new Scene(manageUsers);
+        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appStage.setScene(scene);
+        appStage.show();
+    }
+
+    @FXML
+    public void handleViewTicket(ActionEvent event) throws IOException{
+
+    }
+
+    @FXML
+    public void handleViewOwnedTickets(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CoordinatorPane.fxml"));
+        Parent coordinate = loader.load();
+
+        CoordinatorController controller = loader.getController();
+        controller.setUser(user);
+
+        Scene scene = new Scene(coordinate);
+        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appStage.setScene(scene);
+        appStage.show();
+    }
+
+    private void setButtonsVisibility(){
+        menageUsersButton.managedProperty().bind(menageUsersButton.visibleProperty());
+        viewOwnedTicketsButton.managedProperty().bind(viewOwnedTicketsButton.visibleProperty());
+
+        if(user.getUserType().equalsIgnoreCase("C")) {
+            menageUsersButton.setVisible(false);
+        }
+        if(user.getUserType().equalsIgnoreCase("U")){
+            viewOwnedTicketsButton.setVisible(false);
+            menageUsersButton.setVisible(false);
+        }
 
     }
 }

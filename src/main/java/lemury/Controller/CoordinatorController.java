@@ -1,9 +1,6 @@
 package lemury.Controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import lemury.Model.Ticket.Ticket;
@@ -15,10 +12,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import sun.rmi.runtime.Log;
-
-import java.io.IOException;
-import java.sql.SQLException;
 
 
 public class CoordinatorController extends UserController {
@@ -32,7 +25,7 @@ public class CoordinatorController extends UserController {
     @FXML
     private TableColumn<Ticket, TicketStatus> statusColumn;
     @FXML
-    private TableColumn<Ticket, String> submiteeColumn;
+    private TableColumn<Ticket, String> userColumn;
     @FXML
     private Button logoutButton;
     @FXML
@@ -47,41 +40,23 @@ public class CoordinatorController extends UserController {
         titleColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().title()));
         descriptionColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().description()));
         statusColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().status()));
-        submiteeColumn.setCellValueFactory(dataValue ->
-                new SimpleObjectProperty<>(dataValue.getValue().submitee().firstName() + " " +
-                        dataValue.getValue().submitee().lastName()));
+        userColumn.setCellValueFactory(dataValue ->
+                new SimpleObjectProperty<>(dataValue.getValue().submitter().firstName() + " " +
+                        dataValue.getValue().submitter().lastName()));
+        userColumn.setText("Submitter");
     }
 
-    public void setTickets(ObservableList<Ticket> tickets) {
-        this.tickets = tickets;
-        ticketsTable.setItems(tickets);
+    public void setTicketsOwnedByCoordinator() {
+        this.tickets = Ticket.getTicketsListOfCoordinator((Coordinator)user);
+        ticketsTable.setItems(this.tickets);
     }
     @FXML
     public void handleRefreshAction(){
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CoordinatorPane.fxml"));
-        Stage stage = (Stage) refreshButton.getScene().getWindow();
-        stage.close();
-
-        setTickets(Coordinator.getTicketsList(userID));
+        setTickets(Ticket.getTicketsListOfCoordinator((Coordinator) user));
         initialize();
-        stage.show();
-
     }
 
-    /*
-    @FXML
-    public void handleLogoutAction() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoggingPane.fxml"));
-        Parent logging = loader.load();
-        Stage stage = (Stage) logoutButton.getScene().getWindow();
-        stage.close();
-
-        LoggingController loggingController = loader.getController();
-        Scene scene = new Scene(logging);
-        Stage appStage = new Stage();
-        appStage.setScene(scene);
-        appStage.show();
+    public void setUser(User user){
+        this.user = Coordinator.findCoordinatorById(user.id()).get();
     }
-
-     */
 }

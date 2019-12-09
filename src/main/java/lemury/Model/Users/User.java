@@ -1,7 +1,6 @@
 package lemury.Model.Users;
 
 import javafx.collections.FXCollections;
-import lemury.Model.Departments.Department;
 import lemury.Model.Ticket.Ticket;
 import lemury.Query.QueryExecutor;
 import javafx.collections.ObservableList;
@@ -19,18 +18,20 @@ public class User {
     private final String firstName;
     private final String lastName;
     private final String login;
+    private final String userType;
     private String password;
 
     private List<Ticket> submittedTickets;
 
 
-    protected User(int id, String firstName, String lastName, String login, String password) {
+    protected User(int id, String firstName, String lastName, String login, String password, String userType) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
         this.password = password;
         this.submittedTickets = null;
+        this.userType = userType;
 
     }
 
@@ -67,6 +68,8 @@ public class User {
         return password;
     }
 
+    public String getUserType(){return userType;}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -84,34 +87,23 @@ public class User {
         return Objects.hash(id, firstName, lastName, login, password);
     }
 
-    public static ObservableList<Ticket> getTicketsList(int userID) {
-        ObservableList<Ticket> result = FXCollections.observableArrayList();
-        String sqlQuery = String.format("SELECT * FROM %s WHERE user_id = %d;", Ticket.TABLE_NAME, userID);
-
-        try {
-            ResultSet rs = QueryExecutor.read(sqlQuery);
-            while(rs.next()) {
-                Ticket ticket = new Ticket(rs.getInt("id"),
-                        (Coordinator)Coordinator.findById(rs.getInt("coordinator_id")).get(),
-                        User.findById(rs.getInt("user_id")).get(), rs.getString("title"),
-                        rs.getString("description"));
-                result.add(ticket);
-            }
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-
-        return result;
-    }
-
-
     public static Optional<User> findById(final int id) {
         String findByIdSql = String.format("SELECT * FROM %s WHERE id = %d", User.TABLE_NAME, id);
+        return getUser(findByIdSql);
+    }
+
+    public static Optional<User> findByLogin(final String login, final String password){
+        String findByLoginSql = String.format("SELECT * FROM '%s' WHERE login='%s' AND password='%s'", User.TABLE_NAME,
+                login, password);
+        return getUser(findByLoginSql);
+    }
+
+    private static Optional<User> getUser(String findByLoginSql) {
         try {
-            ResultSet rs = QueryExecutor.read(findByIdSql);
+            ResultSet rs = QueryExecutor.read(findByLoginSql);
             return Optional.of(new User(rs.getInt("id"), rs.getString("first_name"),
                     rs.getString("last_name"), rs.getString("login"),
-                    rs.getString("password")));
+                    rs.getString("password"), rs.getString("user_type")));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -128,7 +120,6 @@ public class User {
         }
     }
 
-
     public static ObservableList<User> getUsersList() {
         ObservableList<User> result = FXCollections.observableArrayList();
         String sqlQuery = String.format("SELECT * FROM %s WHERE USER_TYPE = 'U';", TABLE_NAME);
@@ -136,7 +127,10 @@ public class User {
         try {
             ResultSet rs = QueryExecutor.read(sqlQuery);
             while(rs.next()) {
-                User currentUser = new User(rs.getInt("id"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"), rs.getString("LOGIN"), rs.getString("PASSWORD"));
+                User currentUser = new User(rs.getInt("id"),
+                        rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"),
+                        rs.getString("LOGIN"), rs.getString("PASSWORD"),
+                        rs.getString("user_type"));
                 result.add(currentUser);
             }
         } catch(SQLException e) {
@@ -144,6 +138,10 @@ public class User {
         }
 
         return result;
+    }
+
+    public String getFullName(){
+        return firstName + " " + lastName;
     }
 }
 

@@ -4,7 +4,6 @@ import lemury.Model.Users.Administrator;
 import lemury.Model.Users.Coordinator;
 import lemury.Model.Users.User;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +24,7 @@ import java.io.IOException;
 public class ManageUsersController extends CoordinatorController {
     private ObservableList<User> users;
     private ObservableList<Coordinator> coordinators;
+    private Administrator administrator;
 
     @FXML
     private TableView<User> usersTable;
@@ -81,6 +81,12 @@ public class ManageUsersController extends CoordinatorController {
 
         deleteUserButton.disableProperty().bind(Bindings.isEmpty(usersTable.getSelectionModel().getSelectedItems()));
         deleteCoordinatorButton.disableProperty().bind(Bindings.isEmpty(coordinatorsTable.getSelectionModel().getSelectedItems()));
+
+        users = User.getUsersList();
+        usersTable.setItems(users);
+
+        coordinators = Coordinator.getCoordinatorsList();
+        coordinatorsTable.setItems(coordinators);
     }
 
     public void setUsers(ObservableList<User> users) {
@@ -91,6 +97,10 @@ public class ManageUsersController extends CoordinatorController {
     public void setCoordinators(ObservableList<Coordinator> coordinators) {
         this.coordinators = coordinators;
         coordinatorsTable.setItems(coordinators);
+    }
+
+    protected void setAdministrator(User administrator){
+        this.administrator = Administrator.findAdministratorById(administrator.id()).get();
     }
 
     @FXML
@@ -127,21 +137,4 @@ public class ManageUsersController extends CoordinatorController {
         appStage.setScene(scene);
         appStage.show();
     }
-
-    /*
-    @FXML
-    public void handleLogoutAction() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoggingPane.fxml"));
-        Parent logging = loader.load();
-        Stage stage = (Stage) logoutButton.getScene().getWindow();
-        stage.close();
-
-        LoggingController loggingController = loader.getController();
-        Scene scene = new Scene(logging);
-        Stage appStage = new Stage();
-        appStage.setScene(scene);
-        appStage.show();
-    }
-
-     */
 }
