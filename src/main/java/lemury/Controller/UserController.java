@@ -69,7 +69,6 @@ public class UserController {
         statusColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().status()));
         userColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().owner().getFullName()));
         userColumn.setText("Owner");
-        waitingFilter.setSelected(true);
     }
 
     @FXML
