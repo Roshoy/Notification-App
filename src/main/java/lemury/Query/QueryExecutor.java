@@ -55,6 +55,17 @@ public final class QueryExecutor {
                     "FOREIGN KEY(id) references TICKETS(id)" +
                     ");");
 
+            LOGGER.info("Creating table Messages");
+            create("CREATE TABLE IF NOT EXISTS MESSAGES (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "date DATE NOT NULL, " +
+                    "ticket_id INT NOT NULL, " +
+                    "author_id INT NOT NULL, " +
+                    "text VARCHAR(500) NOT NULL, " +
+                    "FOREIGN KEY(ticket_id) references TICKETS(id), " +
+                    "FOREIGN KEY(author_id) references USERS(id)" +
+                    ");");
+
 
         } catch (SQLException e) {
             LOGGER.info("Error during create tables: " + e.getMessage());
