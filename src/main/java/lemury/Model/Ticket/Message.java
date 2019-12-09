@@ -34,6 +34,26 @@ public class Message {
         this.text = text;
     }
 
+    public int id() {
+        return id;
+    }
+
+    public Date date() {
+        return date;
+    }
+
+    public Ticket referencedTicket() {
+        return referencedTicket;
+    }
+
+    public User author() {
+        return author;
+    }
+
+    public String text() {
+        return text;
+    }
+
     public static Optional<Message> create(int ticketID, int authorID, String text) {
         Date date = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
@@ -75,9 +95,9 @@ public class Message {
         return Optional.empty();
     }
 
-    private static ObservableList<Message> getMessagesForTicket(Ticket referencedTicket) {
+    public static ObservableList<Message> getMessagesForTicket(Ticket referencedTicket) {
         ObservableList<Message> result = FXCollections.observableArrayList();
-        String sqlQuery = String.format("SELECT * FROM %s WHERE TICKET_ID = %d;", TABLE_NAME, referencedTicket.id());
+        String sqlQuery = String.format("SELECT * FROM %s WHERE TICKET_ID = %d ORDER BY DATE;", TABLE_NAME, referencedTicket.id());
 
         try {
             ResultSet rs = QueryExecutor.read(sqlQuery);

@@ -19,6 +19,8 @@
        <Button fx:id="updateButton" layoutX="10.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleUpdateAction" text="User View/ Refresh User View" />
        <Button fx:id="refreshButton" layoutX="230.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleRefreshAction" text="Coordinator View/ Refresh Coordinator View" />
 
+       <Button fx:id="viewTicketButton" layoutX="230.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleViewTicket" text="View ticket" />
+
        <Button fx:id = "logoutButton" layoutX="511.0" layoutY="21.0" mnemonicParsing="false" text="Log out" onAction="#handleLogoutAction" />
    </children>
 </AnchorPane>

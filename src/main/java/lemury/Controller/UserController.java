@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import lemury.Model.Ticket.Message;
 import lemury.Model.Ticket.Ticket;
 import lemury.Model.Ticket.TicketStatus;
 import lemury.Model.Users.User;
@@ -173,7 +174,10 @@ public class UserController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/TicketMessagesPane.fxml"));
             Parent ticketMessages = loader.load();
 
+            Ticket referencedTicket = ticketsTable.getSelectionModel().getSelectedItem();
             TicketMessagesController controller = loader.getController();
+            controller.setUser(user);
+            controller.setTicket(referencedTicket);
 
             Scene scene = new Scene(ticketMessages);
             Stage appStage = new Stage();

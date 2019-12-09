@@ -1,6 +1,9 @@
 package lemury.Controller;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import lemury.Model.Ticket.Ticket;
@@ -12,6 +15,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+
+import java.io.IOException;
 
 
 public class CoordinatorController extends UserController {
@@ -30,6 +35,8 @@ public class CoordinatorController extends UserController {
     private Button logoutButton;
     @FXML
     private Button refreshButton;
+    @FXML
+    private Button viewTicketButton;
 
 
     private ObservableList<Ticket> tickets;
