@@ -102,34 +102,24 @@ public class Ticket {
     }
 
     public static ObservableList<Ticket> filterTicketList(User user, boolean waiting, boolean inProgress, boolean done){
-        String search = "";
+        StringBuilder search = new StringBuilder();
 
-        if (waiting && inProgress && done){
-            search = "'WAITING', 'IN_PROGRESS', 'DONE'";
+        if(waiting){
+            search.append(",'WAITING'");
         }
-        else if( waiting && inProgress){
-            search = "'WAITING', 'IN_PROGRESS'";
+        if(inProgress){
+            search.append(",'IN_PROGRESS'");
         }
-        else if(inProgress && done){
-            search = "'IN_PROGRESS', 'DONE'";
+        if(done){
+            search.append(",'DONE'");
         }
-        else if(waiting && done){
-            search = "'WAITING', 'DONE'";
-        }
-        else if(waiting){
-            search = "'WAITING'";
-        }
-        else if(inProgress){
-            search = "IN_PROGRESS";
-        }
-        else if(done){
-            search = "DONE";
-        }
-        else{
+        if(search.length() > 0){
+            search.deleteCharAt(0); // remove unnecessary coma
         }
 
         ObservableList<Ticket> result = FXCollections.observableArrayList();
-        String sqlQuery = String.format("SELECT * FROM %s WHERE user_id = %d AND status IN (%s)", Ticket.TABLE_NAME, user.id(), search);
+        String sqlQuery = String.format("SELECT * FROM %s WHERE user_id = %d AND status IN (%s)",
+                Ticket.TABLE_NAME, user.id(), search.toString());
         return getTickets(result, sqlQuery);
     }
 
