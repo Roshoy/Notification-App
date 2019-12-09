@@ -6,7 +6,10 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.Controller.UserController">
-   <children>
+    <fx:define>
+        <ToggleGroup fx:id="ticketType" />
+    </fx:define>
+    <children>
       <Label fx:id="login" alignment="CENTER" layoutX="566.0" layoutY="31.0" prefHeight="21.0" prefWidth="66.0" textAlignment="CENTER">
          <font>
             <Font size="15.0" />
@@ -31,9 +34,9 @@
          </font>
       </Label>
        <Button fx:id="updateButton" layoutX="306.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleUpdateAction" text="Update" />
-      <RadioButton fx:id="waitingFilter" layoutX="419.0" layoutY="4.0" mnemonicParsing="false" text="WAITIING" />
-      <RadioButton fx:id="inProgressFilter" layoutX="419.0" layoutY="29.0" mnemonicParsing="false" text="IN PROGRESS" />
-      <RadioButton fx:id="doneFilter" layoutX="419.0" layoutY="50.0" mnemonicParsing="false" text="DONE" />
+      <RadioButton fx:id="waitingFilter" layoutX="419.0" layoutY="4.0" mnemonicParsing="false" text="WAITING" toggleGroup="$ticketType" />
+      <RadioButton fx:id="inProgressFilter" layoutX="419.0" layoutY="29.0" mnemonicParsing="false" text="IN PROGRESS" toggleGroup="$ticketType" />
+      <RadioButton fx:id="doneFilter" layoutX="419.0" layoutY="50.0" mnemonicParsing="false" text="DONE" toggleGroup="$ticketType" />
       <Button fx:id="filterButton" layoutX="26.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleFilterAction" text="Filter" />
-   </children>
+    </children>
 </AnchorPane>

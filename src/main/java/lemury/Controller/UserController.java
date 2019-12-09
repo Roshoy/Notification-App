@@ -69,6 +69,7 @@ public class UserController {
         statusColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().status()));
         userColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().owner().getFullName()));
         userColumn.setText("Owner");
+        waitingFilter.setSelected(true);
     }
 
     @FXML
@@ -167,7 +168,19 @@ public class UserController {
 
     @FXML
     public void handleViewTicket(ActionEvent event) throws IOException{
+        if(ticketsTable.getSelectionModel().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "No ticket selected!").showAndWait();
+        } else {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/TicketMessagesPane.fxml"));
+            Parent ticketMessages = loader.load();
 
+            TicketMessagesController controller = loader.getController();
+
+            Scene scene = new Scene(ticketMessages);
+            Stage appStage = new Stage();
+            appStage.setScene(scene);
+            appStage.show();
+        }
     }
 
     @FXML
