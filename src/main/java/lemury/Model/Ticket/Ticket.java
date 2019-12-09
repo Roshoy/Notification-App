@@ -101,6 +101,38 @@ public class Ticket {
         return getTickets(result, sqlQuery);
     }
 
+    public static ObservableList<Ticket> filterTicketList(User user, boolean waiting, boolean inProgress, boolean done){
+        String search = "";
+
+        if (waiting && inProgress && done){
+            search = "'WAITING', 'IN_PROGRESS', 'DONE'";
+        }
+        else if( waiting && inProgress){
+            search = "'WAITING', 'IN_PROGRESS'";
+        }
+        else if(inProgress && done){
+            search = "'IN_PROGRESS', 'DONE'";
+        }
+        else if(waiting && done){
+            search = "'WAITING', 'DONE'";
+        }
+        else if(waiting){
+            search = "'WAITING'";
+        }
+        else if(inProgress){
+            search = "IN_PROGRESS";
+        }
+        else if(done){
+            search = "DONE";
+        }
+        else{
+        }
+
+        ObservableList<Ticket> result = FXCollections.observableArrayList();
+        String sqlQuery = String.format("SELECT * FROM %s WHERE user_id = %d AND status IN (%s)", Ticket.TABLE_NAME, user.id(), search);
+        return getTickets(result, sqlQuery);
+    }
+
     public static ObservableList<Ticket> getTicketsListOfCoordinator(Coordinator coordinator) {
         ObservableList<Ticket> result = FXCollections.observableArrayList();
         String sqlQuery = String.format("SELECT * FROM %s WHERE coordinator_id = %d;", Ticket.TABLE_NAME, coordinator.id());

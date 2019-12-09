@@ -8,10 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import lemury.Model.Ticket.Ticket;
 import lemury.Model.Ticket.TicketStatus;
@@ -42,6 +39,15 @@ public class UserController {
     protected TableColumn<Ticket, TicketStatus> statusColumn;
     @FXML
     private TableColumn<Ticket, String> userColumn;
+    @FXML
+    private RadioButton waitingFilter;
+    @FXML
+    private RadioButton inProgressFilter;
+    @FXML
+    private RadioButton doneFilter;
+    @FXML
+    private Button filterButton;
+
 
     @FXML
     private Button logoutButton;
@@ -111,7 +117,38 @@ public class UserController {
     @FXML
     public void handleUpdateAction() {
         setTickets(Ticket.getTicketsList(user));
+
         initialize();
+    }
+
+    @FXML
+    public void handleFilterAction(){
+        boolean waiting;
+        boolean inProgress;
+        boolean done;
+
+        if(waitingFilter.isSelected()){
+            waiting = true;
+        }
+        else{
+            waiting = false;
+        }
+
+        if(inProgressFilter.isSelected()){
+            inProgress = true;
+        }
+        else{
+            inProgress = false;
+        }
+
+        if(doneFilter.isSelected()){
+            done = true;
+        }
+        else{
+            done = false;
+        }
+
+        setTickets(Ticket.filterTicketList(user, waiting, inProgress, done));
     }
 
     @FXML
