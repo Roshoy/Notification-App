@@ -1,5 +1,7 @@
 package lemury.Model.Departments;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import lemury.Model.Ticket.Ticket;
 import lemury.Model.Users.Coordinator;
 import lemury.Query.QueryExecutor;
@@ -48,6 +50,23 @@ public class Department {
         }
 
         return Optional.empty();
+    }
+
+    public static ObservableList<String> getNames(){
+        String getSql = String.format("SELECT name FROM %s",TABLE_NAME);
+        ObservableList<String> result = FXCollections.observableArrayList();
+
+        try {
+            ResultSet rs = QueryExecutor.read(getSql);
+            while (rs.next()){
+                String departmentName = rs.getString("name");
+                result.add(departmentName);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     public static Optional<Department> findById(final int id) {
