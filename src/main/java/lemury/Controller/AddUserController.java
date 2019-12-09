@@ -1,5 +1,6 @@
 package lemury.Controller;
 
+import javafx.scene.control.ChoiceBox;
 import lemury.Model.Departments.Department;
 import lemury.Model.Users.Administrator;
 import lemury.Model.Users.Coordinator;
@@ -36,11 +37,11 @@ public class AddUserController {
     @FXML
     private RadioButton coordinatorRadioButton;
     @FXML
-    private TextField departmentTextField;
+    private ChoiceBox<String> departmentField;
 
     @FXML
     private void initialize() {
-        departmentTextField.disableProperty().bind(coordinatorRadioButton.selectedProperty().not());
+        departmentField.setItems(Department.getNames());
     }
 
     public void setUsers(ObservableList<User> users) {
@@ -59,8 +60,10 @@ public class AddUserController {
 
         }
         else if(coordinatorRadioButton.isSelected()) {
+            String woow = departmentField.getSelectionModel().toString();
+            System.out.println(woow);
             Optional<Coordinator> newCoordinator = Administrator.createCoordinatorAccount(loginTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), passwordTextField.getText(),
-                    Department.findIdByName(departmentTextField.getText()));
+                    Department.findIdByName(departmentField.getSelectionModel().getSelectedItem()));
             this.coordinators.add(newCoordinator.get());
         }
 
