@@ -35,13 +35,13 @@ public class UserController {
     @FXML
     private TableView<Ticket> ticketsTable;
     @FXML
-    private TableColumn<Ticket, String> titleColumn;
+    protected TableColumn<Ticket, String> titleColumn;
     @FXML
-    private TableColumn<Ticket, String> descriptionColumn;
+    protected TableColumn<Ticket, String> descriptionColumn;
     @FXML
-    private TableColumn<Ticket, TicketStatus> statusColumn;
+    protected TableColumn<Ticket, TicketStatus> statusColumn;
     @FXML
-    private TableColumn<Ticket, String> ownerColumn;
+    private TableColumn<Ticket, String> userColumn;
 
     @FXML
     private Button logoutButton;
@@ -61,7 +61,8 @@ public class UserController {
         this.titleColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().title()));
         descriptionColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().description()));
         statusColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().status()));
-        ownerColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().owner().getFullName()));
+        userColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().owner().getFullName()));
+        userColumn.setText("Owner");
     }
 
     @FXML
@@ -70,7 +71,7 @@ public class UserController {
         Parent addITTicket = loader.load();
 
         AddITTicketController controller = loader.getController();
-        controller.setUserID(user.id());
+        controller.setUser(user);
         controller.setLogin(login.getText());
 
         Scene scene = new Scene(addITTicket);
@@ -109,13 +110,8 @@ public class UserController {
     }
     @FXML
     public void handleUpdateAction() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/UserPane.fxml"));
-        Stage stage = (Stage) updateButton.getScene().getWindow();
-        stage.close();
-
         setTickets(Ticket.getTicketsList(user));
         initialize();
-        stage.show();
     }
 
     @FXML

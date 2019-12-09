@@ -13,7 +13,7 @@
                    <TableColumn fx:id="titleColumn" prefWidth="150.0" text="Title" />
                    <TableColumn fx:id="descriptionColumn" prefWidth="150.0" text="Description" />
                    <TableColumn fx:id="statusColumn" prefWidth="150.0" text="Status" />
-                   <TableColumn fx:id="submitterColumn" prefWidth="146.0" text="submitter" />
+                   <TableColumn fx:id="userColumn" prefWidth="146.0" text="submitter" />
                </columns>
            </TableView>
        <Button fx:id="updateButton" layoutX="10.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleUpdateAction" text="User View/ Refresh User View" />

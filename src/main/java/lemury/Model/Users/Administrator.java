@@ -2,8 +2,6 @@ package lemury.Model.Users;
 
 import lemury.Model.Departments.Department;
 import lemury.Query.QueryExecutor;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -25,7 +25,7 @@ public class CoordinatorController extends UserController {
     @FXML
     private TableColumn<Ticket, TicketStatus> statusColumn;
     @FXML
-    private TableColumn<Ticket, String> submitterColumn;
+    private TableColumn<Ticket, String> userColumn;
     @FXML
     private Button logoutButton;
     @FXML
@@ -40,25 +40,20 @@ public class CoordinatorController extends UserController {
         titleColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().title()));
         descriptionColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().description()));
         statusColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().status()));
-        submitterColumn.setCellValueFactory(dataValue ->
+        userColumn.setCellValueFactory(dataValue ->
                 new SimpleObjectProperty<>(dataValue.getValue().submitter().firstName() + " " +
                         dataValue.getValue().submitter().lastName()));
+        userColumn.setText("Submitter");
     }
 
-    public void setTickets(ObservableList<Ticket> tickets) {
+    public void setTicketsOwnedByCoordinator() {
         this.tickets = Ticket.getTicketsListOfCoordinator((Coordinator)user);
         ticketsTable.setItems(this.tickets);
     }
     @FXML
     public void handleRefreshAction(){
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CoordinatorPane.fxml"));
-        Stage stage = (Stage) refreshButton.getScene().getWindow();
-        stage.close();
-
         setTickets(Ticket.getTicketsListOfCoordinator((Coordinator) user));
         initialize();
-        stage.show();
-
     }
 
     public void setUser(User user){

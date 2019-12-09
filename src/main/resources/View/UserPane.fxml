@@ -15,7 +15,7 @@
         <columns>
           <TableColumn fx:id="titleColumn" prefWidth="127.20001220703125" text="Title" />
           <TableColumn fx:id="descriptionColumn" prefWidth="278.4000244140625" text="Description" />
-            <TableColumn fx:id="ownerColumn" prefWidth="115.99993896484375" text="Owner" />
+            <TableColumn fx:id="userColumn" prefWidth="115.99993896484375" text="Owner" />
             <TableColumn fx:id="statusColumn" prefWidth="86.39993896484373" text="Status" />
         </columns>
       </TableView>

@@ -3,7 +3,6 @@ package lemury.Controller;
 import lemury.Model.Departments.Department;
 import lemury.Model.Ticket.ITTicket;
 import lemury.Model.Ticket.Ticket;
-import lemury.Model.Ticket.TicketStatus;
 import lemury.Model.Users.Coordinator;
 import lemury.Model.Users.User;
 import lemury.Query.QueryExecutor;
@@ -40,8 +39,7 @@ public class AddITTicketController {
     @FXML
     private TextField computerNo;
 
-    private int userID;
-
+    private User user;
 
     @FXML // zmienione
     private void handleAddTicket(ActionEvent event) throws SQLException, IOException {
@@ -63,7 +61,7 @@ public class AddITTicketController {
             return;
         }
 
-        int ticketID = Ticket.create(coordinatorID, userID, title.getText(), description.getText());
+        int ticketID = Ticket.create(coordinatorID, user.id(), title.getText(), description.getText());
         ITTicket.create(ticketID, compNo);
 
 
@@ -73,7 +71,7 @@ public class AddITTicketController {
         this.login.setText(login);
     }
 
-    public void setUserID(int id){
-        userID = id;
+    public void setUser(User user){
+        this.user = user;
     }
 }
