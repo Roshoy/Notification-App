@@ -1,9 +1,13 @@
 package lemury.Model.Ticket;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import lemury.Model.Users.Coordinator;
 import lemury.Model.Users.User;
 import lemury.Query.QueryExecutor;
 
+import javax.management.Query;
+import javax.xml.transform.Result;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -69,5 +73,29 @@ public class Message {
         }
 
         return Optional.empty();
+    }
+
+    private static ObservableList<Message> getMessagesForTicket(Ticket referencedTicket) {
+        ObservableList<Message> result = FXCollections.observableArrayList();
+        String sqlQuery = String.format("SELECT * FROM %s WHERE TICKET_ID = %d;", TABLE_NAME, referencedTicket.id());
+
+        try {
+            ResultSet rs = QueryExecutor.read(sqlQuery);
+            while (rs.next()) {
+                Date msgDate = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").parse(rs.getString("DATE"));
+                Optional<User> msgAuthorOpt = User.findById(rs.getInt("AUTHOR_ID"));
+
+                if(msgAuthorOpt.isPresent()) {
+                    result.add(new Message(rs.getInt("ID"), msgDate, referencedTicket, msgAuthorOpt.get(), rs.getString("TEXT")));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            System.out.println("Error with parsing date!");
+            e.printStackTrace();
+        }
+
+        return result;
     }
 }
