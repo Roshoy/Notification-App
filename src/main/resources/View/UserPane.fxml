@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.Controller.UserController">
+<AnchorPane prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.Controller.UserController">
    <children>
       <Label fx:id="login" alignment="CENTER" layoutX="566.0" layoutY="31.0" prefHeight="21.0" prefWidth="66.0" textAlignment="CENTER">
          <font>
@@ -30,5 +31,9 @@
          </font>
       </Label>
        <Button fx:id="updateButton" layoutX="306.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleUpdateAction" text="Update" />
+      <RadioButton fx:id="waitingFilter" layoutX="419.0" layoutY="4.0" mnemonicParsing="false" text="WAITIING" />
+      <RadioButton fx:id="inProgressFilter" layoutX="419.0" layoutY="29.0" mnemonicParsing="false" text="IN PROGRESS" />
+      <RadioButton fx:id="doneFilter" layoutX="419.0" layoutY="50.0" mnemonicParsing="false" text="DONE" />
+      <Button fx:id="filterButton" layoutX="26.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleFilterAction" text="Filter" />
    </children>
 </AnchorPane>
