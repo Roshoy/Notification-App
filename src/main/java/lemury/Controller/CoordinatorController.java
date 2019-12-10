@@ -17,6 +17,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 
 public class CoordinatorController extends UserController {
@@ -32,6 +34,8 @@ public class CoordinatorController extends UserController {
     @FXML
     private TableColumn<Ticket, String> userColumn;
     @FXML
+    private TableColumn<Ticket, String> dateColumn;
+    @FXML
     private Button logoutButton;
     @FXML
     private Button refreshButton;
@@ -44,6 +48,7 @@ public class CoordinatorController extends UserController {
 
     @FXML
     private void initialize() {
+        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         titleColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().title()));
         descriptionColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().description()));
         statusColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().status()));
@@ -51,6 +56,7 @@ public class CoordinatorController extends UserController {
                 new SimpleObjectProperty<>(dataValue.getValue().submitter().firstName() + " " +
                         dataValue.getValue().submitter().lastName()));
         userColumn.setText("Submitter");
+        dateColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dateFormat.format(dataValue.getValue().date())));
     }
 
     public void setTicketsOwnedByCoordinator() {

@@ -5,6 +5,7 @@ import lemury.Model.Users.User;
 import lemury.Query.QueryExecutor;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 public class ITTicket extends Ticket {
     private static String department = "TEST";
@@ -19,8 +20,8 @@ public class ITTicket extends Ticket {
         QueryExecutor.createAndObtainId(sqlInsertIT);
     }
 
-    private ITTicket(int id, Coordinator owner, User submitter, String title, String description, int computerNo){
-        super(id, owner, submitter, title, description);
+    private ITTicket(int id, Coordinator owner, User submitter, String title, String description, int computerNo, Date date){
+        super(id, owner, submitter, title, description, date);
         this.computerNo = computerNo;
     }
 }

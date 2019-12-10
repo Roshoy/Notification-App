@@ -17,6 +17,9 @@ import lemury.Model.Users.User;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class UserController {
     @FXML
@@ -40,6 +43,8 @@ public class UserController {
     protected TableColumn<Ticket, TicketStatus> statusColumn;
     @FXML
     private TableColumn<Ticket, String> userColumn;
+    @FXML
+    private TableColumn<Ticket, String> dateColumn;
     @FXML
     private RadioButton waitingFilter;
     @FXML
@@ -65,11 +70,13 @@ public class UserController {
 
     @FXML
     private void initialize() {
+        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         this.titleColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().title()));
         descriptionColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().description()));
         statusColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().status()));
         userColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().owner().getFullName()));
         userColumn.setText("Owner");
+        dateColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dateFormat.format(dataValue.getValue().date())));
     }
 
     @FXML

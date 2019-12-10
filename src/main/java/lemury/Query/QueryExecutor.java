@@ -44,6 +44,7 @@ public final class QueryExecutor {
                     "description VARCHAR(500) NOT NULL, " +
                     "status CHAR(15) NOT NULL, " +
                     "release_notes VARCHAR(500), " +
+                    "date DATE NOT NULL," +
                     "FOREIGN KEY(coordinator_id) references USERS(id), " +
                     "FOREIGN KEY(user_id) references USERS(id) " +
                     ");");
