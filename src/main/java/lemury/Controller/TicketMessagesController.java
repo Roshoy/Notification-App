@@ -69,7 +69,7 @@ public class TicketMessagesController {
         DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 
         for(Message msg: messages) {
-            String formattedMsg = String.format("%s\n%s\n\t%s\n", msg.author().getLogin(), dateFormat.format(msg.date()), msg.text());
+            String formattedMsg = String.format("%s\n%s\n%s\n\n", msg.author().getLogin(), dateFormat.format(msg.date()), msg.text());
             Label msgLabel = new Label(formattedMsg);
             msgLabel.setWrapText(true);
 
