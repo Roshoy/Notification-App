@@ -44,6 +44,7 @@ public final class QueryExecutor {
                     "description VARCHAR(500) NOT NULL, " +
                     "status CHAR(15) NOT NULL, " +
                     "release_notes VARCHAR(500), " +
+                    "date DATE NOT NULL," +
                     "FOREIGN KEY(coordinator_id) references USERS(id), " +
                     "FOREIGN KEY(user_id) references USERS(id) " +
                     ");");
@@ -53,6 +54,17 @@ public final class QueryExecutor {
                     "id INTEGER PRIMARY KEY, " +
                     "computer_no INTEGER NOT NULL," +
                     "FOREIGN KEY(id) references TICKETS(id)" +
+                    ");");
+
+            LOGGER.info("Creating table Messages");
+            create("CREATE TABLE IF NOT EXISTS MESSAGES (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "date DATE NOT NULL, " +
+                    "ticket_id INT NOT NULL, " +
+                    "author_id INT NOT NULL, " +
+                    "text VARCHAR(500) NOT NULL, " +
+                    "FOREIGN KEY(ticket_id) references TICKETS(id), " +
+                    "FOREIGN KEY(author_id) references USERS(id)" +
                     ");");
 
 

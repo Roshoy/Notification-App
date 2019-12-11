@@ -1,4 +1,4 @@
-package lemury.Model.main;
+package lemury.main;
 
 public class Main {
 

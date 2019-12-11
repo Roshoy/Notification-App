@@ -28,6 +28,6 @@
         <RadioButton fx:id="standardUserRadioButton" layoutX="172.0" layoutY="180.0" text="Standard user" toggleGroup="$userType" />
         <RadioButton fx:id="coordinatorRadioButton" layoutX="172.0" layoutY="210.0" text="Coordinator" toggleGroup="$userType" />
         <Label layoutX="42.0" layoutY="225.0" text="Department" />
-        <TextField fx:id="departmentTextField" layoutX="172.0" layoutY="230.0" promptText="Department" />
+        <ChoiceBox fx:id="departmentField" layoutX="172.0" layoutY="233.0" prefWidth="150.0" />
     </children>
 </AnchorPane>

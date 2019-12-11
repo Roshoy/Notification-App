@@ -2,6 +2,7 @@ package lemury;
 
 import lemury.Connection.ConnectionProvider;
 import lemury.Model.Departments.Department;
+import lemury.Model.Ticket.Message;
 import lemury.Model.Ticket.Ticket;
 import lemury.Model.Users.Administrator;
 import lemury.Model.Users.Coordinator;
@@ -24,17 +25,20 @@ public class DatabaseTests {
 
     @Before
     public void setUp() throws SQLException {
-        QueryExecutor.delete("DELETE FROM USERS;");
-        QueryExecutor.delete("DELETE FROM DEPARTMENTS;");
-        QueryExecutor.delete("DELETE FROM TICKETS;");
+        QueryExecutor.delete("DELETE FROM USERS WHERE LOGIN = 'mat3' OR LOGIN = 'mat4';");
+        QueryExecutor.delete("DELETE FROM USERS WHERE LOGIN = 'coord1' OR LOGIN = 'coord2';");
+        QueryExecutor.delete("DELETE FROM DEPARTMENTS WHERE NAME = 'Dzial 1' OR NAME = 'Dzial 2';");
+        QueryExecutor.delete("DELETE FROM DEPARTMENTS WHERE NAME = 'Dzial testowy 1' OR NAME = 'Dzial testowy 2';");
+        //QueryExecutor.delete("DELETE FROM TICKETS;");
+        QueryExecutor.delete("DELETE FROM MESSAGES;");
     }
 
 
     @Test
     public void createUserTest() {
-        Optional<User> first = User.createUserAccount("mat", "Mateusz", "Kowal", "password");
+        Optional<User> first = User.createUserAccount("mat3", "Mateusz", "Kowal", "password");
         checkUser(first);
-        Optional<User> second = User.createUserAccount("mat2", "Mateusz1", "Kowa1l", "password");
+        Optional<User> second = User.createUserAccount("mat4", "Mateusz1", "Kowa1l", "password");
         checkUser(second);
         Assert.assertNotEquals(first.get().id(), second.get().id());
     }
@@ -90,6 +94,13 @@ public class DatabaseTests {
             Assert.assertNotNull(u.getPassword());
             Assert.assertNotNull(u.getDepartment());
         });
+    }
+
+    @Test
+    public void addNewMessageTest() {
+        // 15 - ticket komputer nie działa, 143 - koordynator (Adam Małysz)
+        Optional<Message> msg = Message.create(15, 143, "Witam, tu Adam Małysz, czy próbował Pan podłączyć zasilanie do prądu? PZDR z fartem");
+        Assert.assertNotEquals(Optional.empty(), msg);
     }
 
     /*

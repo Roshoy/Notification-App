@@ -10,12 +10,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import lemury.Model.Ticket.Message;
 import lemury.Model.Ticket.Ticket;
 import lemury.Model.Ticket.TicketStatus;
 import lemury.Model.Users.User;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class UserController {
     @FXML
@@ -39,6 +43,8 @@ public class UserController {
     protected TableColumn<Ticket, TicketStatus> statusColumn;
     @FXML
     private TableColumn<Ticket, String> userColumn;
+    @FXML
+    private TableColumn<Ticket, String> dateColumn;
     @FXML
     private RadioButton waitingFilter;
     @FXML
@@ -64,11 +70,13 @@ public class UserController {
 
     @FXML
     private void initialize() {
+        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         this.titleColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().title()));
         descriptionColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().description()));
         statusColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().status()));
         userColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().owner().getFullName()));
         userColumn.setText("Owner");
+        dateColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dateFormat.format(dataValue.getValue().date())));
     }
 
     @FXML
@@ -167,7 +175,22 @@ public class UserController {
 
     @FXML
     public void handleViewTicket(ActionEvent event) throws IOException{
+        if(ticketsTable.getSelectionModel().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "No ticket selected!").showAndWait();
+        } else {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/TicketMessagesPane.fxml"));
+            Parent ticketMessages = loader.load();
 
+            Ticket referencedTicket = ticketsTable.getSelectionModel().getSelectedItem();
+            TicketMessagesController controller = loader.getController();
+            controller.setUser(user);
+            controller.setTicket(referencedTicket);
+
+            Scene scene = new Scene(ticketMessages);
+            Stage appStage = new Stage();
+            appStage.setScene(scene);
+            appStage.show();
+        }
     }
 
     @FXML

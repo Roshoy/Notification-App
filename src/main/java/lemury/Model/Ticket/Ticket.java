@@ -10,6 +10,11 @@ import lemury.Query.QueryExecutor;
 import javax.management.Query;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Optional;
 
 public class Ticket {
@@ -23,16 +28,18 @@ public class Ticket {
     private String description;
     private TicketStatus status;
     private String releaseNotes; //what did I do whit this ticket?
+    private Date date;
     //date etc
 
 
-    public Ticket(int id, Coordinator owner, User submitter, String title, String description) {
+    public Ticket(int id, Coordinator owner, User submitter, String title, String description, Date date) {
         this.id = id;
         this.owner = owner;
         this.submitter = submitter;
         this.title = title;
         this.description = description;
         this.status = TicketStatus.WAITING;
+        this.date = date;
     }
 
    // public Ticket(){};
@@ -61,10 +68,15 @@ public class Ticket {
         return this.status;
     }
 
+    public Date date() { return this.date; }
+
     //Changet type of returning value from Oprional<Ticket> to int
     public static int create(int coordinatorID, int userID, String title, String description) {
-        String insertSql = String.format("INSERT INTO %s (COORDINATOR_ID, USER_ID, TITLE, DESCRIPTION, STATUS) VALUES (%d, %d, '%s', '%s', 'WAITING');",
-                TABLE_NAME, coordinatorID, userID, title, description);
+        Date date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+        String dateString = dateFormat.format(date);
+        String insertSql = String.format("INSERT INTO %s (COORDINATOR_ID, USER_ID, TITLE, DESCRIPTION, STATUS, DATE) VALUES (%d, %d, '%s', '%s', 'WAITING', '%s');",
+                TABLE_NAME, coordinatorID, userID, title, description, dateString);
         int ticketID = 0;
 
         try {
@@ -84,11 +96,16 @@ public class Ticket {
         String findBySql = String.format("SELECT * FROM %s WHERE id = %d;", TABLE_NAME, id);
         try {
             ResultSet rs = QueryExecutor.read(findBySql);
+            Date ticketDate = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").parse(rs.getString("DATE"));
             return Optional.of(new Ticket(id, Administrator.findCoordinatorById(rs.getInt("coordinator_id")).get(),
                     User.findById(rs.getInt("user_id")).get(),
                     rs.getString("title"),
-                    rs.getString("description")));
+                    rs.getString("description"),
+                    ticketDate));
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch(ParseException e) {
+            System.out.println("Error with date parsing");
             e.printStackTrace();
         }
 
@@ -102,34 +119,24 @@ public class Ticket {
     }
 
     public static ObservableList<Ticket> filterTicketList(User user, boolean waiting, boolean inProgress, boolean done){
-        String search = "";
+        StringBuilder search = new StringBuilder();
 
-        if (waiting && inProgress && done){
-            search = "'WAITING', 'IN_PROGRESS', 'DONE'";
+        if(waiting){
+            search.append(",'WAITING'");
         }
-        else if( waiting && inProgress){
-            search = "'WAITING', 'IN_PROGRESS'";
+        if(inProgress){
+            search.append(",'IN_PROGRESS'");
         }
-        else if(inProgress && done){
-            search = "'IN_PROGRESS', 'DONE'";
+        if(done){
+            search.append(",'DONE'");
         }
-        else if(waiting && done){
-            search = "'WAITING', 'DONE'";
-        }
-        else if(waiting){
-            search = "'WAITING'";
-        }
-        else if(inProgress){
-            search = "IN_PROGRESS";
-        }
-        else if(done){
-            search = "DONE";
-        }
-        else{
+        if(search.length() > 0){
+            search.deleteCharAt(0); // remove unnecessary coma
         }
 
         ObservableList<Ticket> result = FXCollections.observableArrayList();
-        String sqlQuery = String.format("SELECT * FROM %s WHERE user_id = %d AND status IN (%s)", Ticket.TABLE_NAME, user.id(), search);
+        String sqlQuery = String.format("SELECT * FROM %s WHERE user_id = %d AND status IN (%s)",
+                Ticket.TABLE_NAME, user.id(), search.toString());
         return getTickets(result, sqlQuery);
     }
 
@@ -144,13 +151,18 @@ public class Ticket {
         try {
             ResultSet rs = QueryExecutor.read(sqlQuery);
             while(rs.next()) {
+                Date ticketDate = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").parse(rs.getString("DATE"));
                 Ticket ticket = new Ticket(rs.getInt("id"),
                         (Coordinator)Coordinator.findById(rs.getInt("coordinator_id")).get(),
                         User.findById(rs.getInt("user_id")).get(), rs.getString("title"),
-                        rs.getString("description"));
+                        rs.getString("description"),
+                        ticketDate);
                 result.add(ticket);
             }
         } catch(SQLException e) {
+            e.printStackTrace();
+        } catch(ParseException e) {
+            System.out.println("Error with date parsing");
             e.printStackTrace();
         }
 

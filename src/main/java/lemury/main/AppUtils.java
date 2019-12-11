@@ -1,4 +1,4 @@
-package lemury.Model.main;
+package lemury.main;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
