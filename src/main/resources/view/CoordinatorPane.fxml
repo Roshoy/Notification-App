@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.biletomat.controller.CoordinatorController">
+   <children>
+       <Label fx:id="login" layoutX="476.0" layoutY="15.0" prefHeight="21.0" prefWidth="66.0" />
+       <Button fx:id="addITTicketButton" layoutX="64.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleAddITTicket" text="Add IT Ticket" />
+
+       <TableView fx:id="ticketsTable" layoutY="77.0" prefHeight="523.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+               <columns>
+                   <TableColumn fx:id="titleColumn" prefWidth="150.0" text="Title" />
+                   <TableColumn fx:id="descriptionColumn" prefWidth="150.0" text="Description" />
+                   <TableColumn fx:id="statusColumn" prefWidth="150.0" text="Status" />
+                   <TableColumn fx:id="userColumn" prefWidth="146.0" text="submitter" />
+                   <TableColumn fx:id="dateColumn" prefWidth="150.0" text="Date" />
+               </columns>
+           </TableView>
+       <Button fx:id="updateButton" layoutX="10.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleUpdateAction" text="User View/ Refresh User View" />
+       <Button fx:id="refreshButton" layoutX="230.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleRefreshAction" text="Coordinator View/ Refresh Coordinator View" />
+
+       <Button fx:id="viewTicketButton" layoutX="230.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleViewTicket" text="View ticket" />
+
+       <Button fx:id = "logoutButton" layoutX="630.0" layoutY="21.0" mnemonicParsing="false" text="Log out" onAction="#handleLogoutAction" prefWidth="100.0" />
+   </children>
+</AnchorPane>

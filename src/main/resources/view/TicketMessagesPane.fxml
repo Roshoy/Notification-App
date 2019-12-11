@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="lemury.biletomat.controller.TicketMessagesController"
+            prefHeight="600.0" prefWidth="750.0">
+    <children>
+        <Label fx:id="login" alignment="CENTER" layoutX="566.0" layoutY="31.0" prefHeight="21.0" prefWidth="66.0" textAlignment="CENTER">
+            <font>
+                <Font size="15.0" />
+            </font></Label>
+        <Label layoutX="40.0" layoutY="15.0" text="Title" />
+        <Label fx:id="titleLabel" layoutX="150.0" layoutY="15.0" text="test" />
+        <Label layoutX="40.0" layoutY="60.0" text="Description" />
+        <Label fx:id="descriptionLabel" layoutX="150.0" layoutY="60.0" text="test" />
+        <Label layoutX="40.0" layoutY="120.0" text="Owner" />
+        <Label fx:id="ownerLabel" layoutX="150.0" layoutY="120.0" text="test" />
+        <Label layoutX="40.0" layoutY="150.0" text="Status" />
+        <Label fx:id="statusLabel" layoutX="150.0" layoutY="150.0" text="test" />
+
+        <Button fx:id="refreshButton" layoutX="565.0" layoutY="150.0" text="Refresh messages" prefWidth="150.0" onAction="#handleRefreshAction" />
+
+        <VBox fx:id="messageHistoryVBox" layoutX="40.0" layoutY="180.0" prefWidth="650.0" />
+        <ScrollPane fx:id="messageHistoryContainer" layoutX="40.0" layoutY="180.0" prefHeight="200.0" prefWidth="675.0" />
+
+        <Label layoutX="40.0" layoutY="410.0" text="New message:" />
+        <TextField fx:id="newMessageTextField" layoutX="150.0" layoutY="410.0" promptText="Put your message here" prefWidth="400.0" />
+        <Button fx:id="sendMessageButton" layoutX="565.0" layoutY="410.0" text="Send message" prefWidth="150.0" onAction="#handleSendMessageAction" />
+    </children>
+
+</AnchorPane>
