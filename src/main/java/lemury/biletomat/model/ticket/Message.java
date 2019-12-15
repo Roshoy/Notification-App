@@ -52,6 +52,13 @@ public class Message {
     }
 
     public static Optional<Message> create(int ticketID, int authorID, String text) {
+        Optional<Ticket> ticket = Ticket.findTicketById(ticketID);
+        Optional<User> author = User.findById(authorID);
+
+        if(ticket.equals(Optional.empty()) || author.equals(Optional.empty())){
+            return Optional.empty();
+        }
+
         Date date = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         String dateString = dateFormat.format(date);

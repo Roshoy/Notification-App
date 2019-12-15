@@ -1,6 +1,6 @@
 package lemury.biletomat.controller;
 
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.*;
 import lemury.biletomat.model.departments.Department;
 import lemury.biletomat.model.users.Administrator;
 import lemury.biletomat.model.users.Coordinator;
@@ -8,9 +8,6 @@ import lemury.biletomat.model.users.User;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.util.Optional;
@@ -56,6 +53,11 @@ public class AddUserController {
     private void handleAddAction(ActionEvent actionEvent) {
         if(standardUserRadioButton.isSelected()) {
             Optional<User> newUser = User.createUserAccount(loginTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), passwordTextField.getText());
+            if(newUser.equals(Optional.empty())){
+                new Alert(Alert.AlertType.ERROR, "User with that login already exists!").showAndWait();
+                loginTextField.setText("");
+                return;
+            }
             this.users.add(newUser.get());
 
         }

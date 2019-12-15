@@ -36,6 +36,12 @@ public class User {
     }
 
     public static Optional<User> createUserAccount(String login, String firstName, String lastName, String password){
+        Optional<User> user = User.findByLogin(login);
+        if(!user.equals(Optional.empty())){
+            System.out.println("User with that id already exists");
+            return Optional.empty();
+        }
+
         String insertSql = String.format("INSERT INTO %s (LOGIN, FIRST_NAME, LAST_NAME, PASSWORD, USER_TYPE) VALUES ('%s', '%s', '%s', '%s', '%s');", TABLE_NAME, login,firstName
                 , lastName, password, "U");
 
@@ -95,6 +101,12 @@ public class User {
     public static Optional<User> findByLogin(final String login, final String password){
         String findByLoginSql = String.format("SELECT * FROM '%s' WHERE login='%s' AND password='%s'", User.TABLE_NAME,
                 login, password);
+        return getUser(findByLoginSql);
+    }
+
+    public static Optional<User> findByLogin(String login){
+        String findByLoginSql = String.format("SELECT * FROM '%s' WHERE login='%s'", User.TABLE_NAME,
+                login);
         return getUser(findByLoginSql);
     }
 
