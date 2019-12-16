@@ -1,5 +1,9 @@
 package lemury.biletomat.model.ticket;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lemury.biletomat.model.users.Administrator;
@@ -20,54 +24,61 @@ public class Ticket {
     private final int id;
     private static final String TABLE_NAME = "TICKETS";
 
-    private Coordinator owner; //if feels wierd, change (guy who takes care of this ticket, coordinator)
-    private User submitter;
+    private ObjectProperty<Coordinator> owner; //if feels wierd, change (guy who takes care of this ticket, coordinator)
+    private ObjectProperty<User> submitter;
 
-    private String title;
-    private String description;
-    private TicketStatus status;
-    private String releaseNotes; //what did I do whit this ticket?
-    private Date date;
-    //date etc
-
+    private StringProperty title;
+    private StringProperty description;
+    private ObjectProperty<TicketStatus> status;
+    private ObjectProperty<Date> date;
 
     protected Ticket(int id, Coordinator owner, User submitter, String title, String description, TicketStatus status, Date date) {
         this.id = id;
-        this.owner = owner;
-        this.submitter = submitter;
-        this.title = title;
-        this.description = description;
-        this.status = status;
-        this.date = date;
+        this.owner = new SimpleObjectProperty<>(owner);
+        this.submitter = new SimpleObjectProperty<>(submitter);
+        this.title = new SimpleStringProperty(title);
+        this.description = new SimpleStringProperty(description);
+        this.status = new SimpleObjectProperty<>(status);
+        this.date = new SimpleObjectProperty<>(date);
     }
-
-   // public ticket(){};
 
     public int id() {
         return this.id;
     }
 
     public Coordinator owner() {
-        return this.owner;
+        return this.owner.get();
     }
+
+    public ObjectProperty<Coordinator> getOwnerProperty() { return this.owner; }
 
     public User submitter() {
-        return this.submitter;
+        return this.submitter.get();
     }
+
+    public ObjectProperty<User> getSubmitterProperty() { return this.submitter; }
 
     public String title() {
-        return this.title;
+        return this.title.get();
     }
+
+    public StringProperty getTitleProperty() { return  this.title; }
 
     public String description() {
-        return this.description;
+        return this.description.get();
     }
+
+    public StringProperty getDescriptionProperty() { return this.description; }
 
     public TicketStatus status(){
-        return this.status;
+        return this.status.get();
     }
 
-    public Date date() { return this.date; }
+    public ObjectProperty<TicketStatus> getStatusProperty() { return this.status; }
+
+    public Date date() { return this.date.get(); }
+
+    public ObjectProperty<Date> getDateProperty() { return this.date; }
 
     //Changet type of returning value from Oprional<ticket> to int
     public static int create(int coordinatorID, int userID, String title, String description) {
@@ -174,11 +185,10 @@ public class Ticket {
         String sqlQuery = String.format("UPDATE %s SET STATUS = '%s' WHERE ID = %d;", TABLE_NAME, newTicketStatus.toString(), this.id);
         try {
             QueryExecutor.create(sqlQuery);
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        this.status = newTicketStatus;
+        this.status.set(newTicketStatus);
     }
-
 }

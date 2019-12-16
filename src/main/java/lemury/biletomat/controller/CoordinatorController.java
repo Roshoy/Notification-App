@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class CoordinatorController extends UserController {
@@ -24,9 +25,9 @@ public class CoordinatorController extends UserController {
     @FXML
     private TableColumn<Ticket, TicketStatus> statusColumn;
     @FXML
-    private TableColumn<Ticket, String> userColumn;
+    private TableColumn<Ticket, User> userColumn;
     @FXML
-    private TableColumn<Ticket, String> dateColumn;
+    private TableColumn<Ticket, Date> dateColumn;
     @FXML
     private Button logoutButton;
     @FXML
@@ -42,16 +43,10 @@ public class CoordinatorController extends UserController {
 
 
     @FXML
-    private void initialize() {
-        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-        titleColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().title()));
-        descriptionColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().description()));
-        statusColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().status()));
-        userColumn.setCellValueFactory(dataValue ->
-                new SimpleObjectProperty<>(dataValue.getValue().submitter().firstName() + " " +
-                        dataValue.getValue().submitter().lastName()));
+    protected void initialize() {
+        super.initialize();
         userColumn.setText("Submitter");
-        dateColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dateFormat.format(dataValue.getValue().date())));
+        userColumn.setCellValueFactory(dataValue -> dataValue.getValue().getSubmitterProperty());
 
         ObservableList<String> ticketStatusNames = TicketStatus.getNames();
         ticketStatusChoiceBox.setItems(ticketStatusNames);

@@ -12,12 +12,13 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import lemury.biletomat.model.ticket.Ticket;
 import lemury.biletomat.model.ticket.TicketStatus;
+import lemury.biletomat.model.users.Coordinator;
 import lemury.biletomat.model.users.User;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class UserController {
     @FXML
@@ -40,9 +41,9 @@ public class UserController {
     @FXML
     protected TableColumn<Ticket, TicketStatus> statusColumn;
     @FXML
-    private TableColumn<Ticket, String> userColumn;
+    private TableColumn<Ticket, Coordinator> userColumn;
     @FXML
-    private TableColumn<Ticket, String> dateColumn;
+    private TableColumn<Ticket, Date> dateColumn;
     @FXML
     private RadioButton waitingFilter;
     @FXML
@@ -67,14 +68,32 @@ public class UserController {
     }
 
     @FXML
-    private void initialize() {
-        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-        this.titleColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().title()));
-        descriptionColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().description()));
-        statusColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().status()));
-        userColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().owner().getFullName()));
+    protected void initialize() {
+        titleColumn.setCellValueFactory(dataValue -> dataValue.getValue().getTitleProperty());
+        descriptionColumn.setCellValueFactory(dataValue -> dataValue.getValue().getDescriptionProperty());
+        statusColumn.setCellValueFactory(dataValue -> dataValue.getValue().getStatusProperty());
+        userColumn.setCellValueFactory(dataValue -> dataValue.getValue().getOwnerProperty());
         userColumn.setText("Owner");
-        dateColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dateFormat.format(dataValue.getValue().date())));
+
+        // za: https://stackoverflow.com/questions/47484280/format-of-date-in-the-javafx-tableview
+        dateColumn.setCellFactory(dataValue -> {
+            TableCell<Ticket, Date> dateCell = new TableCell<Ticket, Date>() {
+                private SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if(empty) {
+                        setText(null);
+                    } else {
+                        setText(dateFormat.format(item));
+                    }
+                }
+            };
+
+            return dateCell;
+        });
+        dateColumn.setCellValueFactory(dataValue -> dataValue.getValue().getDateProperty());
     }
 
     @FXML

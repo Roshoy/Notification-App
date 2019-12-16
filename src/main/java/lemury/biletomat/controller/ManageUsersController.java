@@ -63,7 +63,7 @@ public class ManageUsersController extends CoordinatorController {
     private Button logoutButton;
 
     @FXML
-    private void initialize() {
+    protected void initialize() {
         userIDColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().id()));
         userFirstNameColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().firstName()));
         userLastNameColumn.setCellValueFactory(dataValue -> new SimpleObjectProperty<>(dataValue.getValue().lastName()));
