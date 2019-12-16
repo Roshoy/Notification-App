@@ -25,9 +25,9 @@
         <TextField fx:id="passwordTextField" layoutX="172.0" layoutY="323.0" promptText="Password" />
         <Button fx:id="addUserButton" layoutX="450.0" layoutY="298.0" mnemonicParsing="false" text="Add User" onAction="#handleAddAction" />
         <Button fx:id="cancelButton" layoutX="530.0" layoutY="298.0" mnemonicParsing="false" text="Cancel" onAction="#handleCancelAction"/>
-        <RadioButton fx:id="standardUserRadioButton" layoutX="172.0" layoutY="180.0" text="Standard user" toggleGroup="$userType" />
-        <RadioButton fx:id="coordinatorRadioButton" layoutX="172.0" layoutY="210.0" text="Coordinator" toggleGroup="$userType" />
+        <RadioButton fx:id="standardUserRadioButton" layoutX="172.0" layoutY="180.0" text="Standard user" toggleGroup="$userType" onAction="#checkRadioButton"/>
+        <RadioButton fx:id="coordinatorRadioButton" layoutX="172.0" layoutY="210.0" text="Coordinator" toggleGroup="$userType" onAction="#checkRadioButton"/>
         <Label layoutX="42.0" layoutY="225.0" text="Department" />
-        <ChoiceBox fx:id="departmentField" layoutX="172.0" layoutY="233.0" prefWidth="150.0" />
+        <ChoiceBox fx:id="departmentField" layoutX="172.0" layoutY="233.0" prefWidth="150.0" onAction="#actualiseChoiceBox" />
     </children>
 </AnchorPane>

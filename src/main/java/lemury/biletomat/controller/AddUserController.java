@@ -39,6 +39,7 @@ public class AddUserController {
     @FXML
     private void initialize() {
         departmentField.setItems(Department.getNames());
+
     }
 
     public void setUsers(ObservableList<User> users) {
@@ -62,6 +63,7 @@ public class AddUserController {
 
         }
         else if(coordinatorRadioButton.isSelected()) {
+            departmentField.setDisable(false);
             String woow = departmentField.getSelectionModel().toString();
             System.out.println(woow);
             Optional<Coordinator> newCoordinator = Administrator.createCoordinatorAccount(loginTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), passwordTextField.getText(),
@@ -71,6 +73,24 @@ public class AddUserController {
 
         Stage stage = (Stage) addUserButton.getScene().getWindow();
         stage.close();
+    }
+
+    @FXML
+    public void checkRadioButton(){
+        actualiseChoiceBox();
+    }
+
+
+    @FXML
+    public void actualiseChoiceBox(){
+        if(standardUserRadioButton.isSelected()){
+            this.departmentField.setDisable(true);
+        }
+
+        else if(coordinatorRadioButton.isSelected()){
+            this.departmentField.setDisable(false);
+        }
+
     }
 
     @FXML
