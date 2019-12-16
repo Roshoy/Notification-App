@@ -2,7 +2,6 @@ package lemury.biletomat.controller;
 
 import javafx.scene.control.*;
 import lemury.biletomat.model.departments.Department;
-import lemury.biletomat.model.users.Administrator;
 import lemury.biletomat.model.users.Coordinator;
 import lemury.biletomat.model.users.User;
 import javafx.collections.ObservableList;
@@ -65,7 +64,7 @@ public class AddUserController {
             departmentField.setDisable(false);
             String woow = departmentField.getSelectionModel().toString();
             System.out.println(woow);
-            Optional<Coordinator> newCoordinator = Administrator.createCoordinatorAccount(loginTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), passwordTextField.getText(),
+            Optional<Coordinator> newCoordinator = Coordinator.createCoordinatorAccount(loginTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), passwordTextField.getText(),
                     Department.findIdByName(departmentField.getSelectionModel().getSelectedItem()));
             this.coordinators.add(newCoordinator.get());
         }

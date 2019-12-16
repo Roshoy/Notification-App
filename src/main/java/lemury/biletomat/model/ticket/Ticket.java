@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import lemury.biletomat.model.users.Administrator;
 import lemury.biletomat.query.QueryExecutor;
 import lemury.biletomat.model.users.Coordinator;
 import lemury.biletomat.model.users.User;
@@ -107,7 +106,7 @@ public class Ticket {
         try {
             ResultSet rs = QueryExecutor.read(findBySql);
             Date ticketDate = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").parse(rs.getString("DATE"));
-            return Optional.of(new Ticket(id, Administrator.findCoordinatorById(rs.getInt("coordinator_id")).get(),
+            return Optional.of(new Ticket(id, Coordinator.findCoordinatorById(rs.getInt("coordinator_id")).get(),
                     User.findById(rs.getInt("user_id")).get(),
                     rs.getString("title"),
                     rs.getString("description"),
