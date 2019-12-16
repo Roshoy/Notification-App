@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="303.0" prefWidth="453.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.biletomat.controller.AddITTicketController">
+<AnchorPane prefHeight="303.0" prefWidth="486.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.biletomat.controller.AddITTicketController">
    <children>
-      <Label fx:id="login" layoutX="502.0" layoutY="38.0" />
+      <Label fx:id="login" alignment="CENTER_RIGHT" layoutX="357.0" layoutY="27.0" prefHeight="16.0" prefWidth="95.0" />
       <TextField fx:id="title" layoutX="164.0" layoutY="64.0" prefHeight="31.0" prefWidth="288.0" promptText="Title" />
       <Label layoutX="29.0" layoutY="72.0" text="Title" />
       <Label layoutX="29.0" layoutY="110.0" text="Description" />
