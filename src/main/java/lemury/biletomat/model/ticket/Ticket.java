@@ -31,13 +31,13 @@ public class Ticket {
     //date etc
 
 
-    public Ticket(int id, Coordinator owner, User submitter, String title, String description, Date date) {
+    protected Ticket(int id, Coordinator owner, User submitter, String title, String description, TicketStatus status, Date date) {
         this.id = id;
         this.owner = owner;
         this.submitter = submitter;
         this.title = title;
         this.description = description;
-        this.status = TicketStatus.WAITING;
+        this.status = status;
         this.date = date;
     }
 
@@ -100,6 +100,7 @@ public class Ticket {
                     User.findById(rs.getInt("user_id")).get(),
                     rs.getString("title"),
                     rs.getString("description"),
+                    TicketStatus.valueOf(rs.getString("status")),
                     ticketDate));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -155,6 +156,7 @@ public class Ticket {
                         (Coordinator)Coordinator.findById(rs.getInt("coordinator_id")).get(),
                         User.findById(rs.getInt("user_id")).get(), rs.getString("title"),
                         rs.getString("description"),
+                        TicketStatus.valueOf(rs.getString("status")),
                         ticketDate);
                 result.add(ticket);
             }
@@ -168,5 +170,15 @@ public class Ticket {
         return result;
     }
 
+    public void setTicketStatus(TicketStatus newTicketStatus) {
+        String sqlQuery = String.format("UPDATE %s SET STATUS = '%s' WHERE ID = %d;", TABLE_NAME, newTicketStatus.toString(), this.id);
+        try {
+            QueryExecutor.create(sqlQuery);
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        this.status = newTicketStatus;
+    }
 
 }

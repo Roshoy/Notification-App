@@ -27,8 +27,8 @@ public class ITTicket extends Ticket {
 
     }
 
-    private ITTicket(int id, Coordinator owner, User submitter, String title, String description, int computerNo, Date date){
-        super(id, owner, submitter, title, description, date);
+    private ITTicket(int id, Coordinator owner, User submitter, String title, String description, int computerNo, TicketStatus status, Date date){
+        super(id, owner, submitter, title, description, status, date);
         this.computerNo = computerNo;
     }
 }

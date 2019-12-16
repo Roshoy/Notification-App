@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.biletomat.controller.CoordinatorController">
+<AnchorPane prefHeight="642.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.biletomat.controller.CoordinatorController">
    <children>
        <Label fx:id="login" layoutX="476.0" layoutY="15.0" prefHeight="21.0" prefWidth="66.0" />
        <Button fx:id="addITTicketButton" layoutX="64.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleAddITTicket" text="Add IT Ticket" />
@@ -20,8 +26,14 @@
        <Button fx:id="updateButton" layoutX="10.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleUpdateAction" text="User View/ Refresh User View" />
        <Button fx:id="refreshButton" layoutX="230.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleRefreshAction" text="Coordinator View/ Refresh Coordinator View" />
 
-       <Button fx:id="viewTicketButton" layoutX="230.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleViewTicket" text="View ticket" />
+       <Button fx:id="viewTicketButton" layoutX="14.0" layoutY="606.0" mnemonicParsing="false" onAction="#handleViewTicket" text="View ticket" />
 
-       <Button fx:id = "logoutButton" layoutX="630.0" layoutY="21.0" mnemonicParsing="false" text="Log out" onAction="#handleLogoutAction" prefWidth="100.0" />
+       <Button fx:id="logoutButton" layoutX="630.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleLogoutAction" prefWidth="100.0" text="Log out" />
+      <Button fx:id="changeTicketStatusButton" layoutX="583.0" layoutY="606.0" mnemonicParsing="false" onAction="#handleChangeTicketStatusAction" text="Change ticket status" />
+      <ChoiceBox fx:id="ticketStatusChoiceBox" layoutX="426.0" layoutY="606.0" prefWidth="150.0">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </ChoiceBox>
    </children>
 </AnchorPane>
