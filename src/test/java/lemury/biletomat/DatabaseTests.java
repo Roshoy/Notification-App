@@ -3,7 +3,6 @@ package lemury.biletomat;
 import lemury.biletomat.connection.ConnectionProvider;
 import lemury.biletomat.model.departments.Department;
 import lemury.biletomat.model.ticket.Message;
-import lemury.biletomat.model.users.Administrator;
 import lemury.biletomat.model.users.Coordinator;
 import lemury.biletomat.model.users.User;
 import lemury.biletomat.query.QueryExecutor;
@@ -71,13 +70,15 @@ public class DatabaseTests {
 
     @Test
     public void createCoordinatorTest() {
-        Optional<Department> coordDepartment1 = Department.create("Dzial testowy");
-        Optional<Coordinator> firstCoordinator = Administrator.createCoordinatorAccount("coord1", "Michał",
+        Optional<Department> coordDepartment1 = Department.create("Dzial testowy 1");
+        checkDepartment(coordDepartment1);
+        Optional<Coordinator> firstCoordinator = Coordinator.createCoordinatorAccount("coord1", "Michał",
                 "Wiśniewski", "qwerty1234", coordDepartment1.get().id());
         checkCoordinator(firstCoordinator);
 
         Optional<Department> coordDepartment2 = Department.create("Dzial testowy 2");
-        Optional<Coordinator> secondCoordinator = Administrator.createCoordinatorAccount("coord2", "Michał",
+        checkDepartment(coordDepartment2);
+        Optional<Coordinator> secondCoordinator = Coordinator.createCoordinatorAccount("coord2", "Michał",
                 "Kowalski", "qwerty1234", coordDepartment2.get().id());
         checkCoordinator(secondCoordinator);
 
