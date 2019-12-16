@@ -39,7 +39,6 @@ public class AddUserController {
     @FXML
     private void initialize() {
         departmentField.setItems(Department.getNames());
-
     }
 
     public void setUsers(ObservableList<User> users) {

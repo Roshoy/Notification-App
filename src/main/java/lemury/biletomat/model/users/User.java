@@ -35,6 +35,26 @@ public class User {
 
     }
 
+    public int id() {
+        return id;
+    }
+
+    public String getLogin(){return  login;}
+
+    public String firstName() {
+        return firstName;
+    }
+
+    public String lastName() {
+        return lastName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getUserType(){return userType;}
+
     public static Optional<User> createUserAccount(String login, String firstName, String lastName, String password){
         Optional<User> user = User.findByLogin(login);
         if(!user.equals(Optional.empty())){
@@ -53,44 +73,6 @@ public class User {
         }
 
         return Optional.empty();
-    }
-
-
-    public int id() {
-        return id;
-    }
-
-        public String getLogin(){return  login;}
-
-        public String firstName() {
-        return firstName;
-    }
-
-        public String lastName() {
-        return lastName;
-    }
-
-        public String getPassword() {
-        return password;
-    }
-
-    public String getUserType(){return userType;}
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id &&
-                Objects.equals(firstName, user.firstName) &&
-                Objects.equals(lastName, user.lastName) &&
-                Objects.equals(login, user.login) &&
-                Objects.equals(password, user.password);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, login, password);
     }
 
     public static Optional<User> findById(final int id) {
@@ -152,8 +134,26 @@ public class User {
         return result;
     }
 
-    public String getFullName(){
+    @Override
+    public String toString() {
         return firstName + " " + lastName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(login, user.login) &&
+                Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, login, password);
     }
 }
 
