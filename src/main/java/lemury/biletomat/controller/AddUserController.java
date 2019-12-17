@@ -50,6 +50,15 @@ public class AddUserController {
 
     @FXML
     private void handleAddAction(ActionEvent actionEvent) {
+
+        System.out.println(firstNameTextField.getText().toString());
+        if(loginTextField.getText().isEmpty() || firstNameTextField.getText().isEmpty() || lastNameTextField.getText().isEmpty() ||
+                passwordTextField.getText().isEmpty()  || (!standardUserRadioButton.isSelected() && !coordinatorRadioButton.isSelected())){
+            new Alert(Alert.AlertType.ERROR, "Fulfill all fields").showAndWait();
+            loginTextField.setText("");
+            return;
+        }
+
         if(standardUserRadioButton.isSelected()) {
             Optional<User> newUser = User.createUserAccount(loginTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), passwordTextField.getText());
             if(newUser.equals(Optional.empty())){

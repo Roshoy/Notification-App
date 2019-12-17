@@ -56,6 +56,12 @@ public class User {
     public String getUserType(){return userType;}
 
     public static Optional<User> createUserAccount(String login, String firstName, String lastName, String password){
+        if(login.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || password.isEmpty()){
+            System.out.println("IN user create empty string ");
+            return Optional.empty();
+        }
+
+
         Optional<User> user = User.findByLogin(login);
         if(!user.equals(Optional.empty())){
             System.out.println("User with that id already exists");

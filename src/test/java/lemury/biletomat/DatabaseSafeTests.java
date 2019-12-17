@@ -15,11 +15,16 @@ import java.util.Optional;
 
 import static lemury.biletomat.query.QueryExecutor.create;
 
+
+//zrobic testy dluzsze czy się tworzy ticket, czy potem koordyntor go widzi
+
+
 public class DatabaseSafeTests {
     @BeforeClass
     public static void init() {
             ConnectionProvider.init("jdbc:sqlite:Database");
         }
+
 
     @BeforeClass
     public static void createTables(){
