@@ -1,6 +1,11 @@
 package lemury.biletomat.controller;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import lemury.biletomat.model.ticket.Ticket;
 import lemury.biletomat.model.ticket.TicketStatus;
 import lemury.biletomat.model.users.Coordinator;
@@ -9,6 +14,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,6 +44,8 @@ public class CoordinatorController extends UserController {
     private ChoiceBox<String> ticketStatusChoiceBox;
     @FXML
     private Button changeTicketStatusButton;
+    @FXML
+    protected Button backButton;
 
     private ObservableList<Ticket> tickets;
 
@@ -88,6 +96,18 @@ public class CoordinatorController extends UserController {
                 referencedTicket.setTicketStatus(newTicketStatus);
             }
         }
+    }
+
+    @FXML
+    protected void handleBackAction(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UserPane.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+        stage.setScene(new Scene(loader.load()));
+        UserController userController = loader.<UserController>getController();
+        userController.setUser(user);
+        userController.setTickets(Ticket.getTicketsList(user));
+        stage.show();
     }
 
     public void setUser(User user){

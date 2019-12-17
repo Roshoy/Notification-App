@@ -63,9 +63,6 @@ public class UserController {
 
     private ObservableList<Ticket> tickets;
 
-    public void setLogin(String login) {
-        this.login.setText(login);
-    }
 
     @FXML
     protected void initialize() {
@@ -122,10 +119,6 @@ public class UserController {
         ticketsTable.setItems(tickets);
     }
 
-    public void setLoginText(String login) {
-        this.login.setText(login);
-    }
-
     @FXML
     public void handleLogoutAction() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LoggingPane.fxml"));
@@ -139,9 +132,10 @@ public class UserController {
         appStage.setScene(scene);
         appStage.show();
     }
+
     @FXML
     public void handleUpdateAction() {
-        setTickets(Ticket.getTicketsList(user));
+        setTickets(Ticket.getTicketsList(this.user));
 
         initialize();
     }

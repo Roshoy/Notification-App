@@ -1,5 +1,7 @@
 package lemury.biletomat.controller;
 
+import javafx.scene.Node;
+import lemury.biletomat.model.ticket.Ticket;
 import lemury.biletomat.model.users.Coordinator;
 import lemury.biletomat.model.users.User;
 import javafx.beans.binding.Bindings;
@@ -21,7 +23,6 @@ import java.io.IOException;
 public class ManageUsersController extends CoordinatorController {
     private ObservableList<User> users;
     private ObservableList<Coordinator> coordinators;
-    private Coordinator administrator;
 
     @FXML
     private TableView<User> usersTable;
@@ -97,7 +98,7 @@ public class ManageUsersController extends CoordinatorController {
     }
 
     protected void setAdministrator(User administrator){
-        this.administrator = Coordinator.findCoordinatorById(administrator.id()).get();
+        this.user = Coordinator.findCoordinatorById(administrator.id()).get();
     }
 
     @FXML

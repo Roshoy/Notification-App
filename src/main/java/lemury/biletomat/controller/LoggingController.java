@@ -48,7 +48,6 @@ public class LoggingController {
             UserController userController = loader.<UserController>getController();
             userController.setUser(user);
             userController.setTickets(Ticket.getTicketsList(user));
-            userController.setLogin(login.getText());
             stage.show();
         }
     }}
