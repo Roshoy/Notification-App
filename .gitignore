@@ -22,14 +22,15 @@
 *.rar
 
 #local workspace#
-.idea/workspace.xml
+.idea
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
 ### Gradle ###
-.gradle
+/.gradle/
 /build/
+/gradle/
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -44,3 +45,6 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 
 # End of https://www.gitignore.io/api/java,gradle
+gradle/wrapper/gradle-wrapper.jar
+settings.gradle
+src/test/resources/

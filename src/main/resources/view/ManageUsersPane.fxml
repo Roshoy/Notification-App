@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="374.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.biletomat.controller.ManageUsersController">
+    <children>
+        <Label layoutX="15.0" layoutY="15.0" text="Users" />
+        <TableView fx:id="usersTable" layoutX="15.0" layoutY="36.0" prefHeight="150.0" prefWidth="616.0">
+            <columns>
+                <TableColumn fx:id="userIDColumn" prefWidth="100.0" text="UserID" />
+                <TableColumn fx:id="userFirstNameColumn" prefWidth="100.0" text="FirstName" />
+                <TableColumn fx:id="userLastNameColumn" prefWidth="100.0" text="LastName" />
+                <TableColumn fx:id="userLoginColumn" prefWidth="100.0" text="Login" />
+                <TableColumn fx:id="userPasswordColumn" prefWidth="100.0" text="password" />
+            </columns>
+        </TableView>
+
+        <Button fx:id="deleteUserButton" layoutX="641.0" layoutY="124.0" maxWidth="175" mnemonicParsing="false" onAction="#handleUserDeleteAction" prefHeight="26.0" prefWidth="140.0" text="Delete user" />
+
+        <Label layoutX="15.0" layoutY="192.0" text="Coordinators" />
+        <TableView fx:id="coordinatorsTable" layoutX="15.0" layoutY="213.0" prefHeight="150.0" prefWidth="616.0">
+            <columns>
+                <TableColumn fx:id="coordinatorIDColumn" prefWidth="100.0" text="UserID" />
+                <TableColumn fx:id="coordinatorFirstNameColumn" prefWidth="100.0" text="FirstName" />
+                <TableColumn fx:id="coordinatorLastNameColumn" prefWidth="100.0" text="LastName" />
+                <TableColumn fx:id="coordinatorLoginColumn" prefWidth="100.0" text="Login" />
+                <TableColumn fx:id="coordinatorPasswordColumn" prefWidth="100.0" text="password" />
+                <TableColumn fx:id="coordinatorDepartmentColumn" prefWidth="100.0" text="Department" />
+            </columns>
+        </TableView>
+
+        <Button fx:id="deleteCoordinatorButton" layoutX="641.0" layoutY="262.0" maxWidth="175" mnemonicParsing="false" onAction="#handleCoordinatorDeleteAction" prefHeight="25.0" prefWidth="140.0" text="Delete coordinator" />
+
+        <Button fx:id="addUserButton" layoutX="641.0" layoutY="85.0" maxWidth="175" mnemonicParsing="false" onAction="#handleAddUserAction" prefHeight="26.0" prefWidth="140.0" text="Add user" />
+      <Button fx:id="logoutButton" layoutX="641.0" layoutY="36.0" mnemonicParsing="false" onAction="#handleLogoutAction" prefHeight="26.0" prefWidth="140.0" text="Log out" />
+      <Button fx:id="backButton" layoutX="641.0" layoutY="335.0" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="25.0" prefWidth="140.0" text="Back" />
+
+    </children>
+</AnchorPane>

@@ -14,7 +14,7 @@ repositories {
 }
 
 application {
-    mainClassName = "lemury.Model.main.Main"
+    mainClassName = "lemury.biletomat.main.Main"
 }
 
 javafx {
