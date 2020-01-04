@@ -31,6 +31,9 @@ public class UserController {
     private Button viewTicketButton;
     @FXML
     private Button viewOwnedTicketsButton;
+    @FXML
+    private Button addNewTicketTypeButton;
+
 
     @FXML
     private TableView<Ticket> ticketsTable;
@@ -108,6 +111,21 @@ public class UserController {
         appStage.show();
     }
 
+    @FXML
+    private void handleAddNewTicketTypeAction(ActionEvent event) throws SQLException, IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddNewTicketTypePane.fxml"));
+        Parent addTicketType = loader.load();
+
+        AddNewTicketTypeController controller = loader.getController();
+        //controller.setUser(user);
+        //ontroller.setLogin(login.getText());
+
+        Scene scene = new Scene(addTicketType);
+        Stage appStage = new Stage();
+        appStage.setScene(scene);
+        appStage.show();
+    }
+
     public void setUser(User user) {
         this.user = user;
         this.login.setText(user.getLogin());
@@ -132,6 +150,8 @@ public class UserController {
         appStage.setScene(scene);
         appStage.show();
     }
+
+
 
     @FXML
     public void handleUpdateAction() {
@@ -224,10 +244,12 @@ public class UserController {
 
         if(user.getUserType().equalsIgnoreCase("C")) {
             menageUsersButton.setVisible(false);
+            addNewTicketTypeButton.setVisible(false);
         }
         if(user.getUserType().equalsIgnoreCase("U")){
             viewOwnedTicketsButton.setVisible(false);
             menageUsersButton.setVisible(false);
+            addNewTicketTypeButton.setVisible(false);
         }
 
     }
