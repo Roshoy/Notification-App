@@ -1,5 +1,6 @@
 package lemury.biletomat.model.users;
 
+import javafx.collections.ObservableArrayBase;
 import lemury.biletomat.model.departments.Department;
 import lemury.biletomat.model.ticket.Ticket;
 import lemury.biletomat.query.QueryExecutor;
@@ -9,6 +10,7 @@ import javafx.collections.ObservableList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 public class Coordinator extends User {
@@ -47,7 +49,7 @@ public class Coordinator extends User {
                     rs.getString("LAST_NAME"), rs.getString("LOGIN"),
                     rs.getString("PASSWORD"), Department.findById(rs.getInt("DEPARTMENT_ID")).get(),
                     rs.getString("user_type")));
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchElementException e) {
             e.printStackTrace();
         }
 
@@ -60,14 +62,7 @@ public class Coordinator extends User {
 
         try {
             ResultSet rs = QueryExecutor.read(sqlQuery);
-            while(rs.next()) {
-                Coordinator currentCoordinator = new Coordinator(rs.getInt("id"), rs.getString("FIRST_NAME"),
-                        rs.getString("LAST_NAME"), rs.getString("LOGIN"),
-                        rs.getString("PASSWORD"),
-                        Department.findById(rs.getInt("DEPARTMENT_ID")).get(),
-                        rs.getString("user_type"));
-                result.add(currentCoordinator);
-            }
+            parseCoordinatorResultSet(result, rs);
         } catch(SQLException e) {
             e.printStackTrace();
         }
@@ -89,12 +84,28 @@ public class Coordinator extends User {
         return Optional.empty();
     }
 
+    public static ObservableList<Coordinator> findCoordinatorsByDepartmentId(int departmentId) {
+        ObservableList<Coordinator> result = FXCollections.observableArrayList();
+        String sqlQuery = String.format("SELECT * FROM USERS WHERE user_type = 'C' and department_id = '%d'", departmentId);
 
-    public static int findCoordinatorByDepartmentNo(int departmentNo) throws SQLException {
-        String findCoordinator = String.format("SELECT * FROM USERS WHERE user_type = 'C' and department_id = '%d'", departmentNo);
-        ResultSet resultSet = QueryExecutor.read(findCoordinator);
-        return QueryExecutor.readIdFromResultSet(resultSet);
+        try {
+            ResultSet rs = QueryExecutor.read(sqlQuery);
+            parseCoordinatorResultSet(result, rs);
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
-
+    private static void parseCoordinatorResultSet(List<Coordinator> list, ResultSet rs) throws SQLException {
+        while(rs.next()) {
+            Coordinator currentCoordinator = new Coordinator(rs.getInt("id"), rs.getString("FIRST_NAME"),
+                    rs.getString("LAST_NAME"), rs.getString("LOGIN"),
+                    rs.getString("PASSWORD"),
+                    Department.findById(rs.getInt("DEPARTMENT_ID")).get(),
+                    rs.getString("user_type"));
+            list.add(currentCoordinator);
+        }
+    }
 }

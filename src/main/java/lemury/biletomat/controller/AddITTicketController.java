@@ -35,7 +35,7 @@ public class AddITTicketController {
     private User user;
 
     @FXML // zmienione
-    private void handleAddTicket(ActionEvent event) throws SQLException, IOException {
+    private void handleAddTicket(ActionEvent event) throws SQLException {
         int compNo = Integer.parseInt(computerNo.getText());
         int departmentID = Department.findIdByName(ITTicket.getDepartment());
 
@@ -48,7 +48,8 @@ public class AddITTicketController {
         //                  Coordinator.TABLE_NAME, ticket.TABLE_NAME);
         //ResultSet resultSet = QueryExecutor.read(findCoordinator);
 
-        int coordinatorID = Coordinator.findCoordinatorByDepartmentNo(departmentID);
+        // TODO - lepsze kryterium doboru koordynatora niż pierwszy z listy
+        int coordinatorID = Coordinator.findCoordinatorsByDepartmentId(departmentID).get(0).id();
         if(coordinatorID < 0){
             System.out.println("Brak dostepnych koordynatorów");
             return;
