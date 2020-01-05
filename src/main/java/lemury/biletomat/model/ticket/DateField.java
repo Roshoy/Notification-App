@@ -7,7 +7,7 @@ public class DateField extends Field {
     private LocalDate date;
 
     public DateField(String name, boolean required, LocalDate date){
-        super(name, required);
+        super(name, required, "date");
         this.date = date;
     }
 

@@ -7,6 +7,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import lemury.biletomat.model.departments.Department;
+import lemury.biletomat.model.ticket.*;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class AddNewTicketTypeController {
@@ -40,6 +46,11 @@ public class AddNewTicketTypeController {
     final int gap =30;
 
 
+    private Label nameFields[] = new Label[10];
+    private Label typeFields[] = new Label[10];
+    private Label reqFields[] = new Label[10];
+    private TextField valueField[] = new TextField[10];
+
 
     @FXML
     private void initialize() {
@@ -51,6 +62,15 @@ public class AddNewTicketTypeController {
                         "String",
                         "Date"
                 );
+
+        for(int i =0; i <10; i++){
+            nameFields[i] = new Label();
+            typeFields[i] = new Label();
+            reqFields[i] = new Label();
+            valueField[i] = new TextField();
+        }
+
+
         dataTypeField.setItems(options);
         this.requiredRadioButton.setVisible(false);
         this.fieldName.setVisible(false);
@@ -98,19 +118,6 @@ public class AddNewTicketTypeController {
             return;
         }
 
-        Label nameFields[] = new Label[10];
-        Label typeFields[] = new Label[10];
-        Label reqFields[] = new Label[10];
-        TextField valueField[] = new TextField[10];
-
-        for(int i =0; i <10; i++){
-            nameFields[i] = new Label();
-            typeFields[i] = new Label();
-            reqFields[i] = new Label();
-            valueField[i] = new TextField();
-        }
-
-
 
         pane1.getChildren().add(valueField[counter]);
         pane1.getChildren().add(nameFields[counter]);
@@ -145,6 +152,25 @@ public class AddNewTicketTypeController {
         this.requiredRadioButton.setSelected(false);
 
         counter++;
+    }
+
+    @FXML
+    private void handleSubmitAction(ActionEvent event){
+
+        TicketStructure ticketStructure = new TicketStructure(this.ticketTypeName.getText());
+
+        for(int i = 0; i<counter; i++){
+            if(this.typeFields[i].getText() == "Int"){
+                ticketStructure.addIntField(this.nameFields[i].getText(), Boolean.parseBoolean(this.reqFields[i].getText()), 0);
+            }
+            if(this.typeFields[i].getText() == "String"){
+                ticketStructure.addStringField(this.nameFields[i].getText(), Boolean.parseBoolean(this.reqFields[i].getText()), "");
+            }
+            if(this.typeFields[i].getText() == "Date"){
+                ticketStructure.addDateField(this.nameFields[i].getText(), Boolean.parseBoolean(this.reqFields[i].getText()), LocalDate.now());
+            }
+        }
+        ticketStructure.insertToDb();
     }
 
 }

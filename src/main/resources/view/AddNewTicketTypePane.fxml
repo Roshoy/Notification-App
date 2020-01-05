@@ -13,7 +13,7 @@
       <Button fx:id="addButton" layoutX="456.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleAddAction" text="Add" />
       <TextField fx:id="ticketTypeName" layoutX="26.0" layoutY="45.0" />
       <Text layoutX="54.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name of ticket type" />
-      <Button fx:id="submitButton" layoutX="514.0" layoutY="45.0" mnemonicParsing="false" text="Submit" />
+      <Button fx:id="submitButton" layoutX="514.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleSubmitAction" text="Submit" />
       <ChoiceBox fx:id="dataTypeField" layoutX="275.0" layoutY="118.0" prefWidth="150.0" />
       <TextField fx:id="fieldName" layoutX="32.0" layoutY="118.0" />
       <Text layoutX="284.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose department" />
