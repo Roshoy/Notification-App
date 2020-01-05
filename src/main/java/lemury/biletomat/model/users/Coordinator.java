@@ -1,5 +1,6 @@
 package lemury.biletomat.model.users;
 
+import javafx.beans.property.SimpleListProperty;
 import javafx.collections.ObservableArrayBase;
 import lemury.biletomat.model.departments.Department;
 import lemury.biletomat.model.ticket.Ticket;
@@ -16,16 +17,22 @@ import java.util.Optional;
 
 public class Coordinator extends User {
     private Department department;
-    private List<Ticket> tickets;
+    private ObservableList<Ticket> ownedTickets;
 
     protected Coordinator(int id, String firstName, String lastName, String login, String password, Department department, String userType) {
         super(id, firstName, lastName, login, password, userType);
         this.department = department;
+        this.ownedTickets = new SimpleListProperty<>();
+        this.ownedTickets = Ticket.getTicketsListOfCoordinator(this);
     }
 
 
     public Department getDepartment() {
         return department;
+    }
+
+    public ObservableList<Ticket> getOwnedTickets() {
+        return ownedTickets;
     }
 
     // maybe it could be done better with different type in Optional

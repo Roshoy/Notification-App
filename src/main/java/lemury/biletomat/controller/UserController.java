@@ -163,6 +163,7 @@ public class UserController {
     public void setUser(User user) {
         this.user = user;
         this.login.setText(user.getLogin());
+        ticketsTable.setItems(user.getSubmittedTickets());
         setButtonsVisibility();
     }
 
