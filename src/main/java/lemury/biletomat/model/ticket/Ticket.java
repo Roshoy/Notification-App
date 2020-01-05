@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Ticket {
@@ -189,5 +190,37 @@ public class Ticket {
         }
 
         this.status.set(newTicketStatus);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ticket ticket = (Ticket) o;
+        return id == ticket.id() &&
+                this.owner().equals(ticket.owner()) &&
+                this.submitter().equals(ticket.submitter()) &&
+                this.title().equals(ticket.title()) &&
+                this.description().equals(ticket.description()) &&
+                this.status().equals(ticket.status()) &&
+                this.date().equals(ticket.date());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, owner, submitter, title, description, status, date);
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id=" + id +
+                ", owner=" + owner +
+                ", submitter=" + submitter +
+                ", title=" + title +
+                ", description=" + description +
+                ", status=" + status +
+                ", date=" + date +
+                '}';
     }
 }

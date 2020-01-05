@@ -8,6 +8,7 @@ import lemury.biletomat.query.QueryExecutor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -88,5 +89,19 @@ public class Department {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Department that = (Department) o;
+        return id == that.id &&
+                Name.equals(that.Name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, Name);
     }
 }

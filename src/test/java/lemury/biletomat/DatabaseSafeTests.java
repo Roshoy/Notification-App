@@ -5,6 +5,7 @@ import lemury.biletomat.model.departments.Department;
 import lemury.biletomat.model.ticket.ITTicket;
 import lemury.biletomat.model.ticket.Message;
 import lemury.biletomat.model.ticket.Ticket;
+import lemury.biletomat.model.ticket.TicketStatus;
 import lemury.biletomat.model.users.Coordinator;
 import lemury.biletomat.model.users.User;
 import lemury.biletomat.query.QueryExecutor;
@@ -15,6 +16,10 @@ import javax.swing.text.html.Option;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +30,7 @@ import static lemury.biletomat.query.QueryExecutor.create;
 
 
 public class DatabaseSafeTests {
+    final int exampleUserId = 11;
     final String exampleUserLogin = "michal";
     final String exampleUserFirstName = "Michał";
     final String exampleUserLastName = "Michaiłowicz";
@@ -44,6 +50,14 @@ public class DatabaseSafeTests {
     final String exampleCoordinator2FirstName = "Michał";
     final String exampleCoordinator2LastName = "Michałowski";
     final String exampleCoordinator2Password = "qwerty997";
+
+    final int exampleTicketId = 997;
+
+    Date date = Calendar.getInstance().getTime();
+    DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+    String dateString = dateFormat.format(date);
+    final String exampleTicketTitle = "Zgloszenie";
+    final String exampleTicketDescription = "Description...";
 
     @BeforeClass
     public static void init() {
@@ -112,9 +126,11 @@ public class DatabaseSafeTests {
     public void setUp() throws SQLException {
         QueryExecutor.delete("DELETE FROM USERS;");
         QueryExecutor.delete("DELETE FROM DEPARTMENTS;");
+        QueryExecutor.delete("DELETE FROM TICKETS;");
+        QueryExecutor.delete("DELETE FROM MESSAGES;");
 
-        String insertUserSql = String.format("INSERT INTO USERS (LOGIN, FIRST_NAME, LAST_NAME, PASSWORD, USER_TYPE) VALUES ('%s', '%s', '%s', '%s', '%s');",
-                exampleUserLogin, exampleUserFirstName, exampleUserLastName, exampleUserPassword, "U");
+        String insertUserSql = String.format("INSERT INTO USERS (ID, LOGIN, FIRST_NAME, LAST_NAME, PASSWORD, USER_TYPE) VALUES (%d, '%s', '%s', '%s', '%s', '%s');",
+                exampleUserId, exampleUserLogin, exampleUserFirstName, exampleUserLastName, exampleUserPassword, "U");
         QueryExecutor.create(insertUserSql);
 
         QueryExecutor.create(String.format("INSERT INTO DEPARTMENTS (ID, NAME) VALUES (%d, '%s');", exampleDepartmentId, exampleDepartmentName));
@@ -126,6 +142,10 @@ public class DatabaseSafeTests {
         insertCoordinatorSql = String.format("INSERT INTO USERS (ID, LOGIN, FIRST_NAME, LAST_NAME, PASSWORD, DEPARTMENT_ID, USER_TYPE) VALUES (%d, '%s', '%s', '%s', '%s', %d, '%s');",
                 exampleCoordinator2Id, exampleCoordinator2Login, exampleCoordinator2FirstName, exampleCoordinator2LastName, exampleCoordinator2Password, exampleDepartmentId, "C");
         QueryExecutor.create(insertCoordinatorSql);
+
+        String insertTicketSql = String.format("INSERT INTO TICKETS (ID, COORDINATOR_ID, USER_ID, TITLE, DESCRIPTION, STATUS, DATE) VALUES (%d, %d, %d, '%s', '%s', 'WAITING', '%s');",
+                exampleTicketId, exampleCoordinatorId, exampleUserId, exampleTicketTitle, exampleTicketDescription, dateString);
+        QueryExecutor.create(insertTicketSql);
         //QueryExecutor.delete("DELETE FROM USERS WHERE LOGIN = 'coord1' OR LOGIN = 'coord2';");
         //QueryExecutor.delete("DELETE FROM DEPARTMENTS WHERE NAME = 'Dzial 1' OR NAME = 'Dzial 2';");
         //QueryExecutor.delete("DELETE FROM DEPARTMENTS WHERE NAME = 'Dzial testowy 1' OR NAME = 'Dzial testowy 2';");
@@ -162,6 +182,16 @@ public class DatabaseSafeTests {
         final Statement statement = ConnectionProvider.getConnection().createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         Assert.assertFalse(resultSet.next());
+    }
+
+    private void checkUser(final Optional<User> user) {
+        Assert.assertTrue(user.isPresent());
+        user.ifPresent(u -> {
+            Assert.assertTrue(u.id() > 0);
+            Assert.assertNotNull(u.firstName());
+            Assert.assertNotNull(u.lastName());
+            Assert.assertNotNull(u.getPassword());
+        });
     }
 
     @Test
@@ -272,18 +302,77 @@ public class DatabaseSafeTests {
         }
     }
 
+    // TICKET CLASS TESTS ----------------------------------------------------------------------------------------------
+    @Test
+    public void addNewTicketTest() {
+        Assert.assertNotEquals(0, Ticket.create(exampleCoordinatorId, exampleUserId, "Nowy ticket", "opis..."));
+    }
 
-//we should not be able to create it ticket without base ticket in database
+    @Test
+    public void findTicketByIdTest() {
+        Optional<Ticket> optTicket = Ticket.findTicketById(exampleTicketId);
+
+        if(optTicket.isPresent()) {
+            Ticket ticket = optTicket.get();
+
+            Assert.assertEquals(exampleCoordinatorId, ticket.owner().id());
+            Assert.assertEquals(exampleUserId, ticket.submitter().id());
+            Assert.assertEquals(exampleTicketTitle, ticket.title());
+            Assert.assertEquals(exampleTicketDescription, ticket.description());
+        }
+    }
+
+    @Test
+    public void getTicketsListTest() {
+        Optional<Ticket> optTicket = Ticket.findTicketById(exampleTicketId);
+        Optional<User> optUser = User.findById(exampleUserId);
+
+        if(optTicket.isPresent() && optUser.isPresent()) {
+            List<Ticket> ticketList = Ticket.getTicketsList(optUser.get());
+
+            Assert.assertTrue(ticketList.size() >= 1);
+            Assert.assertTrue(ticketList.contains(optTicket.get()));
+        }
+    }
+
+    @Test
+    public void getCoordinatorTicketsTest() {
+        Optional<User> optCoordinator = Coordinator.findById(exampleCoordinatorId);
+        Optional<Ticket> optTicket = Ticket.findTicketById(exampleTicketId);
+
+        if(optTicket.isPresent() && optCoordinator.isPresent()) {
+            List<Ticket> ticketList = Ticket.getTicketsListOfCoordinator((Coordinator) optCoordinator.get());
+
+            Assert.assertTrue(ticketList.size() >= 1);
+            Assert.assertTrue(ticketList.contains(optTicket.get()));
+        }
+    }
+    @Test
+    public void filterTest() {
+        Optional<Ticket> optTicket = Ticket.findTicketById(exampleTicketId);
+        Optional<User> optUser = User.findById(exampleUserId);
+
+        if(optTicket.isPresent() && optUser.isPresent()) {
+            List<Ticket> filteredList1 = Ticket.filterTicketList(optUser.get(), true, false, false);
+            Assert.assertTrue(filteredList1.contains(optTicket.get()));
+
+            optTicket.get().setTicketStatus(TicketStatus.IN_PROGRESS);
+            List<Ticket> filteredList2 = Ticket.filterTicketList(optUser.get(), false, true, true);
+            Assert.assertTrue(filteredList2.contains(optTicket.get()));
+        }
+    }
+
+    //we should not be able to create it ticket without base ticket in database
     @Test
     public void createITTicketWithoutTicketTest() throws SQLException {
         ITTicket.create(2,12);
-        String sql = "SELECT * FROM ITTICKETS WHERE id = 2";
+        String sql = "SELECT * FROM ITTICKETS WHERE id = 2;";
         final Statement statement = ConnectionProvider.getConnection().createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         Assert.assertFalse(resultSet.next());
     }
 
-
+    // MESSAGE CLASS TESTS ---------------------------------------------------------------------------------------------
     @Test
     public void createMessageWithUncorrectAuthorIDTest() throws SQLException {
         Message.create(1, 2, "Test");
@@ -294,15 +383,7 @@ public class DatabaseSafeTests {
         Assert.assertFalse(resultSet.next());
     }
 
-    private void checkUser(final Optional<User> user) {
-        Assert.assertTrue(user.isPresent());
-        user.ifPresent(u -> {
-            Assert.assertTrue(u.id() > 0);
-            Assert.assertNotNull(u.firstName());
-            Assert.assertNotNull(u.lastName());
-            Assert.assertNotNull(u.getPassword());
-        });
-    }
+
 
     @AfterClass
     public static void cleanUp() throws SQLException {

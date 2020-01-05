@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Coordinator extends User {
@@ -107,5 +108,19 @@ public class Coordinator extends User {
                     rs.getString("user_type"));
             list.add(currentCoordinator);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Coordinator that = (Coordinator) o;
+        return department.equals(that.department);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), department);
     }
 }
