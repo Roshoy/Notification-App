@@ -1,8 +1,11 @@
 package lemury.biletomat.model.ticket;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import lemury.biletomat.query.QueryExecutor;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,6 +20,25 @@ public class TicketStructure {
         this.name = name;
         fields = new ArrayList<>();
     }
+
+
+    public static ObservableList<String> getNames(){
+        String getSql = String.format("SELECT name FROM %s",TABLE_NAME);
+        ObservableList<String> result = FXCollections.observableArrayList();
+
+        try {
+            ResultSet rs = QueryExecutor.read(getSql);
+            while (rs.next()){
+                String departmentName = rs.getString("name");
+                result.add(departmentName);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
 
     public int insertToDb(){
         String insertSql = String.format("INSERT INTO %s(name) VALUES ('%s')", TABLE_NAME, this.name);

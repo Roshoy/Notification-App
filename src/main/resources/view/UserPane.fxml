@@ -44,5 +44,7 @@
       <RadioButton fx:id="doneFilter" layoutX="26.0" layoutY="327.0" mnemonicParsing="false" text="DONE" />
       <Button fx:id="filterButton" layoutX="26.0" layoutY="357.0" mnemonicParsing="false" onAction="#handleFilterAction" prefHeight="26.0" prefWidth="130.0" text="Filter" />
       <Button fx:id="addNewTicketTypeButton" layoutX="25.0" layoutY="246.0" mnemonicParsing="false" onAction="#handleAddNewTicketTypeAction" prefHeight="31.0" prefWidth="130.0" text="Add new ticket type" />
+      <ChoiceBox fx:id="ticketTypeField" layoutX="358.0" layoutY="19.0" prefWidth="150.0" />
+      <Button fx:id= "addNewTicketButton" layoutX="531.0" layoutY="19.0" mnemonicParsing="false"  onAction="#handleAddNewTicketAction" text="Add ticket" />
     </children>
 </AnchorPane>

@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import lemury.biletomat.model.ticket.Ticket;
 import lemury.biletomat.model.ticket.TicketStatus;
+import lemury.biletomat.model.ticket.TicketStructure;
 import lemury.biletomat.model.users.Coordinator;
 import lemury.biletomat.model.users.User;
 
@@ -55,6 +56,11 @@ public class UserController {
     private RadioButton doneFilter;
     @FXML
     private Button filterButton;
+    @FXML
+    private ChoiceBox<String> ticketTypeField;
+    @FXML
+    private Button addNewTicketButton;
+
 
 
     @FXML
@@ -69,6 +75,8 @@ public class UserController {
 
     @FXML
     protected void initialize() {
+        this.ticketTypeField.setItems(TicketStructure.getNames());
+
         titleColumn.setCellValueFactory(dataValue -> dataValue.getValue().getTitleProperty());
         descriptionColumn.setCellValueFactory(dataValue -> dataValue.getValue().getDescriptionProperty());
         statusColumn.setCellValueFactory(dataValue -> dataValue.getValue().getStatusProperty());
@@ -125,6 +133,22 @@ public class UserController {
         appStage.setScene(scene);
         appStage.show();
     }
+
+    @FXML
+    private void handleAddNewTicketAction(ActionEvent event) throws SQLException, IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddTicketPane.fxml"));
+        Parent addTicketType = loader.load();
+
+        AddTicketController controller = loader.getController();
+        controller.setUser(user);
+        controller.setLogin(login.getText());
+
+        Scene scene = new Scene(addTicketType);
+        Stage appStage = new Stage();
+        appStage.setScene(scene);
+        appStage.show();
+    }
+
 
     public void setUser(User user) {
         this.user = user;
