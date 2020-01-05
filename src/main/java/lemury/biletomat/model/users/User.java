@@ -21,8 +21,7 @@ public class User {
     private final String userType;
     private String password;
 
-    private List<Ticket> submittedTickets;
-
+    private ObservableList<Ticket> submittedTickets;
 
     protected User(int id, String firstName, String lastName, String login, String password, String userType) {
         this.id = id;
@@ -30,7 +29,7 @@ public class User {
         this.lastName = lastName;
         this.login = login;
         this.password = password;
-        this.submittedTickets = null;
+        this.submittedTickets = Ticket.getTicketsList(this);
         this.userType = userType;
 
     }
@@ -54,6 +53,10 @@ public class User {
     }
 
     public String getUserType(){return userType;}
+
+    public ObservableList<Ticket> getSubmittedTickets() {
+        return submittedTickets;
+    }
 
     public static Optional<User> createUserAccount(String login, String firstName, String lastName, String password){
         if(login.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || password.isEmpty()){

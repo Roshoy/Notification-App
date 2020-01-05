@@ -65,7 +65,7 @@ public class CoordinatorController extends UserController {
     }
 
     public void setTicketsOwnedByCoordinator() {
-        this.tickets = Ticket.getTicketsListOfCoordinator((Coordinator)user);
+        this.tickets = ((Coordinator)user).getOwnedTickets();
         ticketsTable.setItems(this.tickets);
     }
 
