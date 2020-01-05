@@ -38,6 +38,8 @@ public class AddUserController {
     @FXML
     private void initialize() {
         departmentField.setItems(Department.getNames());
+        standardUserRadioButton.setSelected(true);
+        departmentField.setDisable(true);
     }
 
     public void setUsers(ObservableList<User> users) {

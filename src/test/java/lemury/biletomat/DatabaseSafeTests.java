@@ -8,6 +8,8 @@ import lemury.biletomat.model.users.User;
 import lemury.biletomat.query.QueryExecutor;
 import org.junit.*;
 
+import javax.management.Query;
+import javax.swing.text.html.Option;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,6 +22,11 @@ import static lemury.biletomat.query.QueryExecutor.create;
 
 
 public class DatabaseSafeTests {
+    final String exampleUserLogin = "michal";
+    final String exampleUserFirstName = "Michał";
+    final String exampleUserLastName = "Michaiłowicz";
+    final String exampleUserPassword = "qwerty";
+
     @BeforeClass
     public static void init() {
             ConnectionProvider.init("jdbc:sqlite:Database");
@@ -89,11 +96,33 @@ public class DatabaseSafeTests {
     @Before
     public void setUp() throws SQLException {
         QueryExecutor.delete("DELETE FROM USERS;");
+
+        String insertUserSql = String.format("INSERT INTO USERS (LOGIN, FIRST_NAME, LAST_NAME, PASSWORD, USER_TYPE) VALUES ('%s', '%s', '%s', '%s', '%s');",
+                exampleUserLogin, exampleUserFirstName, exampleUserLastName, exampleUserPassword, "U");
+        QueryExecutor.create(insertUserSql);
         //QueryExecutor.delete("DELETE FROM USERS WHERE LOGIN = 'coord1' OR LOGIN = 'coord2';");
         //QueryExecutor.delete("DELETE FROM DEPARTMENTS WHERE NAME = 'Dzial 1' OR NAME = 'Dzial 2';");
         //QueryExecutor.delete("DELETE FROM DEPARTMENTS WHERE NAME = 'Dzial testowy 1' OR NAME = 'Dzial testowy 2';");
         //QueryExecutor.delete("DELETE FROM TICKETS;");
         //QueryExecutor.delete("DELETE FROM MESSAGES;");
+    }
+
+    @Test
+    public void createUserWithIncompleteDataTest() {
+        Optional<User> user = User.createUserAccount("", "Mateusz", "Kowal", "");
+        Assert.assertEquals(Optional.empty(), user);
+    }
+
+    @Test
+    public void createUserTest() {
+        Optional<User> optUser = User.createUserAccount("mat", "Mateusz", "Kowalski", "qwerty");
+        if(optUser.isPresent()) {
+            User user = optUser.get();
+            Assert.assertEquals("mat", user.getLogin());
+            Assert.assertEquals("Mateusz", user.firstName());
+            Assert.assertEquals("Kowalski", user.lastName());
+            Assert.assertEquals("qwerty", user.getPassword());
+        }
     }
 
     @Test
@@ -105,7 +134,46 @@ public class DatabaseSafeTests {
         String sql = "SELECT * FROM USERS WHERE login = 'mat3' AND password='password1'";
         final Statement statement = ConnectionProvider.getConnection().createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
-        Assert.assertEquals(false, resultSet.next());
+        Assert.assertFalse(resultSet.next());
+    }
+
+    @Test
+    public void findUserByLoginTest() {
+        Optional<User> optUser = User.findByLogin(exampleUserLogin);
+        if(optUser.isPresent()) {
+            User user = optUser.get();
+            Assert.assertEquals(exampleUserLogin, user.getLogin());
+            Assert.assertEquals(exampleUserFirstName, user.firstName());
+            Assert.assertEquals(exampleUserLastName, user.lastName());
+            Assert.assertEquals(exampleUserPassword, user.getPassword());
+        }
+    }
+
+    @Test
+    public void findUserByLoginAndPasswordTest() {
+        Optional<User> optUser = User.findByLogin(exampleUserLogin, exampleUserPassword);
+        if(optUser.isPresent()) {
+            User user = optUser.get();
+            Assert.assertEquals(exampleUserLogin, user.getLogin());
+            Assert.assertEquals(exampleUserFirstName, user.firstName());
+            Assert.assertEquals(exampleUserLastName, user.lastName());
+            Assert.assertEquals(exampleUserPassword, user.getPassword());
+        }
+    }
+
+    @Test
+    public void deleteUserTest() {
+        String login = "iwan123";
+        String password = "321nawi";
+        String firstName = "Iwan";
+        String lastName = "Groźny";
+
+        Optional<User> optUser = User.createUserAccount(login, password, firstName, lastName);
+        if(optUser.isPresent()) {
+            User.deleteUserById(optUser.get().id());
+
+            Assert.assertEquals(Optional.empty(), User.findById(optUser.get().id()));
+        }
     }
 
 
@@ -116,7 +184,7 @@ public class DatabaseSafeTests {
         String sql = "SELECT * FROM ITTICKETS WHERE id = 2";
         final Statement statement = ConnectionProvider.getConnection().createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
-        Assert.assertEquals(false, resultSet.next());
+        Assert.assertFalse(resultSet.next());
     }
 
 
@@ -127,7 +195,7 @@ public class DatabaseSafeTests {
 
         final Statement statement = ConnectionProvider.getConnection().createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
-        Assert.assertEquals(false, resultSet.next());
+        Assert.assertFalse(resultSet.next());
     }
 
     private void checkUser(final Optional<User> user) {

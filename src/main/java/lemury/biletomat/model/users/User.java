@@ -64,7 +64,7 @@ public class User {
 
         Optional<User> user = User.findByLogin(login);
         if(!user.equals(Optional.empty())){
-            System.out.println("User with that id already exists");
+            System.out.println("User with that login already exists");
             return Optional.empty();
         }
 
@@ -87,13 +87,13 @@ public class User {
     }
 
     public static Optional<User> findByLogin(final String login, final String password){
-        String findByLoginSql = String.format("SELECT * FROM '%s' WHERE login='%s' AND password='%s'", User.TABLE_NAME,
+        String findByLoginSql = String.format("SELECT * FROM %s WHERE login = '%s' AND password = '%s';", User.TABLE_NAME,
                 login, password);
         return getUser(findByLoginSql);
     }
 
     public static Optional<User> findByLogin(String login){
-        String findByLoginSql = String.format("SELECT * FROM '%s' WHERE login='%s'", User.TABLE_NAME,
+        String findByLoginSql = String.format("SELECT * FROM %s WHERE login = '%s';", User.TABLE_NAME,
                 login);
         return getUser(findByLoginSql);
     }
@@ -101,9 +101,11 @@ public class User {
     private static Optional<User> getUser(String findByLoginSql) {
         try {
             ResultSet rs = QueryExecutor.read(findByLoginSql);
-            return Optional.of(new User(rs.getInt("id"), rs.getString("first_name"),
-                    rs.getString("last_name"), rs.getString("login"),
-                    rs.getString("password"), rs.getString("user_type")));
+            if(rs.next()) {
+                return Optional.of(new User(rs.getInt("id"), rs.getString("first_name"),
+                        rs.getString("last_name"), rs.getString("login"),
+                        rs.getString("password"), rs.getString("user_type")));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
