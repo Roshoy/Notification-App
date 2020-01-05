@@ -29,6 +29,7 @@ public class User {
         this.lastName = lastName;
         this.login = login;
         this.password = password;
+        this.submittedTickets = Ticket.getTicketsList(this);
         this.userType = userType;
     }
 

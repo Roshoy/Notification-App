@@ -23,6 +23,8 @@ public class Coordinator extends User {
                           Department department, String userType) {
         super(id, firstName, lastName, login, password, userType);
         this.department = department;
+        this.ownedTickets = new SimpleListProperty<>();
+        this.ownedTickets = Ticket.getTicketsListOfCoordinator(this);
     }
 
     @Override
