@@ -75,7 +75,8 @@ public class UserController {
 
     @FXML
     protected void initialize() {
-        this.ticketTypeField.setItems(TicketStructure.getNames());
+        ticketTypeField.setItems(TicketStructure.getNames());
+        ticketTypeField.setValue(TicketStructure.getNames().get(0));
 
         titleColumn.setCellValueFactory(dataValue -> dataValue.getValue().getTitleProperty());
         descriptionColumn.setCellValueFactory(dataValue -> dataValue.getValue().getDescriptionProperty());

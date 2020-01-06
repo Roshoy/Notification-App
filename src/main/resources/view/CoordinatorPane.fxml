@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="642.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.biletomat.controller.CoordinatorController">
+<AnchorPane prefHeight="642.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.biletomat.controller.CoordinatorController">
    <children>
        <Label fx:id="login" alignment="CENTER_RIGHT" layoutX="466.0" layoutY="16.0" prefHeight="21.0" prefWidth="150.0" />
        <Button fx:id="addITTicketButton" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleAddITTicket" prefHeight="26.0" prefWidth="211.0" text="Add IT Ticket" />
@@ -31,5 +32,6 @@
          </cursor>
       </ChoiceBox>
       <Button layoutX="628.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="25.0" prefWidth="100.0" text="Back" />
+      <ChoiceBox fx:id="ticketTypeField" layoutX="300.0" layoutY="11.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
