@@ -57,8 +57,9 @@ public class AddITTicketController {
 
         int ticketID = Ticket.create(coordinatorID, user.id(), title.getText(), description.getText());
         ITTicket.create(ticketID, compNo);
-
-
+        Ticket ticket = Ticket.findTicketById(ticketID).get();
+        ticket.getSubmitterProperty().setValue(user);
+        user.getSubmittedTickets().add(ticket);
     }
 
     public void setLogin(String login) {
