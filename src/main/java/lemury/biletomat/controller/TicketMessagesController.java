@@ -44,6 +44,11 @@ public class TicketMessagesController {
     @FXML
     private Button refreshButton;
 
+    @FXML
+    private void initialize() {
+        messageHistoryContainer.vvalueProperty().bind(messageHistoryVBox.heightProperty());
+    }
+
     public void setUser(User user) {
         this.user = user;
         this.login.setText(user.getLogin());
@@ -94,10 +99,12 @@ public class TicketMessagesController {
 
     @FXML
     public void handleSendMessageAction() {
-        Optional<Message> newMessage = Message.create(this.ticket.id(), this.user.id(), this.newMessageTextField.getText());
-        if(newMessage.isPresent()) {
-            this.messages.add(newMessage.get());
-            readMessages();
+        if (this.newMessageTextField.getText().trim().length() > 0) {
+            Optional<Message> newMessage = Message.create(this.ticket.id(), this.user.id(), this.newMessageTextField.getText());
+            if (newMessage.isPresent()) {
+                this.messages.add(newMessage.get());
+                readMessages();
+            }
         }
     }
 }
