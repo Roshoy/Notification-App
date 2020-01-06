@@ -198,7 +198,11 @@ public class UserController {
     }
 
     public void setTickets(ObservableList<Ticket> tickets) {
-        this.tickets.setAll(tickets);
+        this.tickets = FXCollections.observableArrayList(ticket -> new Observable[]{
+                waitingFilter.selectedProperty(),
+                doneFilter.selectedProperty(),
+                inProgressFilter.selectedProperty()});
+        this.tickets.addAll(tickets);
         filteredTickets = new FilteredList<>(this.tickets, this::ticketFilter);
         ticketsTable.setItems(filteredTickets);
     }
