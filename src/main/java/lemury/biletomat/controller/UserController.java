@@ -239,7 +239,7 @@ public class UserController {
     }
 
     @FXML
-    public void handleViewTicket(ActionEvent event) throws IOException{
+    public void handleViewTicket(ActionEvent event) throws IOException, SQLException {
         if(ticketsTable.getSelectionModel().isEmpty()) {
             new Alert(Alert.AlertType.ERROR, "No ticket selected!").showAndWait();
         } else {
@@ -250,7 +250,7 @@ public class UserController {
             TicketMessagesController controller = loader.getController();
             controller.setUser(user);
             controller.setTicket(referencedTicket);
-
+            controller.actualiseView();
             Scene scene = new Scene(ticketMessages);
             Stage appStage = new Stage();
             appStage.setScene(scene);

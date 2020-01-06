@@ -30,4 +30,18 @@ public class Field {
         }
         return id;
     }
+
+    public static int countFields(int ticket_id){
+        String sql = String.format("SELECT COUNT(*) as counter FROM %s WHERE ticket_id = %d", TABLE_NAME, ticket_id);
+        System.out.println(sql);
+        int counter = 0;
+
+        try {
+            counter = QueryExecutor.createAndObtainId(sql);
+            //return findTicketById(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return counter;
+    }
 }
