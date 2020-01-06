@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Message {
@@ -121,5 +122,22 @@ public class Message {
         }
 
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Message message = (Message) o;
+        return id == message.id &&
+                date.equals(message.date) &&
+                referencedTicket.equals(message.referencedTicket) &&
+                author.equals(message.author) &&
+                text.equals(message.text);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, date, referencedTicket, author, text);
     }
 }
