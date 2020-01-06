@@ -1,7 +1,10 @@
 package lemury.biletomat.controller;
 
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -74,7 +77,7 @@ public class UserController {
     protected Button updateButton;
 
     private ObservableList<Ticket> tickets;
-
+    private FilteredList<Ticket> filteredTickets;
 
     @FXML
     protected void initialize() {
@@ -106,6 +109,26 @@ public class UserController {
             return dateCell;
         });
         dateColumn.setCellValueFactory(dataValue -> dataValue.getValue().getDateProperty());
+
+        setChangeOnFilterRadioButton(waitingFilter);
+        setChangeOnFilterRadioButton(doneFilter);
+        setChangeOnFilterRadioButton(inProgressFilter);
+    }
+
+    private void setChangeOnFilterRadioButton(RadioButton button){
+        button.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> obs, Boolean wasPreviouslySelected,
+                                Boolean isNowSelected) {
+                if (isNowSelected) {
+                    filteredTickets.addAll(user.getSubmittedTickets().filtered(
+                            ticket -> ticket.status().name().equalsIgnoreCase(button.getText())));
+                } else {
+                    filteredTickets.removeAll(user.getSubmittedTickets().filtered(
+                            ticket -> ticket.status().name().equalsIgnoreCase(button.getText())));
+                }
+            }
+        });
     }
 
     /*
@@ -169,7 +192,8 @@ public class UserController {
 
     public void setTickets(ObservableList<Ticket> tickets) {
         this.tickets = tickets;
-        ticketsTable.setItems(tickets);
+        filteredTickets = tickets.filtered(t -> true);
+        ticketsTable.setItems(filteredTickets);
     }
 
     @FXML
@@ -190,7 +214,7 @@ public class UserController {
 
     @FXML
     public void handleUpdateAction() {
-        setTickets(Ticket.getTicketsList(this.user));
+        //setTickets(Ticket.getTicketsList(this.user));
 
         initialize();
     }

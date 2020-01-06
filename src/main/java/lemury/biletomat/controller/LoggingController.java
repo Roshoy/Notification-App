@@ -47,7 +47,7 @@ public class LoggingController {
             stage.setScene(new Scene(loader.load()));
             UserController userController = loader.<UserController>getController();
             userController.setUser(user);
-            userController.setTickets(Ticket.getTicketsList(user));
+            //userController.setTickets(Ticket.getTicketsList(user));
             stage.show();
         }
     }}
