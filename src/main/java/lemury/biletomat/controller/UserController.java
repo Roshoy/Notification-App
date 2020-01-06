@@ -87,7 +87,7 @@ public class UserController {
         // za: https://stackoverflow.com/questions/47484280/format-of-date-in-the-javafx-tableview
         dateColumn.setCellFactory(dataValue -> {
             TableCell<Ticket, Date> dateCell = new TableCell<Ticket, Date>() {
-                private SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+                private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
                 @Override
                 protected void updateItem(Date item, boolean empty) {

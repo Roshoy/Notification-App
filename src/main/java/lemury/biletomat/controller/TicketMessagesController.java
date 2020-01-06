@@ -64,7 +64,7 @@ public class TicketMessagesController {
 
     private void readMessages() {
         messageHistoryVBox.getChildren().clear();
-        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         for(Message msg: messages) {
             String formattedMsg = String.format("%s\n%s\n%s\n\n", msg.author().getLogin(), dateFormat.format(msg.date()), msg.text());
