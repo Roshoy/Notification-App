@@ -89,12 +89,14 @@ public class Ticket {
                 TABLE_NAME, coordinatorID, userID, title, description, dateString);
         int ticketID = 0;
 
-        try {
-            ticketID = QueryExecutor.createAndObtainId(insertSql);
+        if(Coordinator.findById(coordinatorID).isPresent() && User.findById(userID).isPresent()) {
+            try {
+                ticketID = QueryExecutor.createAndObtainId(insertSql);
 
-            //return findTicketById(id);
-        } catch (SQLException e) {
-            e.printStackTrace();
+                //return findTicketById(id);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return ticketID;
@@ -209,18 +211,5 @@ public class Ticket {
     @Override
     public int hashCode() {
         return Objects.hash(id, owner, submitter, title, description, status, date);
-    }
-
-    @Override
-    public String toString() {
-        return "Ticket{" +
-                "id=" + id +
-                ", owner=" + owner +
-                ", submitter=" + submitter +
-                ", title=" + title +
-                ", description=" + description +
-                ", status=" + status +
-                ", date=" + date +
-                '}';
     }
 }

@@ -53,11 +53,14 @@ public class DatabaseSafeTests {
 
     final int exampleTicketId = 997;
 
-    Date date = Calendar.getInstance().getTime();
-    DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-    String dateString = dateFormat.format(date);
+    final Date date = Calendar.getInstance().getTime();
+    final DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+    final String dateString = dateFormat.format(date);
     final String exampleTicketTitle = "Zgloszenie";
     final String exampleTicketDescription = "Description...";
+
+    final int exampleMessageId = 910;
+
 
     @BeforeClass
     public static void init() {
@@ -93,7 +96,7 @@ public class DatabaseSafeTests {
                     "description VARCHAR(500) NOT NULL, " +
                     "status CHAR(15) NOT NULL, " +
                     "release_notes VARCHAR(500), " +
-                    "date DATE NOT NULL," +
+                    "date DATE NOT NULL, " +
                     "FOREIGN KEY(coordinator_id) references USERS(id), " +
                     "FOREIGN KEY(user_id) references USERS(id) " +
                     ");");
@@ -146,11 +149,10 @@ public class DatabaseSafeTests {
         String insertTicketSql = String.format("INSERT INTO TICKETS (ID, COORDINATOR_ID, USER_ID, TITLE, DESCRIPTION, STATUS, DATE) VALUES (%d, %d, %d, '%s', '%s', 'WAITING', '%s');",
                 exampleTicketId, exampleCoordinatorId, exampleUserId, exampleTicketTitle, exampleTicketDescription, dateString);
         QueryExecutor.create(insertTicketSql);
-        //QueryExecutor.delete("DELETE FROM USERS WHERE LOGIN = 'coord1' OR LOGIN = 'coord2';");
-        //QueryExecutor.delete("DELETE FROM DEPARTMENTS WHERE NAME = 'Dzial 1' OR NAME = 'Dzial 2';");
-        //QueryExecutor.delete("DELETE FROM DEPARTMENTS WHERE NAME = 'Dzial testowy 1' OR NAME = 'Dzial testowy 2';");
-        //QueryExecutor.delete("DELETE FROM TICKETS;");
-        //QueryExecutor.delete("DELETE FROM MESSAGES;");
+
+        String insertMessageSql = String.format("INSERT INTO MESSAGES (ID, DATE, TICKET_ID, AUTHOR_ID, TEXT) VALUES (%d, '%s', %d, %d, '%s');",
+                exampleMessageId, dateString, exampleTicketId, exampleUserId, "Pomocy");
+        QueryExecutor.create(insertMessageSql);
     }
 
     // USER CLASS TESTS ------------------------------------------------------------------------------------------------
@@ -309,6 +311,11 @@ public class DatabaseSafeTests {
     }
 
     @Test
+    public void addIncorrectTicketTest() {
+        Assert.assertEquals(0, Ticket.create(-9, -7, "aaa", "bbb"));
+    }
+
+    @Test
     public void findTicketByIdTest() {
         Optional<Ticket> optTicket = Ticket.findTicketById(exampleTicketId);
 
@@ -374,7 +381,13 @@ public class DatabaseSafeTests {
 
     // MESSAGE CLASS TESTS ---------------------------------------------------------------------------------------------
     @Test
-    public void createMessageWithUncorrectAuthorIDTest() throws SQLException {
+    public void createMessageTest() {
+        Optional<Message> optMessage = Message.create(exampleTicketId, exampleUserId, "AAAAA");
+        Assert.assertTrue(optMessage.isPresent());
+    }
+
+    @Test
+    public void createMessageWithIncorrectAuthorIDTest() throws SQLException {
         Message.create(1, 2, "Test");
         String sql = "SELECT * FROM MESSAGES WHERE MESSAGES.ticket_id = 2";
 
@@ -383,7 +396,23 @@ public class DatabaseSafeTests {
         Assert.assertFalse(resultSet.next());
     }
 
+    @Test
+    public void getMessageByIdTest() {
+        Assert.assertTrue(Message.findMessageById(exampleMessageId).isPresent());
+    }
 
+    @Test
+    public void getMessagesForTicketTest() {
+        Optional<Ticket> referencedTicket = Ticket.findTicketById(exampleTicketId);
+        Optional<Message> exampleMessage = Message.findMessageById(exampleMessageId);
+
+        if(referencedTicket.isPresent() && exampleMessage.isPresent()) {
+            List<Message> messageList = Message.getMessagesForTicket(referencedTicket.get());
+
+            Assert.assertTrue(messageList.size() >= 1);
+            Assert.assertTrue(messageList.contains(exampleMessage.get()));
+        }
+    }
 
     @AfterClass
     public static void cleanUp() throws SQLException {
