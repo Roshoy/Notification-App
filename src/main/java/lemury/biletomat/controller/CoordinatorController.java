@@ -77,7 +77,7 @@ public class CoordinatorController extends UserController {
     }
     @FXML
     public void handleRefreshAction(){
-        setTickets(Ticket.getTicketsListOfCoordinator((Coordinator) user));
+        //setTickets(Ticket.getTicketsListOfCoordinator((Coordinator) user));
         initialize();
 
         this.changeTicketStatusButton.setVisible(true);
@@ -106,7 +106,7 @@ public class CoordinatorController extends UserController {
         stage.setScene(new Scene(loader.load()));
         UserController userController = loader.<UserController>getController();
         userController.setUser(user);
-        userController.setTickets(Ticket.getTicketsList(user));
+        //userController.setTickets(Ticket.getTicketsList(user));
         stage.show();
     }
 

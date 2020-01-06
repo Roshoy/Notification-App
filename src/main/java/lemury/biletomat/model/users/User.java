@@ -29,9 +29,7 @@ public class User {
         this.lastName = lastName;
         this.login = login;
         this.password = password;
-        this.submittedTickets = Ticket.getTicketsList(this);
         this.userType = userType;
-
     }
 
     public int id() {
@@ -56,6 +54,10 @@ public class User {
 
     public ObservableList<Ticket> getSubmittedTickets() {
         return submittedTickets;
+    }
+
+    public void updateTickets(){
+        this.submittedTickets = Ticket.getTicketsList(this);
     }
 
     public static Optional<User> createUserAccount(String login, String firstName, String lastName, String password){

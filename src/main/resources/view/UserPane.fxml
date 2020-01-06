@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="962.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.biletomat.controller.UserController">
+<AnchorPane prefHeight="400.0" prefWidth="962.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.biletomat.controller.UserController">
     <children>
       <Label fx:id="login" layoutX="719.0" layoutY="32.0" prefHeight="21.0" prefWidth="100.0" textAlignment="CENTER">
          <font>
@@ -39,9 +31,9 @@
          </font>
       </Label>
        <Button fx:id="updateButton" layoutX="26.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleUpdateAction" prefHeight="26.0" prefWidth="130.0" text="Update" />
-      <RadioButton fx:id="waitingFilter" layoutX="26.0" layoutY="281.0" mnemonicParsing="false" text="WAITING" />
-      <RadioButton fx:id="inProgressFilter" layoutX="26.0" layoutY="303.0" mnemonicParsing="false" text="IN PROGRESS" />
-      <RadioButton fx:id="doneFilter" layoutX="26.0" layoutY="327.0" mnemonicParsing="false" text="DONE" />
+      <RadioButton fx:id="waitingFilter" layoutX="26.0" layoutY="281.0" mnemonicParsing="false" selected="true" text="WAITING" />
+      <RadioButton fx:id="inProgressFilter" layoutX="26.0" layoutY="303.0" mnemonicParsing="false" selected="true" text="IN PROGRESS" />
+      <RadioButton fx:id="doneFilter" layoutX="26.0" layoutY="327.0" mnemonicParsing="false" selected="true" text="DONE" />
       <Button fx:id="filterButton" layoutX="26.0" layoutY="357.0" mnemonicParsing="false" onAction="#handleFilterAction" prefHeight="26.0" prefWidth="130.0" text="Filter" />
       <Button fx:id="addNewTicketTypeButton" layoutX="25.0" layoutY="246.0" mnemonicParsing="false" onAction="#handleAddNewTicketTypeAction" prefHeight="31.0" prefWidth="130.0" text="Add new ticket type" />
       <ChoiceBox fx:id="ticketTypeField" layoutX="358.0" layoutY="19.0" prefWidth="150.0" />

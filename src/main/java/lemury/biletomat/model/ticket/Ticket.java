@@ -32,7 +32,8 @@ public class Ticket {
     private ObjectProperty<TicketStatus> status;
     private ObjectProperty<Date> date;
 
-    protected Ticket(int id, Coordinator owner, User submitter, String title, String description, TicketStatus status, Date date) {
+    protected Ticket(int id, Coordinator owner, User submitter, String title, String description,
+                     TicketStatus status, Date date) {
         this.id = id;
         this.owner = new SimpleObjectProperty<>(owner);
         this.submitter = new SimpleObjectProperty<>(submitter);
@@ -100,8 +101,6 @@ public class Ticket {
         }
 
         return ticketID;
-
-        //return Optional.empty();
     }
 
     public static Optional<Ticket> findTicketById(final int id) {
@@ -128,7 +127,7 @@ public class Ticket {
     public static ObservableList<Ticket> getTicketsList(User user) {
         ObservableList<Ticket> result = FXCollections.observableArrayList();
         String sqlQuery = String.format("SELECT * FROM %s WHERE user_id = %d;", Ticket.TABLE_NAME, user.id());
-        return getTickets(result, sqlQuery);
+        return getTickets(result, sqlQuery, user, null);
     }
 
     public static ObservableList<Ticket> filterTicketList(User user, boolean waiting, boolean inProgress, boolean done){
@@ -150,24 +149,32 @@ public class Ticket {
         ObservableList<Ticket> result = FXCollections.observableArrayList();
         String sqlQuery = String.format("SELECT * FROM %s WHERE user_id = %d AND status IN (%s)",
                 Ticket.TABLE_NAME, user.id(), search.toString());
-        return getTickets(result, sqlQuery);
+        return getTickets(result, sqlQuery, user, null);
     }
 
     public static ObservableList<Ticket> getTicketsListOfCoordinator(Coordinator coordinator) {
         ObservableList<Ticket> result = FXCollections.observableArrayList();
-        String sqlQuery = String.format("SELECT * FROM %s WHERE coordinator_id = %d;", Ticket.TABLE_NAME, coordinator.id());
+        String sqlQuery = String.format("SELECT * FROM %s WHERE coordinator_id = %d;",
+                Ticket.TABLE_NAME, coordinator.id());
 
-        return getTickets(result, sqlQuery);
+        return getTickets(result, sqlQuery, null, coordinator);
     }
 
-    private static ObservableList<Ticket> getTickets(ObservableList<Ticket> result, String sqlQuery) {
+    private static ObservableList<Ticket> getTickets(ObservableList<Ticket> result, String sqlQuery, User submitter,
+                                                     Coordinator owner) {
         try {
             ResultSet rs = QueryExecutor.read(sqlQuery);
             while(rs.next()) {
                 Date ticketDate = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").parse(rs.getString("DATE"));
+                if(submitter == null){
+                    submitter = User.findById(rs.getInt("user_id")).get();
+                }
+                if(owner == null){
+                    owner = (Coordinator)Coordinator.findById(rs.getInt("coordinator_id")).get();
+                }
+
                 Ticket ticket = new Ticket(rs.getInt("id"),
-                        (Coordinator)Coordinator.findById(rs.getInt("coordinator_id")).get(),
-                        User.findById(rs.getInt("user_id")).get(), rs.getString("title"),
+                        owner, submitter, rs.getString("title"),
                         rs.getString("description"),
                         TicketStatus.valueOf(rs.getString("status")),
                         ticketDate);
