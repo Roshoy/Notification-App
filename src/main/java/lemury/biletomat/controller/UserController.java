@@ -141,7 +141,7 @@ public class UserController {
     }
 
     @FXML
-    private void handleAddNewTicketAction(ActionEvent event) throws SQLException, IOException {
+    protected void handleAddNewTicketAction(ActionEvent event) throws SQLException, IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddTicketPane.fxml"));
         Parent addTicketType = loader.load();
 

@@ -9,13 +9,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="962.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.biletomat.controller.UserController">
+<AnchorPane prefHeight="400.0" prefWidth="987.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.biletomat.controller.UserController">
     <children>
-      <Label fx:id="login" layoutX="719.0" layoutY="32.0" prefHeight="21.0" prefWidth="100.0" textAlignment="CENTER">
+      <Label fx:id="login" layoutX="752.0" layoutY="33.0" prefHeight="21.0" prefWidth="100.0" textAlignment="CENTER">
          <font>
             <Font size="15.0" />
          </font></Label>
-      <TableView fx:id="ticketsTable" layoutX="171.0" layoutY="73.0" prefHeight="310.0" prefWidth="767.0">
+      <TableView fx:id="ticketsTable" layoutX="207.0" layoutY="73.0" prefHeight="310.0" prefWidth="763.0">
         <columns>
           <TableColumn fx:id="titleColumn" prefWidth="150.20001220703125" text="Title" />
           <TableColumn fx:id="descriptionColumn" prefWidth="250.4000244140625" text="Description" />
@@ -24,24 +24,24 @@
             <TableColumn fx:id="dateColumn" prefWidth="150.0" text="Date" />
         </columns>
       </TableView>
-      <Label alignment="CENTER_RIGHT" layoutX="654.0" layoutY="34.0" prefHeight="16.0" prefWidth="45.0" text="User:" textAlignment="RIGHT" />
-      <Button fx:id="logoutButton" layoutX="838.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleLogoutAction" prefHeight="26.0" prefWidth="100.0" text="Log out" />
-      <Button fx:id="menageUsersButton" layoutX="26.0" layoutY="209.0" mnemonicParsing="false" onAction="#handleManageUsers" prefHeight="26.0" prefWidth="130.0" text="Manage Users" AnchorPane.topAnchor="209.0" />
-      <Button fx:id="viewTicketButton" layoutX="25.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleViewTicket" prefHeight="26.0" prefWidth="130.0" text="View Ticket" AnchorPane.topAnchor="73.0" />
-      <Button fx:id="viewOwnedTicketsButton" layoutX="26.0" layoutY="144.0" mnemonicParsing="false" onAction="#handleViewOwnedTickets" prefHeight="56.0" prefWidth="130.0" text="View Owned Tickets" textAlignment="CENTER" wrapText="true" />
-      <Label layoutX="171.0" layoutY="30.0" text="Submitted tickets">
+      <Label alignment="CENTER_RIGHT" layoutX="687.0" layoutY="35.0" prefHeight="16.0" prefWidth="45.0" text="User:" textAlignment="RIGHT" />
+      <Button fx:id="logoutButton" layoutX="870.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleLogoutAction" prefHeight="26.0" prefWidth="100.0" text="Log out" />
+      <Button fx:id="menageUsersButton" layoutX="26.0" layoutY="209.0" mnemonicParsing="false" onAction="#handleManageUsers" prefHeight="26.0" prefWidth="162.0" text="Manage Users" AnchorPane.topAnchor="209.0" />
+      <Button fx:id="viewTicketButton" layoutX="25.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleViewTicket" prefHeight="26.0" prefWidth="162.0" text="View Ticket" AnchorPane.topAnchor="73.0" />
+      <Button fx:id="viewOwnedTicketsButton" layoutX="26.0" layoutY="144.0" mnemonicParsing="false" onAction="#handleViewOwnedTickets" prefHeight="56.0" prefWidth="162.0" text="View Owned Tickets" textAlignment="CENTER" wrapText="true" />
+      <Label layoutX="207.0" layoutY="32.0" text="Submitted tickets">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-       <Button fx:id="updateButton" layoutX="26.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleUpdateAction" prefHeight="26.0" prefWidth="130.0" text="Update" />
+       <Button fx:id="updateButton" layoutX="26.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleUpdateAction" prefHeight="26.0" prefWidth="162.0" text="Update" />
       <RadioButton fx:id="waitingFilter" layoutX="26.0" layoutY="281.0" mnemonicParsing="false" text="WAITING" />
       <RadioButton fx:id="inProgressFilter" layoutX="26.0" layoutY="303.0" mnemonicParsing="false" text="IN PROGRESS" />
       <RadioButton fx:id="doneFilter" layoutX="26.0" layoutY="327.0" mnemonicParsing="false" text="DONE" />
-      <Button fx:id="filterButton" layoutX="26.0" layoutY="357.0" mnemonicParsing="false" onAction="#handleFilterAction" prefHeight="26.0" prefWidth="130.0" text="Filter" />
-      <Button fx:id="addNewTicketTypeButton" layoutX="25.0" layoutY="246.0" mnemonicParsing="false" onAction="#handleAddNewTicketTypeAction" prefHeight="31.0" prefWidth="130.0" text="Add new ticket type" />
-      <ChoiceBox fx:id="ticketTypeField" layoutX="359.0" layoutY="29.0" prefWidth="150.0" />
-      <Button fx:id="addNewTicketButton" layoutX="531.0" layoutY="30.0" mnemonicParsing="false" onAction="#handleAddNewTicketAction" text="Add ticket" />
-      <Button fx:id="deleteTicketButton" layoutX="26.0" layoutY="106.0" mnemonicParsing="false" onAction="#handleDeleteTicket" prefHeight="26.0" prefWidth="130.0" text="Delete Ticket" />
+      <Button fx:id="filterButton" layoutX="26.0" layoutY="357.0" mnemonicParsing="false" onAction="#handleFilterAction" prefHeight="26.0" prefWidth="162.0" text="Filter" />
+      <Button fx:id="addNewTicketTypeButton" layoutX="25.0" layoutY="246.0" mnemonicParsing="false" onAction="#handleAddNewTicketTypeAction" prefHeight="31.0" prefWidth="162.0" text="Add new ticket type" />
+      <ChoiceBox fx:id="ticketTypeField" layoutX="412.0" layoutY="30.0" prefWidth="150.0" />
+      <Button fx:id="addNewTicketButton" layoutX="571.0" layoutY="30.0" mnemonicParsing="false" onAction="#handleAddNewTicketAction" text="Add ticket" />
+      <Button fx:id="deleteTicketButton" layoutX="26.0" layoutY="106.0" mnemonicParsing="false" onAction="#handleDeleteTicket" prefHeight="26.0" prefWidth="162.0" text="Delete Ticket" />
     </children>
 </AnchorPane>

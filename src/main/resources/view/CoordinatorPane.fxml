@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane prefHeight="642.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.biletomat.controller.CoordinatorController">
+<AnchorPane prefHeight="642.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.biletomat.controller.CoordinatorController">
    <children>
        <Label fx:id="login" alignment="CENTER_RIGHT" layoutX="466.0" layoutY="16.0" prefHeight="21.0" prefWidth="150.0" />
-       <Button fx:id="addITTicketButton" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleAddITTicket" prefHeight="26.0" prefWidth="211.0" text="Add IT Ticket" />
+       <Button fx:id="addNewTicketButton" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleAddNewTicketAction" prefHeight="26.0" prefWidth="207.0" text="Add Ticket" />
 
        <TableView fx:id="ticketsTable" layoutY="77.0" prefHeight="523.0" prefWidth="750.0" BorderPane.alignment="CENTER">
                <columns>
@@ -19,8 +23,8 @@
                    <TableColumn fx:id="dateColumn" prefWidth="150.0" text="Date" />
                </columns>
            </TableView>
-       <Button fx:id="updateButton" layoutX="10.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleUpdateAction" text="User View/ Refresh User View" />
-       <Button fx:id="refreshButton" layoutX="230.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleRefreshAction" text="Coordinator View/ Refresh Coordinator View" />
+       <Button fx:id="updateButton" layoutX="10.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleUpdateAction" text="User View/Refresh User View" />
+       <Button fx:id="refreshButton" layoutX="230.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleRefreshAction" text="Coordinator View/Refresh Coordinator View" />
 
        <Button fx:id="viewTicketButton" layoutX="14.0" layoutY="606.0" mnemonicParsing="false" onAction="#handleViewTicket" text="View ticket" />
 
@@ -32,6 +36,7 @@
          </cursor>
       </ChoiceBox>
       <Button layoutX="628.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="25.0" prefWidth="100.0" text="Back" />
-      <ChoiceBox fx:id="ticketTypeField" layoutX="300.0" layoutY="11.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="ticketTypeField" layoutX="230.0" layoutY="14.0" prefWidth="150.0" />
+      <Button fx:id="deleteTicketButton" layoutX="114.0" layoutY="606.0" mnemonicParsing="false" onAction="#handleDeleteTicket" prefHeight="26.0" prefWidth="142.0" text="Delete Ticket" />
    </children>
 </AnchorPane>
