@@ -51,7 +51,7 @@ public class UserController {
     @FXML
     protected TableColumn<Ticket, TicketStatus> statusColumn;
     @FXML
-    private TableColumn<Ticket, Coordinator> userColumn;
+    private TableColumn<Ticket, User> userColumn;
     @FXML
     private TableColumn<Ticket, Date> dateColumn;
     @FXML
@@ -109,7 +109,10 @@ public class UserController {
             return dateCell;
         });
         dateColumn.setCellValueFactory(dataValue -> dataValue.getValue().getDateProperty());
-
+        this.tickets = FXCollections.observableArrayList(ticket -> new Observable[]{
+                waitingFilter.selectedProperty(),
+                doneFilter.selectedProperty(),
+                inProgressFilter.selectedProperty()});
         //setChangeOnFilterRadioButton(waitingFilter);
         //setChangeOnFilterRadioButton(doneFilter);
         //setChangeOnFilterRadioButton(inProgressFilter);
@@ -186,11 +189,7 @@ public class UserController {
     }
 
     public void setTickets(ObservableList<Ticket> tickets) {
-        this.tickets = FXCollections.observableArrayList(ticket -> new Observable[]{
-                waitingFilter.selectedProperty(),
-                doneFilter.selectedProperty(),
-                inProgressFilter.selectedProperty()});
-        this.tickets.addAll(tickets);
+        this.tickets.setAll(tickets);
         filteredTickets = new FilteredList<>(this.tickets, this::ticketFilter);
         ticketsTable.setItems(filteredTickets);
     }
@@ -294,16 +293,25 @@ public class UserController {
 
     @FXML
     public void handleViewOwnedTickets(ActionEvent event) throws IOException{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CoordinatorPane.fxml"));
-        Parent coordinate = loader.load();
-
-        CoordinatorController controller = loader.getController();
-        controller.setUser(user);
-
-        Scene scene = new Scene(coordinate);
-        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appStage.setScene(scene);
-        appStage.show();
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CoordinatorPane.fxml"));
+//        Parent coordinate = loader.load();
+//
+//        CoordinatorController controller = loader.getController();
+//        controller.setUser(user);
+//
+//        Scene scene = new Scene(coordinate);
+//        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        appStage.setScene(scene);
+//        appStage.show();
+        String viewOwnedTickets = "View Owned Tickets";
+        String viewSubmittedTickets = "View Submitted Tickets";
+        if(viewOwnedTicketsButton.textProperty().getValue().equals(viewOwnedTickets)) {
+            setTickets(((Coordinator) user).getOwnedTickets());
+            viewOwnedTicketsButton.textProperty().setValue(viewSubmittedTickets);
+        }else{
+            setTickets(((Coordinator) user).getOwnedTickets());
+            viewOwnedTicketsButton.textProperty().setValue(viewOwnedTickets);
+        }
     }
 
     private void setButtonsVisibility(){
