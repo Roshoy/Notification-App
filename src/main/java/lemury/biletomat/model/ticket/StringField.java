@@ -2,6 +2,7 @@ package lemury.biletomat.model.ticket;
 
 import lemury.biletomat.query.QueryExecutor;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class StringField extends Field {
@@ -25,5 +26,22 @@ public class StringField extends Field {
             e.printStackTrace();
         }
         return tickID;
+    }
+
+
+    public static int countFields(int ticket_id){
+        String sql = String.format("SELECT COUNT(*) as counter FROM %s WHERE ticket_id = %d", TABLE_NAME, ticket_id);
+        System.out.println(sql);
+        int counter = 0;
+
+        try {
+            ResultSet rs = QueryExecutor.read(sql);
+            counter = QueryExecutor.readIdFromResultSet(rs);
+            System.out.println(counter);
+            //return findTicketById(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return counter;
     }
 }

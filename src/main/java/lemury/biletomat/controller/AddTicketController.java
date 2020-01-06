@@ -6,12 +6,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import jdk.vm.ci.meta.Local;
 import lemury.biletomat.model.ticket.*;
 import lemury.biletomat.model.users.Coordinator;
 import lemury.biletomat.model.users.User;
 import lemury.biletomat.utils.DateFormatter;
-
+//import lemury.biletomat.utils.DateFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
@@ -117,38 +116,6 @@ public class AddTicketController {
             valueField[i] = new TextField();
         }
 
-/*
-        pane1.getChildren().add(valueField[counter]);
-        pane1.getChildren().add(nameFields[counter]);
-        pane1.getChildren().add(reqFields[counter]);
-        pane1.getChildren().add(typeFields[counter]);
-
-        int y = gap*counter;
-        nameFields[counter].setLayoutX(nameX );
-        nameFields[counter].setLayoutY(labelY + y);
-
-        reqFields[counter].setLayoutX(requiredX );
-        reqFields[counter].setLayoutY(labelY+ y);
-
-        valueField[counter].setLayoutX(valueFieldX);
-        valueField[counter].setLayoutY(valueFieldY + y);
-
-        typeFields[counter].setLayoutX(typeX);
-        typeFields[counter].setLayoutY(labelY + y);
-
-
-        nameFields[counter].setText(this.fieldName.getText());
-        typeFields[counter].setText(this.dataTypeField.getValue());
-
-        /*
-        if(this.requiredRadioButton.isSelected()){
-            reqFields[counter].setText("true");
-        }
-        else{
-            reqFields[counter].setText("false");
-        }
-         */
-
     };
 
 
@@ -166,7 +133,7 @@ public class AddTicketController {
             new Alert(Alert.AlertType.ERROR, "Fulfill title field and description field  ").showAndWait();
         }
 
-        DateFormatter dateFormatter = new DateFormatter("dd.MM.yyyy", "M/dd/yyyy");
+        DateFormatter dateFormatter = new lemury.biletomat.utils.DateFormatter("dd.MM.yyyy", "M/dd/yyyy");
 
         for (int i =0; i<counter; i++){
             if(valueField[i].getText().isEmpty() && reqFields[i].getText().equals("1")){
@@ -193,7 +160,12 @@ public class AddTicketController {
         for(int i = 0; i<counter; i++){
             if(typeFields[i].getText().equals("int")){
                 int field_id = TicketStructure.getTicketStructureDetailsIdFromId(ticketStructureId, nameFields[i].getText());
-                IntField.create(field_id, ticketId, Integer.parseInt(valueField[i].getText()));
+                if(valueField[i].getText().isEmpty()){
+                    IntField.create(field_id, ticketId);
+                }
+                else {
+                    IntField.create(field_id, ticketId, Integer.parseInt(valueField[i].getText()));
+                }
             }
             else if(typeFields[i].getText().equals("string")){
                 int field_id = TicketStructure.getTicketStructureDetailsIdFromId(ticketStructureId, nameFields[i].getText());
