@@ -40,6 +40,7 @@ public class LoggingController {
             informationLabel.setText("Zalogowano");
             informationLabel.setVisible(true);
             User user = optionalUser.get();
+            user.updateTickets();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UserPane.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

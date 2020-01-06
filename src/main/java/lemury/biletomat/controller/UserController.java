@@ -1,8 +1,11 @@
 package lemury.biletomat.controller;
 
+import javafx.beans.Observable;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
@@ -107,9 +110,9 @@ public class UserController {
         });
         dateColumn.setCellValueFactory(dataValue -> dataValue.getValue().getDateProperty());
 
-        setChangeOnFilterRadioButton(waitingFilter);
-        setChangeOnFilterRadioButton(doneFilter);
-        setChangeOnFilterRadioButton(inProgressFilter);
+        //setChangeOnFilterRadioButton(waitingFilter);
+        //setChangeOnFilterRadioButton(doneFilter);
+        //setChangeOnFilterRadioButton(inProgressFilter);
     }
 
     private void setChangeOnFilterRadioButton(RadioButton button){
@@ -117,11 +120,11 @@ public class UserController {
             @Override
             public void changed(ObservableValue<? extends Boolean> obs, Boolean wasPreviouslySelected,
                                 Boolean isNowSelected) {
-                if (isNowSelected) {
-                    filteredTickets.addAll(user.getSubmittedTickets().filtered(
+                if (!wasPreviouslySelected && isNowSelected) {
+                    filteredTickets.addAll(tickets.filtered(
                             ticket -> ticket.status().name().equalsIgnoreCase(button.getText())));
-                } else {
-                    filteredTickets.removeAll(user.getSubmittedTickets().filtered(
+                } else if (wasPreviouslySelected && !isNowSelected){
+                    filteredTickets.removeAll(tickets.filtered(
                             ticket -> ticket.status().name().equalsIgnoreCase(button.getText())));
                 }
             }
@@ -177,13 +180,18 @@ public class UserController {
     public void setUser(User user) {
         this.user = user;
         this.login.setText(user.getLogin());
-        ticketsTable.setItems(user.getSubmittedTickets());
+        //ticketsTable.setItems(user.getSubmittedTickets());
         setButtonsVisibility();
+        setTickets(user.getSubmittedTickets());
     }
 
     public void setTickets(ObservableList<Ticket> tickets) {
-        this.tickets = tickets;
-        filteredTickets = tickets.filtered(t -> true);
+        this.tickets = FXCollections.observableArrayList(ticket -> new Observable[]{
+                waitingFilter.selectedProperty(),
+                doneFilter.selectedProperty(),
+                inProgressFilter.selectedProperty()});
+        this.tickets.addAll(tickets);
+        filteredTickets = new FilteredList<>(this.tickets, this::ticketFilter);
         ticketsTable.setItems(filteredTickets);
     }
 
@@ -208,6 +216,16 @@ public class UserController {
         //setTickets(Ticket.getTicketsList(this.user));
 
         initialize();
+    }
+
+    private boolean ticketFilter(Ticket ticket){
+        boolean a = (waitingFilter.selectedProperty().get() &&
+                ticket.status().name().equalsIgnoreCase(waitingFilter.getText())) ||
+                (inProgressFilter.selectedProperty().get() &&
+                ticket.status().name().equalsIgnoreCase("in_progress")) ||
+                (doneFilter.selectedProperty().get() &&
+                ticket.status().name().equalsIgnoreCase(doneFilter.getText()));
+        return a;
     }
 
     @FXML
@@ -237,7 +255,7 @@ public class UserController {
             done = false;
         }
 
-        setTickets(Ticket.filterTicketList(user, waiting, inProgress, done));
+        //setTickets(Ticket.filterTicketList(user, waiting, inProgress, done));
     }
 
     @FXML
