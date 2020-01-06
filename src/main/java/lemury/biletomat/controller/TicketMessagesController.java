@@ -66,6 +66,8 @@ public class TicketMessagesController {
 
     @FXML
     public void initialize() {
+        messageHistoryContainer.vvalueProperty().bind(messageHistoryVBox.heightProperty());
+
         for(int i =0; i <10; i++){
             labelsInt[i] = new Label();
             labelsString[i]= new Label();
@@ -185,10 +187,12 @@ public class TicketMessagesController {
 
     @FXML
     public void handleSendMessageAction() {
-        Optional<Message> newMessage = Message.create(this.ticket.id(), this.user.id(), this.newMessageTextField.getText());
-        if(newMessage.isPresent()) {
-            this.messages.add(newMessage.get());
-            readMessages();
+        if (this.newMessageTextField.getText().trim().length() > 0) {
+            Optional<Message> newMessage = Message.create(this.ticket.id(), this.user.id(), this.newMessageTextField.getText());
+            if (newMessage.isPresent()) {
+                this.messages.add(newMessage.get());
+                readMessages();
+            }
         }
     }
 }
