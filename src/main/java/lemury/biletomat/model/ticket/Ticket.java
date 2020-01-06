@@ -23,6 +23,7 @@ import java.util.Optional;
 public class Ticket {
     private final int id;
     private static final String TABLE_NAME = "TICKETS";
+    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private ObjectProperty<Coordinator> owner; //if feels wierd, change (guy who takes care of this ticket, coordinator)
     private ObjectProperty<User> submitter;
@@ -83,7 +84,6 @@ public class Ticket {
     //Changet type of returning value from Oprional<ticket> to int
     public static int create(int coordinatorID, int userID, String title, String description) {
         Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         String dateString = dateFormat.format(date);
         String insertSql = String.format("INSERT INTO %s (COORDINATOR_ID, USER_ID, TITLE, DESCRIPTION, STATUS, DATE) VALUES (%d, %d, '%s', '%s', 'WAITING', '%s');",
                 TABLE_NAME, coordinatorID, userID, title, description, dateString);
@@ -108,7 +108,8 @@ public class Ticket {
         String findBySql = String.format("SELECT * FROM %s WHERE id = %d;", TABLE_NAME, id);
         try {
             ResultSet rs = QueryExecutor.read(findBySql);
-            Date ticketDate = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").parse(rs.getString("DATE"));
+            Date ticketDate = dateFormat.parse(rs.getString("DATE"));
+            System.out.println(ticketDate);
             return Optional.of(new Ticket(id, Coordinator.findCoordinatorById(rs.getInt("coordinator_id")).get(),
                     User.findById(rs.getInt("user_id")).get(),
                     rs.getString("title"),
@@ -164,7 +165,7 @@ public class Ticket {
         try {
             ResultSet rs = QueryExecutor.read(sqlQuery);
             while(rs.next()) {
-                Date ticketDate = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").parse(rs.getString("DATE"));
+                Date ticketDate = dateFormat.parse(rs.getString("DATE"));
                 Ticket ticket = new Ticket(rs.getInt("id"),
                         (Coordinator)Coordinator.findById(rs.getInt("coordinator_id")).get(),
                         User.findById(rs.getInt("user_id")).get(), rs.getString("title"),
