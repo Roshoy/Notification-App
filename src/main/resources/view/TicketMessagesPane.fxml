@@ -26,7 +26,7 @@
         <Button fx:id="refreshButton" layoutX="565.0" layoutY="121.0" onAction="#handleRefreshAction" prefWidth="150.0" text="Refresh messages" />
 
         <VBox fx:id="messageHistoryVBox" layoutX="40.0" layoutY="180.0" prefWidth="650.0" />
-        <ScrollPane fx:id="messageHistoryContainer" layoutX="40.0" layoutY="151.0" prefHeight="200.0" prefWidth="675.0" />
+        <ScrollPane fx:id="messageHistoryContainer" layoutX="40.0" layoutY="151.0" prefHeight="200.0" prefWidth="675.0" vvalue="1.0" />
 
         <Label layoutX="41.0" layoutY="368.0" text="New message:" />
         <TextField fx:id="newMessageTextField" layoutX="150.0" layoutY="363.0" prefWidth="400.0" promptText="Put your message here" />
