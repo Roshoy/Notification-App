@@ -54,7 +54,7 @@ public class UserController {
     @FXML
     protected TableColumn<Ticket, TicketStatus> statusColumn;
     @FXML
-    private TableColumn<Ticket, User> userColumn;
+    private TableColumn<Ticket, Coordinator> userColumn;
     @FXML
     private TableColumn<Ticket, Date> dateColumn;
     @FXML
@@ -198,11 +198,7 @@ public class UserController {
     }
 
     public void setTickets(ObservableList<Ticket> tickets) {
-        this.tickets = FXCollections.observableArrayList(ticket -> new Observable[]{
-                waitingFilter.selectedProperty(),
-                doneFilter.selectedProperty(),
-                inProgressFilter.selectedProperty()});
-        this.tickets.addAll(tickets);
+        this.tickets.setAll(tickets);
         filteredTickets = new FilteredList<>(this.tickets, this::ticketFilter);
         ticketsTable.setItems(filteredTickets);
     }
