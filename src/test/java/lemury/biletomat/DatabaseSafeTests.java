@@ -379,6 +379,15 @@ public class DatabaseSafeTests {
         Assert.assertFalse(resultSet.next());
     }
 
+    @Test
+    public void deleteTicketTest() {
+        int newTicketId = Ticket.create(exampleCoordinatorId, exampleUserId, "testowy", "opisopis");
+
+        Ticket.deleteTicketById(newTicketId);
+        Optional<Ticket> optTicket = Ticket.findTicketById(newTicketId);
+        Assert.assertEquals(Optional.empty(), optTicket);
+    }
+
     // MESSAGE CLASS TESTS ---------------------------------------------------------------------------------------------
     @Test
     public void createMessageTest() {

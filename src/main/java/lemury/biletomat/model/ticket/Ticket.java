@@ -184,6 +184,16 @@ public class Ticket {
         return result;
     }
 
+    public static void deleteTicketById(int ticketId) {
+        String sqlQuery = String.format("DELETE FROM %s WHERE id = %d;", TABLE_NAME, ticketId);
+
+        try {
+            QueryExecutor.delete(sqlQuery);
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setTicketStatus(TicketStatus newTicketStatus) {
         String sqlQuery = String.format("UPDATE %s SET STATUS = '%s' WHERE ID = %d;", TABLE_NAME, newTicketStatus.toString(), this.id);
         try {

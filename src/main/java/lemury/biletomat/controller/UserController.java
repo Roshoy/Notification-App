@@ -16,6 +16,7 @@ import lemury.biletomat.model.ticket.TicketStructure;
 import lemury.biletomat.model.users.Coordinator;
 import lemury.biletomat.model.users.User;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -24,8 +25,10 @@ import java.util.Date;
 public class UserController {
     @FXML
     protected Label login = new Label();
+    /*
     @FXML
     private Button addITTicketButton;
+    */
     @FXML
     private Button menageUsersButton;
     @FXML
@@ -60,8 +63,8 @@ public class UserController {
     private ChoiceBox<String> ticketTypeField;
     @FXML
     private Button addNewTicketButton;
-
-
+    @FXML
+    private Button deleteTicketButton;
 
     @FXML
     private Button logoutButton;
@@ -105,6 +108,7 @@ public class UserController {
         dateColumn.setCellValueFactory(dataValue -> dataValue.getValue().getDateProperty());
     }
 
+    /*
     @FXML
     private void handleAddITTicket(ActionEvent event) throws SQLException, IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddITTicketPane.fxml"));
@@ -119,6 +123,7 @@ public class UserController {
         appStage.setScene(scene);
         appStage.show();
     }
+    */
 
     @FXML
     private void handleAddNewTicketTypeAction(ActionEvent event) throws SQLException, IOException {
@@ -267,6 +272,17 @@ public class UserController {
         appStage.show();
     }
 
+    @FXML
+    public void handleDeleteTicket(ActionEvent event) throws IOException {
+        ObservableList<Ticket> toRemove = ticketsTable.getSelectionModel().getSelectedItems();
+
+        for(Ticket ticket : toRemove) {
+            Ticket.deleteTicketById(ticket.id());
+        }
+
+        this.tickets.removeAll(toRemove);
+    }
+
     private void setButtonsVisibility(){
         menageUsersButton.managedProperty().bind(menageUsersButton.visibleProperty());
         viewOwnedTicketsButton.managedProperty().bind(viewOwnedTicketsButton.visibleProperty());
@@ -280,6 +296,5 @@ public class UserController {
             menageUsersButton.setVisible(false);
             addNewTicketTypeButton.setVisible(false);
         }
-
     }
 }
