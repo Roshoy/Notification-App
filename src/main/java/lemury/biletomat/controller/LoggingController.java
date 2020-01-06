@@ -1,6 +1,7 @@
 package lemury.biletomat.controller;
 
 import lemury.biletomat.model.ticket.Ticket;
+import lemury.biletomat.model.users.Coordinator;
 import lemury.biletomat.model.users.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,6 +41,11 @@ public class LoggingController {
             informationLabel.setText("Zalogowano");
             informationLabel.setVisible(true);
             User user = optionalUser.get();
+            optionalUser = Coordinator.findById(user.id());
+            if(optionalUser.isPresent()){
+                user = optionalUser.get();
+            }
+
             user.updateTickets();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UserPane.fxml"));
