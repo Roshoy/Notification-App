@@ -141,9 +141,13 @@ public class UserController {
         Parent addTicketType = loader.load();
 
         AddTicketController controller = loader.getController();
+        controller.setTicketName(this.ticketTypeField.getValue());
+
+        System.out.println(this.ticketTypeField.getValue());
         controller.setUser(user);
         controller.setLogin(login.getText());
 
+        controller.actualiseView();
         Scene scene = new Scene(addTicketType);
         Stage appStage = new Stage();
         appStage.setScene(scene);

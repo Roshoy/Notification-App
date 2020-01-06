@@ -35,6 +35,8 @@ public class AddNewTicketTypeController {
     @FXML
     private RadioButton requiredRadioButton;
 
+    int deptID;
+
     int counter = 0;
 
     final int valueFieldX = 26;
@@ -89,6 +91,7 @@ public class AddNewTicketTypeController {
             new Alert(Alert.AlertType.ERROR, "Fulfill ticket type field").showAndWait();
         }
         else{
+            deptID = Department.findIdByName((String) this.departmentField.getValue());
             //System.out.println(this.departmentField.getValue());
             this.requiredRadioButton.setVisible(true);
             this.ticketTypeName.setDisable(true);
@@ -157,7 +160,8 @@ public class AddNewTicketTypeController {
     @FXML
     private void handleSubmitAction(ActionEvent event){
 
-        TicketStructure ticketStructure = new TicketStructure(this.ticketTypeName.getText());
+
+        TicketStructure ticketStructure = new TicketStructure(this.ticketTypeName.getText(), deptID);
 
         for(int i = 0; i<counter; i++){
             if(this.typeFields[i].getText() == "Int"){
