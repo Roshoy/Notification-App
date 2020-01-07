@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
@@ -15,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.stage.Stage;
 import lemury.biletomat.model.ticket.Ticket;
 import lemury.biletomat.model.ticket.TicketStatus;
@@ -27,6 +29,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class UserController {
     @FXML
@@ -82,6 +85,18 @@ public class UserController {
     private ObservableList<Ticket> tickets;
     private FilteredList<Ticket> filteredTickets;
 
+    private ListChangeListener<Ticket> ticketsListener = c -> {
+        while(c.next()){
+            if(c.wasAdded()){
+                this.tickets.addAll(c.getAddedSubList());
+            }
+            if(c.wasRemoved()) {
+                this.tickets.removeAll(c.getRemoved());
+            }
+        }
+    };
+
+
     @FXML
     protected void initialize() {
         ticketTypeField.setItems(TicketStructure.getNames());
@@ -116,25 +131,8 @@ public class UserController {
                 waitingFilter.selectedProperty(),
                 doneFilter.selectedProperty(),
                 inProgressFilter.selectedProperty()});
-        //setChangeOnFilterRadioButton(waitingFilter);
-        //setChangeOnFilterRadioButton(doneFilter);
-        //setChangeOnFilterRadioButton(inProgressFilter);
-    }
 
-    private void setChangeOnFilterRadioButton(RadioButton button){
-        button.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> obs, Boolean wasPreviouslySelected,
-                                Boolean isNowSelected) {
-                if (!wasPreviouslySelected && isNowSelected) {
-                    filteredTickets.addAll(tickets.filtered(
-                            ticket -> ticket.status().name().equalsIgnoreCase(button.getText())));
-                } else if (wasPreviouslySelected && !isNowSelected){
-                    filteredTickets.removeAll(tickets.filtered(
-                            ticket -> ticket.status().name().equalsIgnoreCase(button.getText())));
-                }
-            }
-        });
+        statusColumn.setCellFactory(ComboBoxTableCell.forTableColumn(TicketStatus.values()));
     }
 
     /*
@@ -198,6 +196,7 @@ public class UserController {
     }
 
     public void setTickets(ObservableList<Ticket> tickets) {
+        tickets.addListener(ticketsListener);
         this.tickets.setAll(tickets);
         filteredTickets = new FilteredList<>(this.tickets, this::ticketFilter);
         ticketsTable.setItems(filteredTickets);
@@ -217,53 +216,21 @@ public class UserController {
         appStage.show();
     }
 
-
-
     @FXML
     public void handleUpdateAction() {
-        //setTickets(Ticket.getTicketsList(this.user));
-
-        initialize();
     }
 
     private boolean ticketFilter(Ticket ticket){
-        boolean a = (waitingFilter.selectedProperty().get() &&
+        return (waitingFilter.selectedProperty().get() &&
                 ticket.status().name().equalsIgnoreCase(waitingFilter.getText())) ||
                 (inProgressFilter.selectedProperty().get() &&
                 ticket.status().name().equalsIgnoreCase("in_progress")) ||
                 (doneFilter.selectedProperty().get() &&
                 ticket.status().name().equalsIgnoreCase(doneFilter.getText()));
-        return a;
     }
 
     @FXML
     public void handleFilterAction(){
-        boolean waiting;
-        boolean inProgress;
-        boolean done;
-
-        if(waitingFilter.isSelected()){
-            waiting = true;
-        }
-        else{
-            waiting = false;
-        }
-
-        if(inProgressFilter.isSelected()){
-            inProgress = true;
-        }
-        else{
-            inProgress = false;
-        }
-
-        if(doneFilter.isSelected()){
-            done = true;
-        }
-        else{
-            done = false;
-        }
-
-        //setTickets(Ticket.filterTicketList(user, waiting, inProgress, done));
     }
 
     @FXML
@@ -302,24 +269,18 @@ public class UserController {
 
     @FXML
     public void handleViewOwnedTickets(ActionEvent event) throws IOException{
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CoordinatorPane.fxml"));
-//        Parent coordinate = loader.load();
-//
-//        CoordinatorController controller = loader.getController();
-//        controller.setUser(user);
-//
-//        Scene scene = new Scene(coordinate);
-//        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        appStage.setScene(scene);
-//        appStage.show();
-        String viewOwnedTickets = "View Owned Tickets";
-        String viewSubmittedTickets = "View Submitted Tickets";
-        if(viewOwnedTicketsButton.textProperty().getValue().equals(viewOwnedTickets)) {
+        String ownedTickets = "Owned Tickets";
+        String submittedTickets = "Submitted Tickets";
+        if(viewOwnedTicketsButton.textProperty().getValue().equals("View " + ownedTickets)) {
+            ticketsTable.setEditable(true);
+            user.getSubmittedTickets().removeListener(ticketsListener);
             setTickets(((Coordinator) user).getOwnedTickets());
-            viewOwnedTicketsButton.textProperty().setValue(viewSubmittedTickets);
+            viewOwnedTicketsButton.textProperty().setValue("View " + submittedTickets);
         }else{
-            setTickets(((Coordinator) user).getOwnedTickets());
-            viewOwnedTicketsButton.textProperty().setValue(viewOwnedTickets);
+            ticketsTable.setEditable(false);
+            ((Coordinator) user).getOwnedTickets().removeListener(ticketsListener);
+            setTickets( user.getSubmittedTickets());
+            viewOwnedTicketsButton.textProperty().setValue("View " + ownedTickets);
         }
     }
 

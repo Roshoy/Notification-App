@@ -42,6 +42,7 @@ public class Ticket {
         this.description = new SimpleStringProperty(description);
         this.status = new SimpleObjectProperty<>(status);
         this.date = new SimpleObjectProperty<>(date);
+        this.status.addListener(c->updateTicket());
     }
 
     public int id() {
@@ -197,6 +198,17 @@ public class Ticket {
         try {
             QueryExecutor.delete(sqlQuery);
         } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateTicket(){
+        String sqlQuery = String.format(
+                "UPDATE %s SET COORDINATOR_ID = %d, USER_ID = %d, TITLE = '%s', DESCRIPTION = '%s', STATUS = '%s', DATE = '%s' WHERE ID = %d;",
+                TABLE_NAME, this.owner.get().id(), this.submitter.get().id(), this.title, this.description, this.status.get(), this.date.get().toString(), this.id);
+        try {
+            QueryExecutor.create(sqlQuery);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
