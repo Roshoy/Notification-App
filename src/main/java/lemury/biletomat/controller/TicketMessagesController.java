@@ -91,7 +91,7 @@ public class TicketMessagesController {
             labelsInt[i].setLayoutX(labelXInt);
             labelsInt[i].setLayoutY(labelY + y);
 
-
+//////Why is this here?????
             String query1 = String.format("SELECT value from TICKET_DETAILS_INT WHERE ticket_id = %d ", ticket.id());
             ResultSet rs1 = QueryExecutor.read(query1);
 

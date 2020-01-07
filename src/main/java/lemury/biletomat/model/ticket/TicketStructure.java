@@ -19,6 +19,7 @@ public class TicketStructure {
     private String name;
     private int department_id;
 
+    //TODO - public -> private and add proper create
     public TicketStructure(String name, int department_id){
         this.name = name;
         this.department_id = department_id;

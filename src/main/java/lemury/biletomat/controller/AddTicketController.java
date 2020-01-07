@@ -99,8 +99,6 @@ public class AddTicketController {
             typeFields[i].setLayoutX(typeX);
             typeFields[i].setLayoutY(labelY + y);
         }
-
-
     }
 
     @FXML

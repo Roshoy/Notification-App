@@ -20,7 +20,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
-public class ManageUsersController extends CoordinatorController {
+public class ManageUsersController/* extends CoordinatorController*/ {
+    private User user;
     private ObservableList<User> users;
     private ObservableList<Coordinator> coordinators;
 
@@ -87,6 +88,11 @@ public class ManageUsersController extends CoordinatorController {
         coordinatorsTable.setItems(coordinators);
     }
 
+
+    public void setUser(User user){
+        this.user = user;
+    }
+
     public void setUsers(ObservableList<User> users) {
         this.users = users;
         usersTable.setItems(users);
@@ -97,8 +103,17 @@ public class ManageUsersController extends CoordinatorController {
         coordinatorsTable.setItems(coordinators);
     }
 
-    protected void setAdministrator(User administrator){
-        this.user = Coordinator.findCoordinatorById(administrator.id()).get();
+    @FXML
+    public void handleLogoutAction() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LoggingPane.fxml"));
+        Parent logging = loader.load();
+        Stage stage = (Stage) logoutButton.getScene().getWindow();
+        stage.close();
+
+        Scene scene = new Scene(logging);
+        Stage appStage = new Stage();
+        appStage.setScene(scene);
+        appStage.show();
     }
 
     @FXML
@@ -134,5 +149,17 @@ public class ManageUsersController extends CoordinatorController {
         Stage appStage = new Stage();
         appStage.setScene(scene);
         appStage.show();
+    }
+
+    @FXML
+    protected void handleBackAction(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UserPane.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+        stage.setScene(new Scene(loader.load()));
+        UserController userController = loader.<UserController>getController();
+        userController.setUser(user);
+        //userController.setTickets(Ticket.getTicketsList(user));
+        stage.show();
     }
 }

@@ -16,6 +16,7 @@ public class IntField extends Field {
     private int value;
     private static final String TABLE_NAME = "TICKET_DETAILS_INT";
 
+    //TODO - public -> private
     public IntField(String name, boolean required, int value) {
         super(name, required, "int");
         this.value = value;

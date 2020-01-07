@@ -11,6 +11,7 @@ public class DateField extends Field {
     private LocalDate date;
     private static final String TABLE_NAME = "TICKET_DETAILS_DATE";
 
+    //TODO - public -> private
     public DateField(String name, boolean required, LocalDate date){
         super(name, required, "date");
         this.date = date;

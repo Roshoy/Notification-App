@@ -74,9 +74,6 @@ public class UserController {
     private Button logoutButton;
     protected User user;
 
-    @FXML
-    protected Button updateButton;
-
     private ObservableList<Ticket> tickets;
     private FilteredList<Ticket> filteredTickets;
 
@@ -135,10 +132,6 @@ public class UserController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddNewTicketTypePane.fxml"));
         Parent addTicketType = loader.load();
 
-        AddNewTicketTypeController controller = loader.getController();
-        //controller.setUser(user);
-        //ontroller.setLogin(login.getText());
-
         Scene scene = new Scene(addTicketType);
         Stage appStage = new Stage();
         appStage.setScene(scene);
@@ -192,10 +185,6 @@ public class UserController {
         appStage.show();
     }
 
-    @FXML
-    public void handleUpdateAction() {
-    }
-
     private boolean ticketFilter(Ticket ticket){
         return (waitingFilter.selectedProperty().get() &&
                 ticket.status().name().equalsIgnoreCase(waitingFilter.getText())) ||
@@ -211,7 +200,7 @@ public class UserController {
         Parent manageUsers = loader.load();
 
         ManageUsersController menageUsers = loader.getController();
-        menageUsers.setAdministrator(user);
+        menageUsers.setUser(user);
 
         Scene scene = new Scene(manageUsers);
         Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -259,7 +248,7 @@ public class UserController {
     }
 
     @FXML
-    public void handleDeleteTicket(ActionEvent event) throws IOException {
+    public void handleDeleteTicket(ActionEvent event){
         ObservableList<Ticket> toRemove = ticketsTable.getSelectionModel().getSelectedItems();
 
         for(Ticket ticket : toRemove) {

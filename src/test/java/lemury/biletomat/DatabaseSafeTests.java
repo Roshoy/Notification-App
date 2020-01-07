@@ -354,20 +354,6 @@ public class DatabaseSafeTests {
             Assert.assertTrue(ticketList.contains(optTicket.get()));
         }
     }
-    @Test
-    public void filterTest() {
-        Optional<Ticket> optTicket = Ticket.findTicketById(exampleTicketId);
-        Optional<User> optUser = User.findById(exampleUserId);
-
-        if(optTicket.isPresent() && optUser.isPresent()) {
-            List<Ticket> filteredList1 = Ticket.filterTicketList(optUser.get(), true, false, false);
-            Assert.assertTrue(filteredList1.contains(optTicket.get()));
-
-            optTicket.get().setTicketStatus(TicketStatus.IN_PROGRESS);
-            List<Ticket> filteredList2 = Ticket.filterTicketList(optUser.get(), false, true, true);
-            Assert.assertTrue(filteredList2.contains(optTicket.get()));
-        }
-    }
 
     //we should not be able to create it ticket without base ticket in database
     @Test

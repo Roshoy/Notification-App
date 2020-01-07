@@ -9,6 +9,7 @@ public class StringField extends Field {
     private String value;
     private static final String TABLE_NAME = "TICKET_DETAILS_STRING";
 
+    //TODO - public -> private
     public StringField(String name, boolean required, String value){
         super(name, required, "string");
         this.value = value;
