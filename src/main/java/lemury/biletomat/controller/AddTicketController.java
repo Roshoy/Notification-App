@@ -129,8 +129,9 @@ public class AddTicketController {
         int minimalTicketsNumber = Integer.MAX_VALUE;
         int coordinatorID = -1;
         for(Coordinator coordinator : depCoordinators) {
-            if(coordinator.ownedTickets().size() < minimalTicketsNumber) {
-                minimalTicketsNumber = coordinator.ownedTickets().size();
+            coordinator.updateTickets();
+            if(coordinator.getOwnedTickets().size() < minimalTicketsNumber) {
+                minimalTicketsNumber = coordinator.getOwnedTickets().size();
                 coordinatorID = coordinator.id();
             }
         }

@@ -41,6 +41,7 @@ public class Ticket {
         this.description = new SimpleStringProperty(description);
         this.status = new SimpleObjectProperty<>(status);
         this.date = new SimpleObjectProperty<>(date);
+        this.ticketMessages = Message.getMessagesForTicket(this);
         this.status.addListener(c->updateTicket());
     }
 
