@@ -33,6 +33,8 @@ public class Department {
         return Name;
     }
 
+    public Set<Coordinator> coordinators() { return coordinators; }
+
     /*
     public ticket CreateNewTicket(){ //Is it SRP friendly?
         return new ticket();

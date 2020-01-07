@@ -1,11 +1,9 @@
 package lemury.biletomat;
 
+import javafx.collections.ObservableList;
 import lemury.biletomat.connection.ConnectionProvider;
 import lemury.biletomat.model.departments.Department;
-import lemury.biletomat.model.ticket.ITTicket;
-import lemury.biletomat.model.ticket.Message;
-import lemury.biletomat.model.ticket.Ticket;
-import lemury.biletomat.model.ticket.TicketStatus;
+import lemury.biletomat.model.ticket.*;
 import lemury.biletomat.model.users.Coordinator;
 import lemury.biletomat.model.users.User;
 import lemury.biletomat.query.QueryExecutor;
@@ -18,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -67,70 +66,17 @@ public class DatabaseSafeTests {
             ConnectionProvider.init("jdbc:sqlite:Database");
         }
 
-
-    @BeforeClass
-    public static void createTables(){
-        try {
-            create("CREATE TABLE IF NOT EXISTS DEPARTMENTS (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "name VARCHAR(50) NOT NULL, " +
-                    "UNIQUE (name)" +
-                    ");");
-
-            create("CREATE TABLE IF NOT EXISTS USERS (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "first_name VARCHAR(50) NOT NULL, " +
-                    "last_name VARCHAR(50) NOT NULL, " +
-                    "login VARCHAR(50) NOT NULL UNIQUE, " +
-                    "password VARCHAR(50) NOT NULL, " +
-                    "department_id INTEGER, " +
-                    "user_type CHAR(1) NOT NULL, " +
-                    "FOREIGN KEY(department_id) references DEPARTMENTS(id) " +
-                    ");");
-
-            create("CREATE TABLE IF NOT EXISTS TICKETS (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "coordinator_id INTEGER NOT NULL, " +
-                    "user_id INTEGER NOT NULL, " +
-                    "title VARCHAR(128) NOT NULL, " +
-                    "description VARCHAR(500) NOT NULL, " +
-                    "status CHAR(15) NOT NULL, " +
-                    "release_notes VARCHAR(500), " +
-                    "date DATE NOT NULL, " +
-                    "FOREIGN KEY(coordinator_id) references USERS(id), " +
-                    "FOREIGN KEY(user_id) references USERS(id) " +
-                    ");");
-
-            create("CREATE TABLE IF NOT EXISTS ITTICKETS (" +
-                    "id INTEGER PRIMARY KEY, " +
-                    "computer_no INTEGER NOT NULL," +
-                    "FOREIGN KEY(id) references TICKETS(id)" +
-                    ");");
-
-            create("CREATE TABLE IF NOT EXISTS MESSAGES (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "date DATE NOT NULL, " +
-                    "ticket_id INT NOT NULL, " +
-                    "author_id INT NOT NULL, " +
-                    "text VARCHAR(500) NOT NULL, " +
-                    "FOREIGN KEY(ticket_id) references TICKETS(id), " +
-                    "FOREIGN KEY(author_id) references USERS(id)" +
-                    ");");
-
-
-        } catch (SQLException e) {
-            //LOGGER.info("Error during create tables: " + e.getMessage());
-            throw new RuntimeException("Cannot create tables");
-        }
-    }
-
-
     @Before
     public void setUp() throws SQLException {
         QueryExecutor.delete("DELETE FROM USERS;");
         QueryExecutor.delete("DELETE FROM DEPARTMENTS;");
         QueryExecutor.delete("DELETE FROM TICKETS;");
         QueryExecutor.delete("DELETE FROM MESSAGES;");
+        QueryExecutor.delete("DELETE FROM TICKET_STRUCTURE;");
+        QueryExecutor.delete("DELETE FROM TICKET_STRUCTURE_DETAILS;");
+        QueryExecutor.delete("DELETE FROM TICKET_DETAILS_DATE;");
+        QueryExecutor.delete("DELETE FROM TICKET_DETAILS_INT;");
+        QueryExecutor.delete("DELETE FROM TICKET_DETAILS_STRING;");
 
         String insertUserSql = String.format("INSERT INTO USERS (ID, LOGIN, FIRST_NAME, LAST_NAME, PASSWORD, USER_TYPE) VALUES (%d, '%s', '%s', '%s', '%s', '%s');",
                 exampleUserId, exampleUserLogin, exampleUserFirstName, exampleUserLastName, exampleUserPassword, "U");
@@ -235,6 +181,20 @@ public class DatabaseSafeTests {
         }
     }
 
+    @Test
+    public void checkSubmittedTicketsListTest() {
+        Optional<User> optUser = User.findById(exampleUserId);
+        Optional<Ticket> optTicket = Ticket.findTicketById(exampleTicketId);
+
+        if(optTicket.isPresent() && optUser.isPresent()) {
+            User user = optUser.get();
+            Ticket ticket = optTicket.get();
+
+            Assert.assertTrue(user.submittedTickets().size() >= 1);
+            Assert.assertTrue(user.submittedTickets().contains(ticket));
+        }
+    }
+
     // DEPARTMENT CLASS TESTS ------------------------------------------------------------------------------------------
     @Test
     public void createDepartmentTest() {
@@ -261,6 +221,20 @@ public class DatabaseSafeTests {
     public void findDepartmentByNameTest() {
         int id = Department.findIdByName(exampleDepartmentName);
         Assert.assertEquals(exampleDepartmentId, id);
+    }
+
+    @Test
+    public void checkCoordinatorsListTest() {
+        Optional<Department> optDepartment = Department.findById(exampleDepartmentId);
+        Optional<User> optCoordinator = Coordinator.findById(exampleCoordinatorId);
+
+        if(optCoordinator.isPresent() && optDepartment.isPresent()) {
+            Coordinator coordinator = (Coordinator) optCoordinator.get();
+            Department department = optDepartment.get();
+
+            Assert.assertTrue(department.coordinators().size() >= 1);
+            Assert.assertTrue(department.coordinators().contains(coordinator));
+        }
     }
 
     // COORDINATOR CLASS TESTS -----------------------------------------------------------------------------------------
@@ -301,6 +275,20 @@ public class DatabaseSafeTests {
 
             Assert.assertTrue(coordinatorList.contains(coordinator1));
             Assert.assertTrue(coordinatorList.contains(coordinator2));
+        }
+    }
+
+    @Test
+    public void checkOwnedTicketsListTest() {
+        Optional<Ticket> optTicket = Ticket.findTicketById(exampleTicketId);
+        Optional<User> optCoordinator = Coordinator.findById(exampleCoordinatorId);
+
+        if(optCoordinator.isPresent() && optTicket.isPresent()) {
+            Ticket ticket = optTicket.get();
+            Coordinator coordinator = (Coordinator) optCoordinator.get();
+
+            Assert.assertTrue(coordinator.ownedTickets().size() >= 1);
+            Assert.assertTrue(coordinator.ownedTickets().contains(ticket));
         }
     }
 
@@ -388,6 +376,20 @@ public class DatabaseSafeTests {
         Assert.assertEquals(Optional.empty(), optTicket);
     }
 
+    @Test
+    public void checkMessagesListTest() {
+        Optional<Message> optMessage = Message.findMessageById(exampleMessageId);
+        Optional<Ticket> optTicket = Ticket.findTicketById(exampleTicketId);
+
+        if(optMessage.isPresent() && optTicket.isPresent()) {
+            Message message = optMessage.get();
+            Ticket ticket = optTicket.get();
+
+            Assert.assertTrue(ticket.ticketMessages().size() >= 1);
+            Assert.assertTrue(ticket.ticketMessages().contains(message));
+        }
+    }
+
     // MESSAGE CLASS TESTS ---------------------------------------------------------------------------------------------
     @Test
     public void createMessageTest() {
@@ -423,13 +425,37 @@ public class DatabaseSafeTests {
         }
     }
 
+    // TICKET STRUCTURE CLASS TEST -------------------------------------------------------------------------------------
+    @Test
+    public void createTicketStructureTest() {
+        TicketStructure addedStructure = new TicketStructure("Test", exampleDepartmentId);
+        int id = addedStructure.insertToDb();
+
+        Assert.assertNotEquals(0, id);
+        ObservableList<String> names = TicketStructure.getNames();
+
+        Assert.assertTrue(names.contains("Test"));
+    }
+
+    @Test
+    public void createTicketWithFieldsTest() throws SQLException {
+        TicketStructure addedStructure = new TicketStructure("TestF", exampleDepartmentId);
+        addedStructure.addDateField("data", true, LocalDate.now());
+        addedStructure.addIntField("liczba", false, 12);
+        addedStructure.addStringField("tekst", true, "AAAA");
+
+        int id = addedStructure.insertToDb();
+
+        String sqlQuery = String.format("SELECT COUNT(*) AS COUNTER FROM TICKET_STRUCTURE_DETAILS WHERE ticket_structure_id = %d;", id);
+        ResultSet rs = QueryExecutor.read(sqlQuery);
+
+        int count = rs.getInt("COUNTER");
+
+        Assert.assertEquals(3, count);
+    }
+
     @AfterClass
     public static void cleanUp() throws SQLException {
         ConnectionProvider.close();
     }
-
-
-
-
-
 }

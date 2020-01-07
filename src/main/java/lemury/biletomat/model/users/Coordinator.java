@@ -16,7 +16,7 @@ import java.util.Optional;
 
 public class Coordinator extends User {
     private Department department;
-    private List<Ticket> tickets;
+    private List<Ticket> ownedTickets;
 
     protected Coordinator(int id, String firstName, String lastName, String login, String password, Department department, String userType) {
         super(id, firstName, lastName, login, password, userType);
@@ -27,6 +27,8 @@ public class Coordinator extends User {
     public Department getDepartment() {
         return department;
     }
+
+    public List<Ticket> ownedTickets() { return ownedTickets; }
 
     // maybe it could be done better with different type in Optional
     public static Optional<Coordinator> createCoordinatorAccount(String login, String firstName, String lastName, String password, int departmentId){

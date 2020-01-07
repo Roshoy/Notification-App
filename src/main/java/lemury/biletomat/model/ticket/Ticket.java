@@ -15,10 +15,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class Ticket {
     private final int id;
@@ -32,6 +29,8 @@ public class Ticket {
     private StringProperty description;
     private ObjectProperty<TicketStatus> status;
     private ObjectProperty<Date> date;
+
+    private List<Message> ticketMessages;
 
     protected Ticket(int id, Coordinator owner, User submitter, String title, String description, TicketStatus status, Date date) {
         this.id = id;
@@ -80,6 +79,8 @@ public class Ticket {
     public Date date() { return this.date.get(); }
 
     public ObjectProperty<Date> getDateProperty() { return this.date; }
+
+    public List<Message> ticketMessages() { return this.ticketMessages; }
 
     //Changet type of returning value from Oprional<ticket> to int
     public static int create(int coordinatorID, int userID, String title, String description) {

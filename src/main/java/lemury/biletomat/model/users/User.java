@@ -23,7 +23,6 @@ public class User {
 
     private List<Ticket> submittedTickets;
 
-
     protected User(int id, String firstName, String lastName, String login, String password, String userType) {
         this.id = id;
         this.firstName = firstName;
@@ -54,6 +53,8 @@ public class User {
     }
 
     public String getUserType(){return userType;}
+
+    public List<Ticket> submittedTickets() { return submittedTickets; }
 
     public static Optional<User> createUserAccount(String login, String firstName, String lastName, String password){
         if(login.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || password.isEmpty()){
