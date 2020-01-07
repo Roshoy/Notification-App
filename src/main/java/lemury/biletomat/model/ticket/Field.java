@@ -11,14 +11,15 @@ public class Field {
 
     private static final String TABLE_NAME = "TICKET_STRUCTURE_DETAILS";
 
-    public Field(String name, boolean required, String type){
+    protected Field(String name, boolean required, String type){
         this.name = name;
         this.required = required;
         this.type = type;
     }
 
-    public int insertToDb(int ticketStructureId){
-        String insertSql = String.format("INSERT INTO %s(ticket_structure_id, name, required, type) VALUES (%d, '%s', %b, '%s')", TABLE_NAME, ticketStructureId, this.name, this.required, this.type);
+    protected int insertToDb(int ticketStructureId){
+        String insertSql = String.format("INSERT INTO %s(ticket_structure_id, name, required, type) VALUES (%d, '%s', %b, '%s')",
+                TABLE_NAME, ticketStructureId, this.name, this.required, this.type);
         System.out.println(insertSql);
         int id =0;
         try {

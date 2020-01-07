@@ -184,14 +184,16 @@ public class DatabaseSafeTests {
     @Test
     public void checkSubmittedTicketsListTest() {
         Optional<User> optUser = User.findById(exampleUserId);
+
         Optional<Ticket> optTicket = Ticket.findTicketById(exampleTicketId);
 
         if(optTicket.isPresent() && optUser.isPresent()) {
             User user = optUser.get();
+            user.updateTickets();
             Ticket ticket = optTicket.get();
 
-            Assert.assertTrue(user.submittedTickets().size() >= 1);
-            Assert.assertTrue(user.submittedTickets().contains(ticket));
+            Assert.assertTrue(user.getSubmittedTickets().size() >= 1);
+            Assert.assertTrue(user.getSubmittedTickets().contains(ticket));
         }
     }
 
@@ -286,9 +288,10 @@ public class DatabaseSafeTests {
         if(optCoordinator.isPresent() && optTicket.isPresent()) {
             Ticket ticket = optTicket.get();
             Coordinator coordinator = (Coordinator) optCoordinator.get();
+            coordinator.updateTickets();
 
-            Assert.assertTrue(coordinator.ownedTickets().size() >= 1);
-            Assert.assertTrue(coordinator.ownedTickets().contains(ticket));
+            Assert.assertTrue(coordinator.getOwnedTickets().size() >= 1);
+            Assert.assertTrue(coordinator.getOwnedTickets().contains(ticket));
         }
     }
 
@@ -340,20 +343,6 @@ public class DatabaseSafeTests {
 
             Assert.assertTrue(ticketList.size() >= 1);
             Assert.assertTrue(ticketList.contains(optTicket.get()));
-        }
-    }
-    @Test
-    public void filterTest() {
-        Optional<Ticket> optTicket = Ticket.findTicketById(exampleTicketId);
-        Optional<User> optUser = User.findById(exampleUserId);
-
-        if(optTicket.isPresent() && optUser.isPresent()) {
-            List<Ticket> filteredList1 = Ticket.filterTicketList(optUser.get(), true, false, false);
-            Assert.assertTrue(filteredList1.contains(optTicket.get()));
-
-            optTicket.get().setTicketStatus(TicketStatus.IN_PROGRESS);
-            List<Ticket> filteredList2 = Ticket.filterTicketList(optUser.get(), false, true, true);
-            Assert.assertTrue(filteredList2.contains(optTicket.get()));
         }
     }
 

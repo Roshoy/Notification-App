@@ -99,8 +99,6 @@ public class AddTicketController {
             typeFields[i].setLayoutX(typeX);
             typeFields[i].setLayoutY(labelY + y);
         }
-
-
     }
 
     @FXML
@@ -117,8 +115,7 @@ public class AddTicketController {
             valueField[i] = new TextField();
         }
 
-    };
-
+    }
 
     @FXML
     public void handleAddAction(javafx.event.ActionEvent event) throws SQLException {
@@ -132,8 +129,9 @@ public class AddTicketController {
         int minimalTicketsNumber = Integer.MAX_VALUE;
         int coordinatorID = -1;
         for(Coordinator coordinator : depCoordinators) {
-            if(coordinator.ownedTickets().size() < minimalTicketsNumber) {
-                minimalTicketsNumber = coordinator.ownedTickets().size();
+            coordinator.updateTickets();
+            if(coordinator.getOwnedTickets().size() < minimalTicketsNumber) {
+                minimalTicketsNumber = coordinator.getOwnedTickets().size();
                 coordinatorID = coordinator.id();
             }
         }
@@ -191,12 +189,14 @@ public class AddTicketController {
             }
         }
 
+        Ticket ticket = Ticket.findTicketById(ticketId).get();
+        ticket.getSubmitterProperty().setValue(user);
+        user.getSubmittedTickets().add(ticket);
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
         alert.setContentText("Ticket has been added");
 
         alert.showAndWait();
-
-
     }
 }

@@ -1,5 +1,6 @@
 package lemury.biletomat.model.users;
 
+import javafx.beans.property.SimpleListProperty;
 import javafx.collections.ObservableArrayBase;
 import lemury.biletomat.model.departments.Department;
 import lemury.biletomat.model.ticket.Ticket;
@@ -13,23 +14,31 @@ import java.util.*;
 
 public class Coordinator extends User {
     private Department department;
-    private List<Ticket> ownedTickets;
+    private ObservableList<Ticket> ownedTickets;
 
-    protected Coordinator(int id, String firstName, String lastName, String login, String password, Department department, String userType) {
+    protected Coordinator(int id, String firstName, String lastName, String login, String password,
+                          Department department, String userType) {
         super(id, firstName, lastName, login, password, userType);
         this.department = department;
-        this.ownedTickets = new LinkedList<>();
     }
 
+    @Override
+    public void updateTickets(){
+        super.updateTickets();
+        this.ownedTickets = Ticket.getTicketsListOfCoordinator(this);
+    }
 
     public Department getDepartment() {
         return department;
     }
 
-    public List<Ticket> ownedTickets() { return ownedTickets; }
+    public ObservableList<Ticket> getOwnedTickets() {
+        return ownedTickets;
+    }
 
     // maybe it could be done better with different type in Optional
-    public static Optional<Coordinator> createCoordinatorAccount(String login, String firstName, String lastName, String password, int departmentId){
+    public static Optional<Coordinator> createCoordinatorAccount(String login, String firstName, String lastName,
+                                                                 String password, int departmentId){
         String insertSql = String.format("INSERT INTO %s (LOGIN, FIRST_NAME, LAST_NAME, PASSWORD, DEPARTMENT_ID, USER_TYPE) VALUES ('%s', '%s', '%s', '%s', %d, '%s');",
                 TABLE_NAME, login, firstName, lastName, password, departmentId, "C");
         try {
