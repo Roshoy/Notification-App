@@ -46,9 +46,9 @@ public class AddTicketController {
 
     final int valueFieldX = 45;
     final int valueFieldY = 157;
-    final int nameX = 200;
-    final int typeX = 388;
-    final int requiredX = 481;
+    final int nameX = 250;
+    final int typeX = 425;
+    final int requiredX = 500;
     final int labelY = 162;
     final int gap = 30;
 
@@ -117,17 +117,28 @@ public class AddTicketController {
 
     }
 
-    //leci null ptr jak nie mamy koordynatorów w danym dziale
     @FXML
     public void handleAddAction(javafx.event.ActionEvent event) throws SQLException {
-        int coordinatorID;
-        ObservableList<Coordinator> coordinators = Coordinator.findCoordinatorsByDepartmentId(this.departmentId);
-        if(coordinators.size() == 0){
+
+        ObservableList<Coordinator> depCoordinators = Coordinator.findCoordinatorsByDepartmentId(this.departmentId);
+        if(depCoordinators.size() == 0){
+            new Alert(Alert.AlertType.ERROR, "Empty department").showAndWait();
+            return;
+        }
+
+        int minimalTicketsNumber = Integer.MAX_VALUE;
+        int coordinatorID = -1;
+        for(Coordinator coordinator : depCoordinators) {
+            if(coordinator.ownedTickets().size() < minimalTicketsNumber) {
+                minimalTicketsNumber = coordinator.ownedTickets().size();
+                coordinatorID = coordinator.id();
+            }
+        }
+
+        if(coordinatorID < 0){
             System.out.println("Brak dostepnych koordynatorów");
             new Alert(Alert.AlertType.ERROR, "No coordinators").showAndWait();
             return;
-        }else{
-            coordinatorID = coordinators.get(0).id();
         }
         if(titleField.getText().isEmpty() || descriptionField.getText().isEmpty()){
             new Alert(Alert.AlertType.ERROR, "Fulfill title field and description field  ").showAndWait();
