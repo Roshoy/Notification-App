@@ -1,5 +1,6 @@
 package lemury.biletomat.controller;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -119,11 +120,24 @@ public class AddTicketController {
     };
 
 
-    //leci null ptr jak nie mamy koordynatorów w danym dziale
     @FXML
     public void handleAddAction(javafx.event.ActionEvent event) throws SQLException {
 
-        int coordinatorID = Coordinator.findCoordinatorsByDepartmentId(this.departmentId).get(0).id();
+        ObservableList<Coordinator> depCoordinators = Coordinator.findCoordinatorsByDepartmentId(this.departmentId);
+        if(depCoordinators.size() == 0){
+            new Alert(Alert.AlertType.ERROR, "Empty department").showAndWait();
+            return;
+        }
+
+        int minimalTicketsNumber = Integer.MAX_VALUE;
+        int coordinatorID = -1;
+        for(Coordinator coordinator : depCoordinators) {
+            if(coordinator.ownedTickets().size() < minimalTicketsNumber) {
+                minimalTicketsNumber = coordinator.ownedTickets().size();
+                coordinatorID = coordinator.id();
+            }
+        }
+
         if(coordinatorID < 0){
             System.out.println("Brak dostepnych koordynatorów");
             new Alert(Alert.AlertType.ERROR, "No coordinators").showAndWait();

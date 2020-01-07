@@ -9,10 +9,7 @@ import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class Coordinator extends User {
     private Department department;
@@ -21,6 +18,7 @@ public class Coordinator extends User {
     protected Coordinator(int id, String firstName, String lastName, String login, String password, Department department, String userType) {
         super(id, firstName, lastName, login, password, userType);
         this.department = department;
+        this.ownedTickets = new LinkedList<>();
     }
 
 
