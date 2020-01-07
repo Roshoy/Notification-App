@@ -204,8 +204,8 @@ public class Ticket {
 
     public void updateTicket(){
         String sqlQuery = String.format(
-                "UPDATE %s SET COORDINATOR_ID = %d, USER_ID = %d, TITLE = '%s', DESCRIPTION = '%s', STATUS = '%s', DATE = '%s' WHERE ID = %d;",
-                TABLE_NAME, this.owner.get().id(), this.submitter.get().id(), this.title, this.description, this.status.get(), this.date.get().toString(), this.id);
+                "UPDATE %s SET COORDINATOR_ID = %d, USER_ID = %d, TITLE = '%s', DESCRIPTION = '%s', STATUS = '%s' WHERE ID = %d;",
+                TABLE_NAME, this.owner.get().id(), this.submitter.get().id(), this.title, this.description, this.status.get(), this.id);
         try {
             QueryExecutor.create(sqlQuery);
         } catch (SQLException e) {

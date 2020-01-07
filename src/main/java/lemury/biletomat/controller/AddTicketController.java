@@ -1,5 +1,6 @@
 package lemury.biletomat.controller;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -116,18 +117,19 @@ public class AddTicketController {
             valueField[i] = new TextField();
         }
 
-    };
-
+    }
 
     //leci null ptr jak nie mamy koordynatorów w danym dziale
     @FXML
     public void handleAddAction(javafx.event.ActionEvent event) throws SQLException {
-
-        int coordinatorID = Coordinator.findCoordinatorsByDepartmentId(this.departmentId).get(0).id();
-        if(coordinatorID < 0){
+        int coordinatorID;
+        ObservableList<Coordinator> coordinators = Coordinator.findCoordinatorsByDepartmentId(this.departmentId);
+        if(coordinators.size() == 0){
             System.out.println("Brak dostepnych koordynatorów");
             new Alert(Alert.AlertType.ERROR, "No coordinators").showAndWait();
             return;
+        }else{
+            coordinatorID = coordinators.get(0).id();
         }
         if(titleField.getText().isEmpty() || descriptionField.getText().isEmpty()){
             new Alert(Alert.AlertType.ERROR, "Fulfill title field and description field  ").showAndWait();
@@ -177,12 +179,14 @@ public class AddTicketController {
             }
         }
 
+        Ticket ticket = Ticket.findTicketById(ticketId).get();
+        ticket.getSubmitterProperty().setValue(user);
+        user.getSubmittedTickets().add(ticket);
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
         alert.setContentText("Ticket has been added");
 
         alert.showAndWait();
-
-
     }
 }

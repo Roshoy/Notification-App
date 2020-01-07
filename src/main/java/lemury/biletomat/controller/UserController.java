@@ -34,10 +34,6 @@ import java.util.List;
 public class UserController {
     @FXML
     protected Label login = new Label();
-    /*
-    @FXML
-    private Button addITTicketButton;
-    */
     @FXML
     private Button menageUsersButton;
     @FXML
@@ -46,7 +42,8 @@ public class UserController {
     private Button viewOwnedTicketsButton;
     @FXML
     private Button addNewTicketTypeButton;
-
+    @FXML
+    private Label ticketsCategory;
 
     @FXML
     private TableView<Ticket> ticketsTable;
@@ -66,8 +63,6 @@ public class UserController {
     private RadioButton inProgressFilter;
     @FXML
     private RadioButton doneFilter;
-    @FXML
-    private Button filterButton;
     @FXML
     private ChoiceBox<String> ticketTypeField;
     @FXML
@@ -135,23 +130,6 @@ public class UserController {
         statusColumn.setCellFactory(ComboBoxTableCell.forTableColumn(TicketStatus.values()));
     }
 
-    /*
-    @FXML
-    private void handleAddITTicket(ActionEvent event) throws SQLException, IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddITTicketPane.fxml"));
-        Parent addITTicket = loader.load();
-
-        AddITTicketController controller = loader.getController();
-        controller.setUser(user);
-        controller.setLogin(login.getText());
-
-        Scene scene = new Scene(addITTicket);
-        Stage appStage = new Stage();
-        appStage.setScene(scene);
-        appStage.show();
-    }
-    */
-
     @FXML
     private void handleAddNewTicketTypeAction(ActionEvent event) throws SQLException, IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddNewTicketTypePane.fxml"));
@@ -190,7 +168,6 @@ public class UserController {
     public void setUser(User user) {
         this.user = user;
         this.login.setText(user.getLogin());
-        //ticketsTable.setItems(user.getSubmittedTickets());
         setButtonsVisibility();
         setTickets(user.getSubmittedTickets());
     }
@@ -209,7 +186,6 @@ public class UserController {
         Stage stage = (Stage) logoutButton.getScene().getWindow();
         stage.close();
 
-        LoggingController loggingController = loader.getController();
         Scene scene = new Scene(logging);
         Stage appStage = new Stage();
         appStage.setScene(scene);
@@ -227,10 +203,6 @@ public class UserController {
                 ticket.status().name().equalsIgnoreCase("in_progress")) ||
                 (doneFilter.selectedProperty().get() &&
                 ticket.status().name().equalsIgnoreCase(doneFilter.getText()));
-    }
-
-    @FXML
-    public void handleFilterAction(){
     }
 
     @FXML
@@ -276,11 +248,13 @@ public class UserController {
             user.getSubmittedTickets().removeListener(ticketsListener);
             setTickets(((Coordinator) user).getOwnedTickets());
             viewOwnedTicketsButton.textProperty().setValue("View " + submittedTickets);
+            ticketsCategory.textProperty().setValue(ownedTickets);
         }else{
             ticketsTable.setEditable(false);
             ((Coordinator) user).getOwnedTickets().removeListener(ticketsListener);
             setTickets( user.getSubmittedTickets());
             viewOwnedTicketsButton.textProperty().setValue("View " + ownedTickets);
+            ticketsCategory.textProperty().setValue(submittedTickets);
         }
     }
 

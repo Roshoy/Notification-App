@@ -41,7 +41,7 @@ public class LoggingController {
             informationLabel.setText("Zalogowano");
             informationLabel.setVisible(true);
             User user = optionalUser.get();
-            if(user.getUserType().equalsIgnoreCase("c")){
+            if(!user.getUserType().equalsIgnoreCase("u")){
                 user = Coordinator.findById(user.id()).get();
             }
 
