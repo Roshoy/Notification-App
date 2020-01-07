@@ -46,9 +46,9 @@ public class AddTicketController {
 
     final int valueFieldX = 45;
     final int valueFieldY = 157;
-    final int nameX = 200;
-    final int typeX = 388;
-    final int requiredX = 481;
+    final int nameX = 250;
+    final int typeX = 425;
+    final int requiredX = 500;
     final int labelY = 162;
     final int gap = 30;
 

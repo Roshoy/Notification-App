@@ -18,8 +18,8 @@ public class DateField extends Field {
 //i dont know if it works
     public static int create(int fieldID, int ticketID, LocalDate value) {
         Date date = Date.valueOf(value);
-        String insertSql = String.format("INSERT INTO %s (field_id, ticket_id, value) VALUES (%d, %d, %d);",
-                TABLE_NAME, fieldID, ticketID,value);
+        String insertSql = String.format("INSERT INTO %s (field_id, ticket_id, value) VALUES (%d, %d, '%s');",
+                TABLE_NAME, fieldID, ticketID, value.toString());
         int tickID = 0;
 
         try {
