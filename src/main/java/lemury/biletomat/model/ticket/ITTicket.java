@@ -8,7 +8,7 @@ import org.graalvm.compiler.nodes.calc.IntegerDivRemNode;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Optional;
-
+/*
 public class ITTicket extends Ticket {
     private static String department = "TEST";
     private  int computerNo;
@@ -32,3 +32,4 @@ public class ITTicket extends Ticket {
         this.computerNo = computerNo;
     }
 }
+*/

@@ -19,6 +19,7 @@ import java.util.*;
 
 public class Ticket {
     private final int id;
+    private final int ticketStructureId;
     private static final String TABLE_NAME = "TICKETS";
     private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -33,7 +34,7 @@ public class Ticket {
     private List<Message> ticketMessages;
 
     protected Ticket(int id, Coordinator owner, User submitter, String title, String description,
-                     TicketStatus status, Date date) {
+                     TicketStatus status, Date date, int ticketStructureId) {
         this.id = id;
         this.owner = new SimpleObjectProperty<>(owner);
         this.submitter = new SimpleObjectProperty<>(submitter);
@@ -43,6 +44,7 @@ public class Ticket {
         this.date = new SimpleObjectProperty<>(date);
         this.ticketMessages = Message.getMessagesForTicket(this);
         this.status.addListener(c->updateTicket());
+        this.ticketStructureId = ticketStructureId;
     }
 
     public int id() {
@@ -86,11 +88,11 @@ public class Ticket {
     public List<Message> ticketMessages() { return this.ticketMessages; }
 
     //Changet type of returning value from Oprional<ticket> to int
-    public static int create(int coordinatorID, int userID, String title, String description) {
+    public static int create(int coordinatorID, int userID, String title, String description, int ticketStructureId) {
         Date date = Calendar.getInstance().getTime();
         String dateString = dateFormat.format(date);
-        String insertSql = String.format("INSERT INTO %s (COORDINATOR_ID, USER_ID, TITLE, DESCRIPTION, STATUS, DATE) VALUES (%d, %d, '%s', '%s', 'WAITING', '%s');",
-                TABLE_NAME, coordinatorID, userID, title, description, dateString);
+        String insertSql = String.format("INSERT INTO %s (COORDINATOR_ID, USER_ID, TITLE, DESCRIPTION, STATUS, DATE, TICKET_STRUCTURE_ID) VALUES (%d, %d, '%s', '%s', 'WAITING', '%s', %d);",
+                TABLE_NAME, coordinatorID, userID, title, description, dateString, ticketStructureId);
         int ticketID = 0;
 
         if(Coordinator.findById(coordinatorID).isPresent() && User.findById(userID).isPresent()) {
@@ -117,7 +119,7 @@ public class Ticket {
                     rs.getString("title"),
                     rs.getString("description"),
                     TicketStatus.valueOf(rs.getString("status")),
-                    ticketDate));
+                    ticketDate, rs.getInt("ticket_structure_id")) ); // changed
         } catch (SQLException e) {
             e.printStackTrace();
         } catch(ParseException e) {
@@ -159,7 +161,8 @@ public class Ticket {
                         owner, submitter, rs.getString("title"),
                         rs.getString("description"),
                         TicketStatus.valueOf(rs.getString("status")),
-                        ticketDate);
+                        ticketDate, rs.getInt("ticket_structure_id"));
+
                 result.add(ticket);
             }
         } catch(SQLException e) {

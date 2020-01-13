@@ -77,12 +77,13 @@ public class TicketMessagesController {
 
 
     public void actualiseView() throws SQLException {
-        int counter1 = IntField.countFields(ticket.id()) ;
+        int counter1 = IntField.countFields(ticket.id());
         int counter2 = StringField.countFields(ticket.id());
         int counter3 = DateField.countFields(ticket.id());
         this.counterInt = counter1;
         this.counterString = counter2;
         this.counterDate = counter3;
+
 
         int y;
         for(int i = 0; i<this.counterInt; i++) {

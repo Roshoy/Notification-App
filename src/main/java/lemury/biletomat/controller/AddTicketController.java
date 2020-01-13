@@ -12,9 +12,11 @@ import lemury.biletomat.model.users.Coordinator;
 import lemury.biletomat.model.users.User;
 import lemury.biletomat.utils.DateFormatter;
 //import lemury.biletomat.utils.DateFormatter;
+import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.time.LocalDate;
 
 public class AddTicketController {
@@ -143,6 +145,7 @@ public class AddTicketController {
         }
         if(titleField.getText().isEmpty() || descriptionField.getText().isEmpty()){
             new Alert(Alert.AlertType.ERROR, "Fulfill title field and description field  ").showAndWait();
+            return;
         }
 
         DateFormatter dateFormatter = new lemury.biletomat.utils.DateFormatter("dd.MM.yyyy", "M/dd/yyyy");
@@ -150,12 +153,14 @@ public class AddTicketController {
         for (int i =0; i<counter; i++){
             if(valueField[i].getText().isEmpty() && reqFields[i].getText().equals("1")){
                 new Alert(Alert.AlertType.ERROR, "Fulfill required fields  ").showAndWait();
+                return;
             }
-            if(typeFields[i].getText().equals("int") && reqFields[i].getText().equals("1")) {
+            if(typeFields[i].getText().equals("int")) {
                 try {
                     Integer.parseInt(valueField[i].getText());
                 } catch (NumberFormatException e) {
                     new Alert(Alert.AlertType.ERROR, "Only numbers are allowed in int fields ").showAndWait();
+                    return;
                 }
             }
 
@@ -164,30 +169,31 @@ public class AddTicketController {
                     LocalDate date = dateFormatter.parse(valueField[i].getText());
                 } catch (IllegalArgumentException e) {
                     new Alert(Alert.AlertType.ERROR, "Date must be in format dd.MM.yyyy or M/dd/yyyy ").showAndWait();
+                    return;
                 }
             }
         }
 
-        int ticketId = Ticket.create(coordinatorID, user.id(), titleField.getText(), descriptionField.getText());
+        int ticketId = Ticket.create(coordinatorID, user.id(), titleField.getText(), descriptionField.getText(), ticketStructureId);
         for(int i = 0; i<counter; i++){
-            if(typeFields[i].getText().equals("int")){
-                int field_id = TicketStructure.getTicketStructureDetailsIdFromId(ticketStructureId, nameFields[i].getText());
-                if(valueField[i].getText().isEmpty()){
-                    IntField.create(field_id, ticketId);
+
+                if (typeFields[i].getText().equals("int")) {
+                    int field_id = TicketStructure.getTicketStructureDetailsIdFromId(ticketStructureId, nameFields[i].getText());
+                    if (valueField[i].getText().isEmpty()) {
+                        IntField.create(field_id, ticketId);
+                    } else {
+                        IntField.create(field_id, ticketId, Integer.parseInt(valueField[i].getText()));
+                    }
+                } else if (typeFields[i].getText().equals("string")) {
+                    int field_id = TicketStructure.getTicketStructureDetailsIdFromId(ticketStructureId, nameFields[i].getText());
+                    StringField.create(field_id, ticketId, valueField[i].getText());
+                } else if (typeFields[i].getText().equals("date")) {
+                    int field_id = TicketStructure.getTicketStructureDetailsIdFromId(ticketStructureId, nameFields[i].getText());
+                    DateField.create(field_id, ticketId, dateFormatter.parse(valueField[i].getText()));
                 }
-                else {
-                    IntField.create(field_id, ticketId, Integer.parseInt(valueField[i].getText()));
-                }
             }
-            else if(typeFields[i].getText().equals("string")){
-                int field_id = TicketStructure.getTicketStructureDetailsIdFromId(ticketStructureId, nameFields[i].getText());
-                StringField.create(field_id, ticketId, valueField[i].getText());
-            }
-            else if(typeFields[i].getText().equals("date")){
-                int field_id = TicketStructure.getTicketStructureDetailsIdFromId(ticketStructureId, nameFields[i].getText());
-                DateField.create(field_id, ticketId, dateFormatter.parse(valueField[i].getText()));
-            }
-        }
+
+
 
         Ticket ticket = Ticket.findTicketById(ticketId).get();
         ticket.getSubmitterProperty().setValue(user);

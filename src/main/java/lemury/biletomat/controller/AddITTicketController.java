@@ -1,7 +1,7 @@
 package lemury.biletomat.controller;
-
+/*
 import lemury.biletomat.model.departments.Department;
-import lemury.biletomat.model.ticket.ITTicket;
+//import lemury.biletomat.model.ticket.ITTicket;
 import lemury.biletomat.model.ticket.Ticket;
 import lemury.biletomat.model.users.Coordinator;
 import lemury.biletomat.model.users.User;
@@ -55,7 +55,7 @@ public class AddITTicketController {
             return;
         }
 
-        int ticketID = Ticket.create(coordinatorID, user.id(), title.getText(), description.getText());
+        int ticketID = Ticket.create(coordinatorID, user.id(), title.getText(), description.getText(), 0);
         ITTicket.create(ticketID, compNo);
         Ticket ticket = Ticket.findTicketById(ticketID).get();
         ticket.getSubmitterProperty().setValue(user);
@@ -70,3 +70,4 @@ public class AddITTicketController {
         this.user = user;
     }
 }
+*/
