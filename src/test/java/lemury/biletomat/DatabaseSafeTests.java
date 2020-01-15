@@ -59,6 +59,7 @@ public class DatabaseSafeTests {
     final String exampleTicketDescription = "Description...";
 
     final int exampleMessageId = 910;
+    final int exampleTicketStructureId = 6;
 
 
     @BeforeClass
@@ -233,6 +234,7 @@ public class DatabaseSafeTests {
         if(optCoordinator.isPresent() && optDepartment.isPresent()) {
             Coordinator coordinator = (Coordinator) optCoordinator.get();
             Department department = optDepartment.get();
+            department.updateCoordinators();
 
             Assert.assertTrue(department.coordinators().size() >= 1);
             Assert.assertTrue(department.coordinators().contains(coordinator));
@@ -298,12 +300,12 @@ public class DatabaseSafeTests {
     // TICKET CLASS TESTS ----------------------------------------------------------------------------------------------
     @Test
     public void addNewTicketTest() {
-        Assert.assertNotEquals(0, Ticket.create(exampleCoordinatorId, exampleUserId, "Nowy ticket", "opis..."));
+        Assert.assertNotEquals(0, Ticket.create(exampleCoordinatorId, exampleUserId, "Nowy ticket", "opis...", exampleTicketStructureId));
     }
 
     @Test
     public void addIncorrectTicketTest() {
-        Assert.assertEquals(0, Ticket.create(-9, -7, "aaa", "bbb"));
+        Assert.assertEquals(0, Ticket.create(-9, -7, "aaa", "bbb", exampleTicketStructureId));
     }
 
     @Test
@@ -346,19 +348,9 @@ public class DatabaseSafeTests {
         }
     }
 
-    //we should not be able to create it ticket without base ticket in database
-    @Test
-    public void createITTicketWithoutTicketTest() throws SQLException {
-        ITTicket.create(2,12);
-        String sql = "SELECT * FROM ITTICKETS WHERE id = 2;";
-        final Statement statement = ConnectionProvider.getConnection().createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
-        Assert.assertFalse(resultSet.next());
-    }
-
     @Test
     public void deleteTicketTest() {
-        int newTicketId = Ticket.create(exampleCoordinatorId, exampleUserId, "testowy", "opisopis");
+        int newTicketId = Ticket.create(exampleCoordinatorId, exampleUserId, "testowy", "opisopis", exampleTicketStructureId);
 
         Ticket.deleteTicketById(newTicketId);
         Optional<Ticket> optTicket = Ticket.findTicketById(newTicketId);

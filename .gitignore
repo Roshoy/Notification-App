@@ -48,3 +48,6 @@ gradle-app.setting
 gradle/wrapper/gradle-wrapper.jar
 settings.gradle
 src/test/resources/
+
+# Database for tests
+Database

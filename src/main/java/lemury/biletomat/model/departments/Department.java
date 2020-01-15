@@ -17,12 +17,11 @@ public class Department {
     public static final String TABLE_NAME = "DEPARTMENTS";
 
     private String Name;
-    private Set<Coordinator> coordinators;
+    private ObservableList<Coordinator> coordinators;
 
-    public Department(int id, String name) {
+    private Department(int id, String name) {
         this.id = id;
         this.Name = name;
-        this.coordinators = new HashSet<>();
     }
 
     public int id() {
@@ -33,7 +32,7 @@ public class Department {
         return Name;
     }
 
-    public Set<Coordinator> coordinators() { return coordinators; }
+    public ObservableList<Coordinator> coordinators() { return coordinators; }
 
     /*
     public ticket CreateNewTicket(){ //Is it SRP friendly?
@@ -69,6 +68,10 @@ public class Department {
         }
 
         return result;
+    }
+
+    public void updateCoordinators() {
+        this.coordinators = Coordinator.findCoordinatorsByDepartmentId(this.id);
     }
 
     public static Optional<Department> findById(final int id) {

@@ -93,16 +93,11 @@ public final class QueryExecutor {
                     "description VARCHAR(500) NOT NULL, " +
                     "status CHAR(15) NOT NULL, " +
                     "release_notes VARCHAR(500), " +
-                    "date DATE NOT NULL," +
+                    "date DATE NOT NULL, " +
+                    "ticket_structure_id INT, " +
                     "FOREIGN KEY(coordinator_id) references USERS(id), " +
-                    "FOREIGN KEY(user_id) references USERS(id) " +
-                    ");");
-
-            LOGGER.info("Creating table ITTickets");
-            create("CREATE TABLE IF NOT EXISTS ITTICKETS (" +
-                    "id INTEGER PRIMARY KEY, " +
-                    "computer_no INTEGER NOT NULL," +
-                    "FOREIGN KEY(id) references TICKETS(id)" +
+                    "FOREIGN KEY(user_id) references USERS(id), " +
+                    "FOREIGN KEY(ticket_structure_id) references TICKET_STRUCTURE(id) " +
                     ");");
 
             LOGGER.info("Creating table Messages");
