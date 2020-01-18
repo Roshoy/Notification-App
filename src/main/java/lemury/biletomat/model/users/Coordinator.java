@@ -16,7 +16,7 @@ public class Coordinator extends User {
     private Department department;
     private ObservableList<Ticket> ownedTickets;
 
-    protected Coordinator(int id, String firstName, String lastName, String login, String password,
+    private Coordinator(int id, String firstName, String lastName, String login, String password,
                           Department department, String userType) {
         super(id, firstName, lastName, login, password, userType);
         this.department = department;

@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import lemury.biletomat.model.departments.Department;
 import lemury.biletomat.query.QueryExecutor;
 
 import java.sql.ResultSet;
@@ -12,18 +13,47 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class TicketStructure {
     private static final String TABLE_NAME = "TICKET_STRUCTURE";
+    private int id;
     private List<Field> fields;
     private String name;
-    private int department_id;
 
-    //TODO - public -> private and add proper create
-    public TicketStructure(String name, int department_id){
+    private TicketStructure(int id, String name){
+        this.id = id;
         this.name = name;
-        this.department_id = department_id;
         fields = new ArrayList<>();
+    }
+
+    public static int create(String name, int department_id) {
+        String insertSql = String.format("INSERT INTO %s (name, department_id) VALUES ('%s', %d)", TABLE_NAME, name, department_id);
+        if(Department.findById(department_id).equals(Optional.empty())) {
+            return -1;
+        }
+
+        try {
+            return QueryExecutor.createAndObtainId(insertSql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+
+    public static Optional<TicketStructure> findById(int id) {
+        String findByIdSql = String.format("SELECT * FROM %s WHERE id = %d;", TABLE_NAME, id);
+
+        try {
+            ResultSet rs = QueryExecutor.read(findByIdSql);
+
+            return Optional.of(new TicketStructure(rs.getInt("id"), rs.getString("name")));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
     }
 
 
@@ -65,7 +95,6 @@ public class TicketStructure {
         return deptId;
     }
 
-
     public static void setNewTicketPane(Label[] nameFields, Label[] typeFields, Label[] reqFields, TextField[] valueFields, int ticketStructureId, int counter) throws SQLException {
         String query = String.format("SELECT * FROM TICKET_STRUCTURE_DETAILS WHERE ticket_structure_id = %d", ticketStructureId);
         ResultSet rs = QueryExecutor.read(query);
@@ -79,16 +108,16 @@ public class TicketStructure {
 
     }
 
-    public static int getTicketStructureDetailsIdFromId(int ticketStructureId, String name) throws SQLException {
-        String query = String.format("SELECT id FROM TICKET_STRUCTURE_DETAILS WHERE ticket_structure_id = %d and name = '%s' ", ticketStructureId, name);
+    public static int getTicketStructureDetailsIdFromTicketId(int ticketStructureId, String name) throws SQLException {
+        String query = String.format("SELECT id FROM TICKET_STRUCTURE_DETAILS WHERE ticket_structure_id = %d and name = '%s';", ticketStructureId, name);
         ResultSet rs = QueryExecutor.read(query);
         int id = QueryExecutor.readIdFromResultSet(rs);
         return id;
     }
 
-
+/*
     public int insertToDb(){
-        String insertSql = String.format("INSERT INTO %s(name, department_id) VALUES ('%s', %d)", TABLE_NAME, this.name, this.department_id);
+        String insertSql = String.format("INSERT INTO %s(name, department_id) VALUES ('%s', %d)", TABLE_NAME, this.name, this.department.id());
         int ticketStructureId = 0;
         try {
             ticketStructureId = QueryExecutor.createAndObtainId(insertSql);
@@ -105,26 +134,16 @@ public class TicketStructure {
 
         return ticketStructureId;
     }
+*/
 
+    public void addField(String name, boolean required, String type){
+        int fieldId = Field.create(this.id, name, required, type);
+        Optional<Field> newField = Field.findFieldById(fieldId);
 
-    public void addIntField(String name, boolean required, int value){
-        IntField intField = new IntField(name, required, value);
-        fields.add(intField);
-    }
-
-    public void addStringField(String name, boolean required, String value){
-        StringField stringField = new StringField(name, required, value);
-        fields.add(stringField);
-    }
-
-    public void addDateField(String name, boolean required, LocalDate date){
-        DateField dateField = new DateField(name, required, date);
-        fields.add(dateField);
+        newField.ifPresent(field -> fields.add(field));
     }
 
     public List<Field> getFields() {
         return fields;
     }
-
-
 }

@@ -2,34 +2,49 @@ package lemury.biletomat.model.ticket;
 
 import lemury.biletomat.query.QueryExecutor;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class Field {
+    private int id;
     private String name;
     private boolean required;
     private String type;
 
     private static final String TABLE_NAME = "TICKET_STRUCTURE_DETAILS";
 
-    protected Field(String name, boolean required, String type){
+    protected Field(int id, String name, boolean required, String type){
+        this.id = id;
         this.name = name;
         this.required = required;
         this.type = type;
     }
 
-    protected int insertToDb(int ticketStructureId){
+    public static int create(int ticketStructureId, String name, boolean required, String type){
         String insertSql = String.format("INSERT INTO %s(ticket_structure_id, name, required, type) VALUES (%d, '%s', %b, '%s')",
-                TABLE_NAME, ticketStructureId, this.name, this.required, this.type);
-        System.out.println(insertSql);
-        int id =0;
-        try {
-            id = QueryExecutor.createAndObtainId(insertSql);
+                TABLE_NAME, ticketStructureId, name, required, type);
 
-            //return findTicketById(id);
+        try {
+            return QueryExecutor.createAndObtainId(insertSql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return id;
+
+        return -1;
+    }
+
+    public static Optional<Field> findFieldById(int id) {
+        String findSql = String.format("SELECT * FROM %s WHERE id = %d;", TABLE_NAME, id);
+
+        try {
+            ResultSet rs = QueryExecutor.read(findSql);
+            return Optional.of(new Field(id, rs.getString("name"), rs.getBoolean("required"), rs.getString("type")));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
     }
 
     public static int countFields(int ticket_id){
@@ -39,7 +54,6 @@ public class Field {
 
         try {
             counter = QueryExecutor.createAndObtainId(sql);
-            //return findTicketById(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }

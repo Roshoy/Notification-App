@@ -9,24 +9,15 @@ import lemury.biletomat.model.users.User;
 import lemury.biletomat.query.QueryExecutor;
 import org.junit.*;
 
-import javax.management.Query;
-import javax.swing.text.html.Option;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
-import static lemury.biletomat.query.QueryExecutor.create;
-
-
-//zrobic testy dluzsze czy się tworzy ticket, czy potem koordyntor go widzi
-
 
 public class DatabaseSafeTests {
     final int exampleUserId = 11;
@@ -409,23 +400,24 @@ public class DatabaseSafeTests {
     // TICKET STRUCTURE CLASS TEST -------------------------------------------------------------------------------------
     @Test
     public void createTicketStructureTest() {
-        TicketStructure addedStructure = new TicketStructure("Test", exampleDepartmentId);
-        int id = addedStructure.insertToDb();
+        int id = TicketStructure.create("Test", exampleDepartmentId);
 
-        Assert.assertNotEquals(0, id);
+        Assert.assertTrue(id > 0);
         ObservableList<String> names = TicketStructure.getNames();
-
         Assert.assertTrue(names.contains("Test"));
     }
 
     @Test
     public void createTicketWithFieldsTest() throws SQLException {
-        TicketStructure addedStructure = new TicketStructure("TestF", exampleDepartmentId);
-        addedStructure.addDateField("data", true, LocalDate.now());
-        addedStructure.addIntField("liczba", false, 12);
-        addedStructure.addStringField("tekst", true, "AAAA");
+        int id = TicketStructure.create("TestF", exampleDepartmentId);
+        Optional<TicketStructure> optionalTicketStructure = TicketStructure.findById(id);
 
-        int id = addedStructure.insertToDb();
+        if(optionalTicketStructure.isPresent()) {
+            TicketStructure addedStructure = optionalTicketStructure.get();
+            addedStructure.addField("data", true, "date");
+            addedStructure.addField("liczba", false,"int");
+            addedStructure.addField("tekst", true, "string");
+        }
 
         String sqlQuery = String.format("SELECT COUNT(*) AS COUNTER FROM TICKET_STRUCTURE_DETAILS WHERE ticket_structure_id = %d;", id);
         ResultSet rs = QueryExecutor.read(sqlQuery);

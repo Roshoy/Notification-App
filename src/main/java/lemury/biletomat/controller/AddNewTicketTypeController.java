@@ -1,5 +1,6 @@
 package lemury.biletomat.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class AddNewTicketTypeController {
@@ -51,7 +53,7 @@ public class AddNewTicketTypeController {
     private Label nameFields[] = new Label[10];
     private Label typeFields[] = new Label[10];
     private Label reqFields[] = new Label[10];
-    private TextField valueField[] = new TextField[10];
+    // private TextField valueField[] = new TextField[10];
 
 
     @FXML
@@ -69,7 +71,7 @@ public class AddNewTicketTypeController {
             nameFields[i] = new Label();
             typeFields[i] = new Label();
             reqFields[i] = new Label();
-            valueField[i] = new TextField();
+            //valueField[i] = new TextField();
         }
 
 
@@ -122,7 +124,7 @@ public class AddNewTicketTypeController {
         }
 
 
-        pane1.getChildren().add(valueField[counter]);
+        //pane1.getChildren().add(valueField[counter]);
         pane1.getChildren().add(nameFields[counter]);
         pane1.getChildren().add(reqFields[counter]);
         pane1.getChildren().add(typeFields[counter]);
@@ -134,8 +136,8 @@ public class AddNewTicketTypeController {
         reqFields[counter].setLayoutX(requiredX );
         reqFields[counter].setLayoutY(labelY+ y);
 
-        valueField[counter].setLayoutX(valueFieldX);
-        valueField[counter].setLayoutY(valueFieldY + y);
+        //valueField[counter].setLayoutX(valueFieldX);
+        //valueField[counter].setLayoutY(valueFieldY + y);
 
         typeFields[counter].setLayoutX(typeX);
         typeFields[counter].setLayoutY(labelY + y);
@@ -160,21 +162,19 @@ public class AddNewTicketTypeController {
     @FXML
     private void handleSubmitAction(ActionEvent event){
 
+        int ticketStructureId = TicketStructure.create(this.ticketTypeName.getText(), deptID);
+        Optional<TicketStructure> optionalTicketStructure = TicketStructure.findById(ticketStructureId);
 
-        TicketStructure ticketStructure = new TicketStructure(this.ticketTypeName.getText(), deptID);
-
-        for(int i = 0; i<counter; i++){
-            if(this.typeFields[i].getText() == "Int"){
-                ticketStructure.addIntField(this.nameFields[i].getText(), Boolean.parseBoolean(this.reqFields[i].getText()), 0);
-            }
-            if(this.typeFields[i].getText() == "String"){
-                ticketStructure.addStringField(this.nameFields[i].getText(), Boolean.parseBoolean(this.reqFields[i].getText()), "");
-            }
-            if(this.typeFields[i].getText() == "Date"){
-                ticketStructure.addDateField(this.nameFields[i].getText(), Boolean.parseBoolean(this.reqFields[i].getText()), LocalDate.now());
-            }
+        if(!optionalTicketStructure.isPresent())
+        {
+            new Alert(Alert.AlertType.ERROR, "Error with saving ticket structure to database").showAndWait();
+            return;
         }
-        ticketStructure.insertToDb();
-    }
 
+        TicketStructure ticketStructure = optionalTicketStructure.get();
+
+        for(int i = 0; i < counter; i++){
+            ticketStructure.addField(this.nameFields[i].getText(), Boolean.parseBoolean(this.reqFields[i].getText()), this.typeFields[i].getText().toLowerCase());
+        }
+    }
 }
