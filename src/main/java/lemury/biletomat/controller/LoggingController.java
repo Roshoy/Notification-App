@@ -1,8 +1,5 @@
 package lemury.biletomat.controller;
 
-import lemury.biletomat.model.ticket.Ticket;
-import lemury.biletomat.model.users.Coordinator;
-import lemury.biletomat.model.users.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,11 +9,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-//import oracle.jrockit.jfr.events.EventControl;
+import lemury.biletomat.model.users.Coordinator;
+import lemury.biletomat.model.users.User;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
+
+//import oracle.jrockit.jfr.events.EventControl;
 
 public class LoggingController {
     @FXML
@@ -33,15 +33,14 @@ public class LoggingController {
     private void handleLoggingAction(ActionEvent event) throws SQLException, IOException {
         Optional<User> optionalUser = User.findByLogin(login.getText(), password.getText());
 
-        if(!optionalUser.isPresent()){
+        if (!optionalUser.isPresent()) {
             informationLabel.setText("Bledny login/haslo");
             informationLabel.setVisible(true);
-        }
-        else{
+        } else {
             informationLabel.setText("Zalogowano");
             informationLabel.setVisible(true);
             User user = optionalUser.get();
-            if(!user.getUserType().equalsIgnoreCase("u")){
+            if (!user.getUserType().equalsIgnoreCase("u")) {
                 user = Coordinator.findById(user.id()).get();
             }
 
@@ -56,4 +55,5 @@ public class LoggingController {
             //userController.setTickets(Ticket.getTicketsList(user));
             stage.show();
         }
-    }}
+    }
+}

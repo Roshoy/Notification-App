@@ -1,10 +1,6 @@
 package lemury.biletomat.controller;
 
 import javafx.beans.Observable;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -24,12 +20,10 @@ import lemury.biletomat.model.ticket.TicketStructure;
 import lemury.biletomat.model.users.Coordinator;
 import lemury.biletomat.model.users.User;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 public class UserController {
     @FXML
@@ -75,19 +69,17 @@ public class UserController {
     protected User user;
 
     private ObservableList<Ticket> tickets;
-    private FilteredList<Ticket> filteredTickets;
 
     private ListChangeListener<Ticket> ticketsListener = c -> {
-        while(c.next()){
-            if(c.wasAdded()){
+        while (c.next()) {
+            if (c.wasAdded()) {
                 this.tickets.addAll(c.getAddedSubList());
             }
-            if(c.wasRemoved()) {
+            if (c.wasRemoved()) {
                 this.tickets.removeAll(c.getRemoved());
             }
         }
     };
-
 
     @FXML
     protected void initialize() {
@@ -108,7 +100,7 @@ public class UserController {
                 @Override
                 protected void updateItem(Date item, boolean empty) {
                     super.updateItem(item, empty);
-                    if(empty) {
+                    if (empty) {
                         setText(null);
                     } else {
                         setText(dateFormat.format(item));
@@ -157,7 +149,6 @@ public class UserController {
         appStage.show();
     }
 
-
     public void setUser(User user) {
         this.user = user;
         this.login.setText(user.getLogin());
@@ -165,10 +156,10 @@ public class UserController {
         setTickets(user.getSubmittedTickets());
     }
 
-    public void setTickets(ObservableList<Ticket> tickets) {
+    private void setTickets(ObservableList<Ticket> tickets) {
         tickets.addListener(ticketsListener);
         this.tickets.setAll(tickets);
-        filteredTickets = new FilteredList<>(this.tickets, this::ticketFilter);
+        FilteredList<Ticket> filteredTickets = new FilteredList<>(this.tickets, this::ticketFilter);
         ticketsTable.setItems(filteredTickets);
     }
 
@@ -185,17 +176,17 @@ public class UserController {
         appStage.show();
     }
 
-    private boolean ticketFilter(Ticket ticket){
+    private boolean ticketFilter(Ticket ticket) {
         return (waitingFilter.selectedProperty().get() &&
                 ticket.status().name().equalsIgnoreCase(waitingFilter.getText())) ||
                 (inProgressFilter.selectedProperty().get() &&
-                ticket.status().name().equalsIgnoreCase("in_progress")) ||
+                        ticket.status().name().equalsIgnoreCase("in_progress")) ||
                 (doneFilter.selectedProperty().get() &&
-                ticket.status().name().equalsIgnoreCase(doneFilter.getText()));
+                        ticket.status().name().equalsIgnoreCase(doneFilter.getText()));
     }
 
     @FXML
-    public void handleManageUsers(ActionEvent event) throws IOException{
+    public void handleManageUsers(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ManageUsersPane.fxml"));
         Parent manageUsers = loader.load();
 
@@ -210,7 +201,7 @@ public class UserController {
 
     @FXML
     public void handleViewTicket(ActionEvent event) throws IOException, SQLException {
-        if(ticketsTable.getSelectionModel().isEmpty()) {
+        if (ticketsTable.getSelectionModel().isEmpty()) {
             new Alert(Alert.AlertType.ERROR, "No ticket selected!").showAndWait();
         } else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TicketMessagesPane.fxml"));
@@ -229,44 +220,44 @@ public class UserController {
     }
 
     @FXML
-    public void handleViewOwnedTickets(ActionEvent event) throws IOException{
+    public void handleViewOwnedTickets(ActionEvent event) throws IOException {
         String ownedTickets = "Owned Tickets";
         String submittedTickets = "Submitted Tickets";
-        if(viewOwnedTicketsButton.textProperty().getValue().equals("View " + ownedTickets)) {
+        if (viewOwnedTicketsButton.textProperty().getValue().equals("View " + ownedTickets)) {
             ticketsTable.setEditable(true);
             user.getSubmittedTickets().removeListener(ticketsListener);
             setTickets(((Coordinator) user).getOwnedTickets());
             viewOwnedTicketsButton.textProperty().setValue("View " + submittedTickets);
             ticketsCategory.textProperty().setValue(ownedTickets);
-        }else{
+        } else {
             ticketsTable.setEditable(false);
             ((Coordinator) user).getOwnedTickets().removeListener(ticketsListener);
-            setTickets( user.getSubmittedTickets());
+            setTickets(user.getSubmittedTickets());
             viewOwnedTicketsButton.textProperty().setValue("View " + ownedTickets);
             ticketsCategory.textProperty().setValue(submittedTickets);
         }
     }
 
     @FXML
-    public void handleDeleteTicket(ActionEvent event){
+    public void handleDeleteTicket(ActionEvent event) {
         ObservableList<Ticket> toRemove = ticketsTable.getSelectionModel().getSelectedItems();
 
-        for(Ticket ticket : toRemove) {
+        for (Ticket ticket : toRemove) {
             Ticket.deleteTicketById(ticket.id());
         }
 
         this.tickets.removeAll(toRemove);
     }
 
-    private void setButtonsVisibility(){
+    private void setButtonsVisibility() {
         menageUsersButton.managedProperty().bind(menageUsersButton.visibleProperty());
         viewOwnedTicketsButton.managedProperty().bind(viewOwnedTicketsButton.visibleProperty());
 
-        if(user.getUserType().equalsIgnoreCase("C")) {
+        if (user.getUserType().equalsIgnoreCase("C")) {
             menageUsersButton.setVisible(false);
             addNewTicketTypeButton.setVisible(false);
         }
-        if(user.getUserType().equalsIgnoreCase("U")){
+        if (user.getUserType().equalsIgnoreCase("U")) {
             viewOwnedTicketsButton.setVisible(false);
             menageUsersButton.setVisible(false);
             addNewTicketTypeButton.setVisible(false);

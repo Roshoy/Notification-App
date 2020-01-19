@@ -1,26 +1,25 @@
 package lemury.biletomat.controller;
 
-import javafx.scene.Node;
-import lemury.biletomat.model.ticket.Ticket;
-import lemury.biletomat.model.users.Coordinator;
-import lemury.biletomat.model.users.User;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import lemury.biletomat.model.users.Coordinator;
+import lemury.biletomat.model.users.User;
 
 import java.io.IOException;
 
 
-public class ManageUsersController/* extends CoordinatorController*/ {
+public class ManageUsersController {
     private User user;
     private ObservableList<User> users;
     private ObservableList<Coordinator> coordinators;
@@ -81,24 +80,21 @@ public class ManageUsersController/* extends CoordinatorController*/ {
         deleteUserButton.disableProperty().bind(Bindings.isEmpty(usersTable.getSelectionModel().getSelectedItems()));
         deleteCoordinatorButton.disableProperty().bind(Bindings.isEmpty(coordinatorsTable.getSelectionModel().getSelectedItems()));
 
-        users = User.getUsersList();
-        usersTable.setItems(users);
-
-        coordinators = Coordinator.getCoordinatorsList();
-        coordinatorsTable.setItems(coordinators);
+        setUsers(User.getUsersList());
+        setCoordinators(Coordinator.getCoordinatorsList());
     }
 
 
-    public void setUser(User user){
+    public void setUser(User user) {
         this.user = user;
     }
 
-    public void setUsers(ObservableList<User> users) {
+    private void setUsers(ObservableList<User> users) {
         this.users = users;
         usersTable.setItems(users);
     }
 
-    public void setCoordinators(ObservableList<Coordinator> coordinators) {
+    private void setCoordinators(ObservableList<Coordinator> coordinators) {
         this.coordinators = coordinators;
         coordinatorsTable.setItems(coordinators);
     }
@@ -120,7 +116,7 @@ public class ManageUsersController/* extends CoordinatorController*/ {
     private void handleUserDeleteAction(ActionEvent actionEvent) {
         ObservableList<User> toRemove = usersTable.getSelectionModel().getSelectedItems();
 
-        for(User user : toRemove) {
+        for (User user : toRemove) {
             User.deleteUserById(user.id());
         }
         this.users.removeAll(toRemove);
@@ -130,7 +126,7 @@ public class ManageUsersController/* extends CoordinatorController*/ {
     private void handleCoordinatorDeleteAction(ActionEvent actionEvent) {
         ObservableList<Coordinator> toRemove = coordinatorsTable.getSelectionModel().getSelectedItems();
 
-        for(Coordinator coordinator : toRemove) {
+        for (Coordinator coordinator : toRemove) {
             User.deleteUserById(coordinator.id());
         }
         this.coordinators.removeAll(toRemove);

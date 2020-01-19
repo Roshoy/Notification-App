@@ -11,13 +11,10 @@ import lemury.biletomat.model.ticket.*;
 import lemury.biletomat.model.users.Coordinator;
 import lemury.biletomat.model.users.User;
 import lemury.biletomat.utils.DateFormatter;
-//import lemury.biletomat.utils.DateFormatter;
-import javax.xml.parsers.ParserConfigurationException;
-import java.awt.*;
-import java.awt.event.ActionEvent;
+
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.time.LocalDate;
+
+//import lemury.biletomat.utils.DateFormatter;
 
 public class AddTicketController {
     @FXML
@@ -45,7 +42,6 @@ public class AddTicketController {
 
     int counter = 0;
 
-
     final int valueFieldX = 45;
     final int valueFieldY = 157;
     final int nameX = 250;
@@ -54,9 +50,9 @@ public class AddTicketController {
     final int labelY = 162;
     final int gap = 30;
 
+    private DateFormatter dateFormatter = new lemury.biletomat.utils.DateFormatter("dd.MM.yyyy", "MM/dd/yyyy");
 
-    public void setTicketName(String name){
-
+    void setTicketName(String name) {
         this.ticketName.setText(name);
     }
 
@@ -65,14 +61,11 @@ public class AddTicketController {
         this.login.setText(login);
     }
 
-    public void setUser(User user){
-        this.user = user;
-    }
+    public void setUser(User user) { this.user = user; }
 
 
-    public void actualiseView() throws SQLException {
+    void actualiseView() throws SQLException {
         this.ticketStructureId = TicketStructure.getIdFromName(this.ticketName.getText());
-        //this.ticketStructureId = TicketStructure.getCount(ticketName.getText());
         this.departmentId = TicketStructure.getDepartmentIdFromId(this.ticketStructureId);
         this.counter = TicketStructure.getCount(ticketStructureId);
         System.out.println("DEPT ID = " + this.departmentId);
@@ -80,9 +73,9 @@ public class AddTicketController {
         System.out.println("COUNTER = " + this.counter);
 
         TicketStructure.setNewTicketPane(nameFields, typeFields, reqFields, valueField, ticketStructureId, counter);
-        System.out.println(nameFields[0].getText()+ typeFields[0].getText() + reqFields[0].getText());
+        System.out.println(nameFields[0].getText() + typeFields[0].getText() + reqFields[0].getText());
 
-        for (int i = 0; i< counter; i++) {
+        for (int i = 0; i < counter; i++) {
             pane1.getChildren().add(valueField[i]);
             pane1.getChildren().add(nameFields[i]);
             pane1.getChildren().add(reqFields[i]);
@@ -110,7 +103,7 @@ public class AddTicketController {
         //this.ticketStructureId = TicketStructure.getCount(ticketName.getText());
         //System.out.println("TICKET STRUCTURE ID = " + this.ticketStructureId);
 
-        for(int i =0; i <10; i++){
+        for (int i = 0; i < 10; i++) {
             nameFields[i] = new Label();
             typeFields[i] = new Label();
             reqFields[i] = new Label();
@@ -119,62 +112,21 @@ public class AddTicketController {
 
     }
 
-    @FXML
-    public void handleAddAction(javafx.event.ActionEvent event) throws SQLException {
-        ObservableList<Coordinator> depCoordinators = Coordinator.findCoordinatorsByDepartmentId(this.departmentId);
-        if(depCoordinators.size() == 0){
-            new Alert(Alert.AlertType.ERROR, "Empty department").showAndWait();
-            return;
-        }
-
+    private int chooseCoordinatorToAssign(ObservableList<Coordinator> depCoordinators) {
         int minimalTicketsNumber = Integer.MAX_VALUE;
         int coordinatorID = -1;
-        for(Coordinator coordinator : depCoordinators) {
+        for (Coordinator coordinator : depCoordinators) {
             coordinator.updateTickets();
-            if(coordinator.getOwnedTickets().size() < minimalTicketsNumber) {
+            if (coordinator.getOwnedTickets().size() < minimalTicketsNumber) {
                 minimalTicketsNumber = coordinator.getOwnedTickets().size();
                 coordinatorID = coordinator.id();
             }
         }
+        return coordinatorID;
+    }
 
-        if(coordinatorID < 0){
-            System.out.println("Brak dostepnych koordynatorów");
-            new Alert(Alert.AlertType.ERROR, "No coordinators").showAndWait();
-            return;
-        }
-        if(titleField.getText().isEmpty() || descriptionField.getText().isEmpty()){
-            new Alert(Alert.AlertType.ERROR, "Fulfill title field and description field  ").showAndWait();
-            return;
-        }
-
-        DateFormatter dateFormatter = new lemury.biletomat.utils.DateFormatter("dd.MM.yyyy", "MM/dd/yyyy");
-
-        for (int i =0; i<counter; i++){
-            if(valueField[i].getText().isEmpty() && reqFields[i].getText().equals("1")){
-                new Alert(Alert.AlertType.ERROR, "Fulfill required fields  ").showAndWait();
-                return;
-            }
-            if(typeFields[i].getText().equals("int")) {
-                try {
-                    Integer.parseInt(valueField[i].getText());
-                } catch (NumberFormatException e) {
-                    new Alert(Alert.AlertType.ERROR, "Only numbers are allowed in int fields ").showAndWait();
-                    return;
-                }
-            }
-
-            if(typeFields[i].getText().equals("date") && reqFields[i].getText().equals("1")){
-                try {
-                    LocalDate date = dateFormatter.parse(valueField[i].getText());
-                } catch (IllegalArgumentException e) {
-                    new Alert(Alert.AlertType.ERROR, "Date must be in format dd.MM.yyyy or MM/dd/yyyy ").showAndWait();
-                    return;
-                }
-            }
-        }
-
-        int ticketId = Ticket.create(coordinatorID, user.id(), titleField.getText(), descriptionField.getText(), ticketStructureId);
-        for(int i = 0; i < counter; i++){
+    private void createNewFields(int ticketId) throws SQLException {
+        for (int i = 0; i < counter; i++) {
             int field_id = TicketStructure.getTicketStructureDetailsIdFromTicketId(ticketStructureId, nameFields[i].getText());
             switch (typeFields[i].getText()) {
                 case "int":
@@ -188,10 +140,75 @@ public class AddTicketController {
                     break;
             }
         }
+    }
+
+    private boolean allFieldsAreValid() {
+        if (titleField.getText().isEmpty() || descriptionField.getText().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Fulfill title field and description field  ").showAndWait();
+            return false;
+        }
+
+        for (int i = 0; i < counter; i++) {
+            if (valueField[i].getText().isEmpty() && reqFields[i].getText().equals("1")) {
+                new Alert(Alert.AlertType.ERROR, "Fulfill required fields  ").showAndWait();
+                return false;
+            }
+
+            if (typeFields[i].getText().equals("int") && !valueField[i].getText().isEmpty()) {
+                try {
+                    Integer.parseInt(valueField[i].getText());
+                } catch (NumberFormatException e) {
+                    new Alert(Alert.AlertType.ERROR, "Only numbers are allowed in int fields ").showAndWait();
+                    return false;
+                }
+            } else if (typeFields[i].getText().equals("date") && reqFields[i].getText().equals("1")) {
+                try {
+                    dateFormatter.parse(valueField[i].getText());
+                } catch (IllegalArgumentException e) {
+                    new Alert(Alert.AlertType.ERROR, "Date must be in format dd.MM.yyyy or MM/dd/yyyy ").showAndWait();
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private void updateUserTickets(Ticket ticket){
+        user.getSubmittedTickets().add(ticket);
+        if(user.getUserType().equalsIgnoreCase("c") &&
+                ticket.getOwnerProperty().get().getLogin().equals(user.getLogin())){
+            ((Coordinator)user).getOwnedTickets().add(ticket);
+        }
+    }
+
+    @FXML
+    public void handleAddAction(javafx.event.ActionEvent event) throws SQLException {
+        ObservableList<Coordinator> depCoordinators = Coordinator.findCoordinatorsByDepartmentId(this.departmentId);
+        if (depCoordinators.size() == 0) {
+            new Alert(Alert.AlertType.ERROR, "Empty department").showAndWait();
+            return;
+        }
+
+        int coordinatorID = chooseCoordinatorToAssign(depCoordinators);
+
+        if (coordinatorID < 0) {
+            System.out.println("Brak dostepnych koordynatorów");
+            new Alert(Alert.AlertType.ERROR, "No coordinators").showAndWait();
+            return;
+        }
+
+        if (!allFieldsAreValid()) {
+            return;
+        }
+
+        int ticketId = Ticket.create(coordinatorID, user.id(), titleField.getText(), descriptionField.getText(), ticketStructureId);
+
+        createNewFields(ticketId);
 
         Ticket ticket = Ticket.findTicketById(ticketId).get();
         ticket.getSubmitterProperty().setValue(user);
-        user.getSubmittedTickets().add(ticket);
+
+        updateUserTickets(ticket);
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");

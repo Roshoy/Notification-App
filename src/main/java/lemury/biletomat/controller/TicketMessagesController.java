@@ -3,7 +3,10 @@ package lemury.biletomat.controller;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -68,10 +71,10 @@ public class TicketMessagesController {
     public void initialize() {
         messageHistoryContainer.vvalueProperty().bind(messageHistoryVBox.heightProperty());
 
-        for(int i =0; i <10; i++){
+        for (int i = 0; i < 10; i++) {
             labelsInt[i] = new Label();
-            labelsString[i]= new Label();
-            labelsDate[i]= new Label();
+            labelsString[i] = new Label();
+            labelsDate[i] = new Label();
         }
     }
 
@@ -85,7 +88,7 @@ public class TicketMessagesController {
 
 
         int y;
-        for(int i = 0; i<this.counterInt; i++) {
+        for (int i = 0; i < this.counterInt; i++) {
             y = gap * i;
             pane1.getChildren().add(labelsInt[i]);
             labelsInt[i].setLayoutX(labelXInt);
@@ -102,8 +105,8 @@ public class TicketMessagesController {
                 labelsInt[i].setText(rs1.getString(1));
             }
         }
-         for(int i = 0; i<this.counterString; i++){
-            y = gap*i;
+        for (int i = 0; i < this.counterString; i++) {
+            y = gap * i;
             pane1.getChildren().add(labelsString[i]);
             labelsString[i].setLayoutX(labelXString);
             labelsString[i].setLayoutY(labelY + y);
@@ -119,8 +122,8 @@ public class TicketMessagesController {
             }
         }
 
-        for(int i = 0; i<this.counterDate; i++){
-            y = gap*i;
+        for (int i = 0; i < this.counterDate; i++) {
+            y = gap * i;
             pane1.getChildren().add(labelsDate[i]);
             labelsDate[i].setLayoutX(labelXDate);
             labelsDate[i].setLayoutY(labelY + y);
@@ -159,14 +162,14 @@ public class TicketMessagesController {
         messageHistoryVBox.getChildren().clear();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        for(Message msg: messages) {
+        for (Message msg : messages) {
             String formattedMsg = String.format("%s\n%s\n%s\n\n", msg.author().getLogin(), dateFormat.format(msg.date()), msg.text());
             Label msgLabel = new Label(formattedMsg);
             msgLabel.setWrapText(true);
 
             HBox msgHBox = new HBox();
 
-            if(msg.author().id() == this.user.id()) {
+            if (msg.author().id() == this.user.id()) {
                 msgLabel.setTextAlignment(TextAlignment.RIGHT);
                 msgHBox.setAlignment(Pos.BASELINE_RIGHT);
             } else {
