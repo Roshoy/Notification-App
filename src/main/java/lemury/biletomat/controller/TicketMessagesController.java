@@ -19,12 +19,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 public class TicketMessagesController {
     private User user;
     private Ticket ticket;
     private ObservableList<Message> messages;
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     @FXML
     private AnchorPane pane1;
@@ -78,64 +81,48 @@ public class TicketMessagesController {
         }
     }
 
-    public void actualiseView() throws SQLException {
-        int counter1 = IntField.countFields(ticket.id());
-        int counter2 = StringField.countFields(ticket.id());
-        int counter3 = DateField.countFields(ticket.id());
-        this.counterInt = counter1;
-        this.counterString = counter2;
-        this.counterDate = counter3;
+    public void actualiseView() {
+        List<IntField> intFields = IntField.findFieldsForTicket(ticket.id());
+        List<StringField> stringFields = StringField.findFieldsForTicket(ticket.id());
+        List<DateField> dateFields = DateField.findFieldsForTicket(ticket.id());
 
+        this.counterInt = intFields.size();
+        this.counterString = stringFields.size();
+        this.counterDate = dateFields.size();
 
         int y;
-        for (int i = 0; i < this.counterInt; i++) {
+        int i = 0;
+
+        for (IntField intField : intFields) {
             y = gap * i;
             pane1.getChildren().add(labelsInt[i]);
             labelsInt[i].setLayoutX(labelXInt);
             labelsInt[i].setLayoutY(labelY + y);
 
-//////Why is this here?????
-            String query1 = String.format("SELECT value from TICKET_DETAILS_INT WHERE ticket_id = %d ", ticket.id());
-            ResultSet rs1 = QueryExecutor.read(query1);
-
-            while (rs1.next()) {
-                System.out.println("RS1  ");
-                System.out.println(rs1.getString(1));
-                System.out.println(i);
-                labelsInt[i].setText(rs1.getString(1));
-            }
+            labelsInt[i].setText(Integer.toString(intField.value()));
+            i++;
         }
-        for (int i = 0; i < this.counterString; i++) {
+
+        i = 0;
+        for (StringField stringField : stringFields) {
             y = gap * i;
             pane1.getChildren().add(labelsString[i]);
             labelsString[i].setLayoutX(labelXString);
             labelsString[i].setLayoutY(labelY + y);
 
-            String query2 = String.format("SELECT value from TICKET_DETAILS_STRING WHERE ticket_id = %d ", ticket.id());
-            ResultSet rs2 = QueryExecutor.read(query2);
-
-            while (rs2.next()) {
-                System.out.println("RS2  ");
-                System.out.println(rs2.getString(1));
-                System.out.println(i);
-                labelsString[i].setText(rs2.getString(1));
-            }
+            labelsString[i].setText(stringField.value());
+            i++;
         }
 
-        for (int i = 0; i < this.counterDate; i++) {
+        i = 0;
+        for (DateField dateField : dateFields) {
             y = gap * i;
             pane1.getChildren().add(labelsDate[i]);
             labelsDate[i].setLayoutX(labelXDate);
             labelsDate[i].setLayoutY(labelY + y);
 
-            String query3 = String.format("SELECT value from TICKET_DETAILS_DATE WHERE ticket_id = %d ", ticket.id());
-            ResultSet rs3 = QueryExecutor.read(query3);
-
-            while (rs3.next()) {
-                System.out.println(rs3.getString(1));
-                System.out.println(i);
-                labelsDate[i].setText(rs3.getString(1));
-            }
+            labelsDate[i].setText(dateTimeFormatter.format(dateField.value()));
+            i++;
         }
     }
 

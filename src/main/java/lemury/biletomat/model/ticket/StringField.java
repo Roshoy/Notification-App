@@ -4,6 +4,8 @@ import lemury.biletomat.query.QueryExecutor;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 public class StringField extends Field {
@@ -14,6 +16,10 @@ public class StringField extends Field {
     private StringField(int id, String name, boolean required, String value){
         super(id, name, required, "string");
         this.value = value;
+    }
+
+    public String value() {
+        return this.value;
     }
 
     public static int create(int fieldID, int ticketID, String value) {
@@ -42,20 +48,21 @@ public class StringField extends Field {
         return Optional.empty();
     }
 
-
-    public static int countFields(int ticket_id){
-        String sql = String.format("SELECT COUNT(*) as counter FROM %s WHERE ticket_id = %d", TABLE_NAME, ticket_id);
-        System.out.println(sql);
-        int counter = 0;
+    public static List<StringField> findFieldsForTicket(int ticketId) {
+        LinkedList<StringField> result = new LinkedList<>();
+        String findSql = String.format("SELECT * FROM %s AS sf JOIN %s AS tsd ON sf.field_id = tsd.id WHERE sf.ticket_id = %d;",
+                TABLE_NAME, PARENT_TABLE_NAME, ticketId);
 
         try {
-            ResultSet rs = QueryExecutor.read(sql);
-            counter = QueryExecutor.readIdFromResultSet(rs);
-            System.out.println(counter);
-            //return findTicketById(id);
+            ResultSet rs = QueryExecutor.read(findSql);
+
+            while(rs.next()) {
+                result.add(new StringField(rs.getInt("field_id"), rs.getString("name"), rs.getBoolean("required"), rs.getString("value")));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return counter;
+
+        return result;
     }
 }

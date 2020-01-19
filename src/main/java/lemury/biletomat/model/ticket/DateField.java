@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 public class DateField extends Field {
@@ -17,6 +19,10 @@ public class DateField extends Field {
     private DateField(int id, String name, boolean required, LocalDate value){
         super(id, name, required, "date");
         this.value = value;
+    }
+
+    public LocalDate value() {
+        return this.value;
     }
 
     //i dont know if it works
@@ -49,19 +55,22 @@ public class DateField extends Field {
         return Optional.empty();
     }
 
-    public static int countFields(int ticket_id){
-        String sql = String.format("SELECT COUNT(*) as counter FROM %s WHERE ticket_id = %d", TABLE_NAME, ticket_id);
-        System.out.println(sql);
-        int counter = 0;
+    public static List<DateField> findFieldsForTicket(int ticketId) {
+        LinkedList<DateField> result = new LinkedList<>();
+        String findSql = String.format("SELECT * FROM %s AS df JOIN %s AS tsd ON df.field_id = tsd.id WHERE df.ticket_id = %d;",
+                TABLE_NAME, PARENT_TABLE_NAME, ticketId);
 
         try {
-            ResultSet rs = QueryExecutor.read(sql);
-            counter = QueryExecutor.readIdFromResultSet(rs);
-            System.out.println(counter);
-            //return findTicketById(id);
+            ResultSet rs = QueryExecutor.read(findSql);
+
+            while(rs.next()) {
+                LocalDate value = LocalDate.parse(rs.getString("value"), dateTimeFormatter);
+                result.add(new DateField(rs.getInt("field_id"), rs.getString("name"), rs.getBoolean("required"), value));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return counter;
+
+        return result;
     }
 }
