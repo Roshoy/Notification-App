@@ -30,7 +30,7 @@ public class LoggingController {
 
 
     @FXML
-    private void handleLoggingAction(ActionEvent event) throws SQLException, IOException {
+    private void handleLoggingAction(ActionEvent event) throws IOException {
         Optional<User> optionalUser = User.findByLogin(login.getText(), password.getText());
 
         if (!optionalUser.isPresent()) {
@@ -50,10 +50,15 @@ public class LoggingController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             stage.setScene(new Scene(loader.load()));
-            UserController userController = loader.<UserController>getController();
+            UserController userController = loader.getController();
             userController.setUser(user);
             //userController.setTickets(Ticket.getTicketsList(user));
             stage.show();
         }
+    }
+
+    @FXML
+    public void handleEnter(ActionEvent event) throws IOException {
+        this.handleLoggingAction(event);
     }
 }

@@ -27,6 +27,10 @@ public class TicketStructure {
         fields = new ArrayList<>();
     }
 
+    public String name() {
+        return this.name;
+    }
+
     public static int create(String name, int department_id) {
         String insertSql = String.format("INSERT INTO %s (name, department_id) VALUES ('%s', %d)", TABLE_NAME, name, department_id);
         if(Department.findById(department_id).equals(Optional.empty())) {
@@ -77,22 +81,19 @@ public class TicketStructure {
     public static int getCount(int ticketStructureId) throws SQLException {
         String query = String.format("SELECT COUNT(*) as count FROM TICKET_STRUCTURE_DETAILS WHERE ticket_structure_id = %d", ticketStructureId);
         ResultSet rs = QueryExecutor.read(query);
-        int counter = QueryExecutor.readIdFromResultSet(rs);
-        return counter;
+        return QueryExecutor.readIdFromResultSet(rs);
     }
 
     public static int getIdFromName(String name) throws SQLException {
         String query = String.format("SELECT * FROM %s WHERE name = '%s'", TABLE_NAME, name);
         ResultSet rs = QueryExecutor.read(query);
-        int id = QueryExecutor.readIdFromResultSet(rs);
-        return id;
+        return QueryExecutor.readIdFromResultSet(rs);
     }
 
     public static int getDepartmentIdFromId(int id) throws SQLException{
         String query = String.format("SELECT department_id FROM %s WHERE id = %d", TABLE_NAME, id );
         ResultSet rs = QueryExecutor.read(query);
-        int deptId = QueryExecutor.readIdFromResultSet(rs);
-        return deptId;
+        return QueryExecutor.readIdFromResultSet(rs);
     }
 
     public static void setNewTicketPane(Label[] nameFields, Label[] typeFields, Label[] reqFields, TextField[] valueFields, int ticketStructureId, int counter) throws SQLException {
@@ -111,8 +112,7 @@ public class TicketStructure {
     public static int getTicketStructureDetailsIdFromTicketId(int ticketStructureId, String name) throws SQLException {
         String query = String.format("SELECT id FROM TICKET_STRUCTURE_DETAILS WHERE ticket_structure_id = %d and name = '%s';", ticketStructureId, name);
         ResultSet rs = QueryExecutor.read(query);
-        int id = QueryExecutor.readIdFromResultSet(rs);
-        return id;
+        return QueryExecutor.readIdFromResultSet(rs);
     }
 
 /*

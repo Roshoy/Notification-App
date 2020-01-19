@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import lemury.biletomat.model.ticket.*;
 import lemury.biletomat.model.users.Coordinator;
 import lemury.biletomat.model.users.User;
@@ -35,10 +36,10 @@ public class AddTicketController {
 
     private User user;
 
-    private Label nameFields[] = new Label[10];
-    private Label typeFields[] = new Label[10];
-    private Label reqFields[] = new Label[10];
-    private TextField valueField[] = new TextField[10];
+    private Label[] nameFields = new Label[10];
+    private Label[] typeFields = new Label[10];
+    private Label[] reqFields = new Label[10];
+    private TextField[] valueField = new TextField[10];
 
     int counter = 0;
 
@@ -215,5 +216,8 @@ public class AddTicketController {
         alert.setContentText("Ticket has been added");
 
         alert.showAndWait();
+
+        Stage stage = (Stage) addButton.getScene().getWindow();
+        stage.close();
     }
 }

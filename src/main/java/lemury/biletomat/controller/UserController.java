@@ -20,6 +20,7 @@ import lemury.biletomat.model.ticket.TicketStructure;
 import lemury.biletomat.model.users.Coordinator;
 import lemury.biletomat.model.users.User;
 
+import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -69,6 +70,7 @@ public class UserController {
     protected User user;
 
     private ObservableList<Ticket> tickets;
+    private ObservableList<String> ticketStructuresNames;
 
     private ListChangeListener<Ticket> ticketsListener = c -> {
         while (c.next()) {
@@ -83,8 +85,9 @@ public class UserController {
 
     @FXML
     protected void initialize() {
-        ticketTypeField.setItems(TicketStructure.getNames());
-        ticketTypeField.setValue(TicketStructure.getNames().get(0));
+        this.ticketStructuresNames = TicketStructure.getNames();
+        ticketTypeField.setItems(this.ticketStructuresNames);
+        ticketTypeField.setValue(this.ticketStructuresNames.get(0));
 
         titleColumn.setCellValueFactory(dataValue -> dataValue.getValue().getTitleProperty());
         descriptionColumn.setCellValueFactory(dataValue -> dataValue.getValue().getDescriptionProperty());
@@ -120,9 +123,12 @@ public class UserController {
     }
 
     @FXML
-    private void handleAddNewTicketTypeAction(ActionEvent event) throws SQLException, IOException {
+    private void handleAddNewTicketTypeAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddNewTicketTypePane.fxml"));
         Parent addTicketType = loader.load();
+
+        AddNewTicketTypeController addNewTicketTypeController = loader.getController();
+        addNewTicketTypeController.setTicketStructureNames(this.ticketStructuresNames);
 
         Scene scene = new Scene(addTicketType);
         Stage appStage = new Stage();
@@ -200,7 +206,7 @@ public class UserController {
     }
 
     @FXML
-    public void handleViewTicket(ActionEvent event) throws IOException, SQLException {
+    public void handleViewTicket(ActionEvent event) throws IOException {
         if (ticketsTable.getSelectionModel().isEmpty()) {
             new Alert(Alert.AlertType.ERROR, "No ticket selected!").showAndWait();
         } else {
@@ -220,7 +226,7 @@ public class UserController {
     }
 
     @FXML
-    public void handleViewOwnedTickets(ActionEvent event) throws IOException {
+    public void handleViewOwnedTickets(ActionEvent event) {
         String ownedTickets = "Owned Tickets";
         String submittedTickets = "Submitted Tickets";
         if (viewOwnedTicketsButton.textProperty().getValue().equals("View " + ownedTickets)) {
@@ -262,5 +268,11 @@ public class UserController {
             menageUsersButton.setVisible(false);
             addNewTicketTypeButton.setVisible(false);
         }
+    }
+
+    @FXML
+    public void handleTableMouseClick(MouseEvent mouseEvent) throws IOException {
+        if(mouseEvent.getClickCount() == 2)
+            this.handleViewTicket(null);
     }
 }
