@@ -121,7 +121,6 @@ public class AddTicketController {
 
     @FXML
     public void handleAddAction(javafx.event.ActionEvent event) throws SQLException {
-
         ObservableList<Coordinator> depCoordinators = Coordinator.findCoordinatorsByDepartmentId(this.departmentId);
         if(depCoordinators.size() == 0){
             new Alert(Alert.AlertType.ERROR, "Empty department").showAndWait();
@@ -189,8 +188,6 @@ public class AddTicketController {
                     break;
             }
         }
-
-
 
         Ticket ticket = Ticket.findTicketById(ticketId).get();
         ticket.getSubmitterProperty().setValue(user);

@@ -73,8 +73,7 @@ public class TicketMessagesController {
             labelsString[i]= new Label();
             labelsDate[i]= new Label();
         }
-    };
-
+    }
 
     public void actualiseView() throws SQLException {
         int counter1 = IntField.countFields(ticket.id());
