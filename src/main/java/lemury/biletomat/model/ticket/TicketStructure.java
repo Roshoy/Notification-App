@@ -137,7 +137,7 @@ public class TicketStructure {
 */
 
     public void addField(String name, boolean required, String type){
-        int fieldId = Field.create(this.id, name, required, type);
+        int fieldId = Field.create(this.id, name, required, FieldType.valueOf(type.toUpperCase()));
         Optional<Field> newField = Field.findFieldById(fieldId);
 
         newField.ifPresent(field -> fields.add(field));

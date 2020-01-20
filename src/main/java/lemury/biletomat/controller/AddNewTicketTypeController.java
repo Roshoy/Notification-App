@@ -9,7 +9,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lemury.biletomat.model.departments.Department;
 import lemury.biletomat.model.ticket.TicketStructure;
-
+import lemury.biletomat.utils.TicketTypeLayoutConstants;
+import lemury.biletomat.model.ticket.Ticket;
 import java.util.Optional;
 
 
@@ -36,22 +37,13 @@ public class AddNewTicketTypeController {
     private int deptID;
 
     private int counter = 0;
-    private static final int MAX_FIELDS = 9;
 
     private ObservableList<String> ticketStructureNames;
 
-    final int valueFieldX = 26;
-    final int valueFieldY = 222;
-    final int nameX = 242;
-    final int typeX = 370;
-    final int requiredX = 480;
-    final int labelY = 230;
-    final int gap = 30;
 
-    private Label[] nameFields = new Label[10];
-    private Label[] typeFields = new Label[10];
-    private Label[] reqFields = new Label[10];
-    // private TextField valueField[] = new TextField[10];
+    private Label[] nameFields = new Label[Ticket.MAX_FIELDS];
+    private Label[] typeFields = new Label[Ticket.MAX_FIELDS];
+    private Label[] reqFields = new Label[Ticket.MAX_FIELDS];
 
     private static final ObservableList<String> TYPE_OPTIONS =
             FXCollections.observableArrayList(
@@ -68,7 +60,7 @@ public class AddNewTicketTypeController {
     private void initialize() {
         departmentField.setItems(Department.getNames());
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < Ticket.MAX_FIELDS; i++) {
             nameFields[i] = new Label();
             typeFields[i] = new Label();
             reqFields[i] = new Label();
@@ -104,8 +96,8 @@ public class AddNewTicketTypeController {
     @FXML
     private void handleAddFieldAction(ActionEvent event) {
         System.out.println(counter);
-        if (counter > MAX_FIELDS) {
-            new Alert(Alert.AlertType.ERROR, String.format("Can't add more fields, limit reached(%s)", MAX_FIELDS))
+        if (counter > Ticket.MAX_FIELDS - 1) {
+            new Alert(Alert.AlertType.ERROR, String.format("Can't add more fields, limit reached(%s)", Ticket.MAX_FIELDS))
                     .showAndWait();
             return;
         }
@@ -124,18 +116,18 @@ public class AddNewTicketTypeController {
         pane1.getChildren().add(reqFields[counter]);
         pane1.getChildren().add(typeFields[counter]);
 
-        int y = gap * counter;
-        nameFields[counter].setLayoutX(nameX);
-        nameFields[counter].setLayoutY(labelY + y);
+        int y = TicketTypeLayoutConstants.GAP * counter;
+        nameFields[counter].setLayoutX(TicketTypeLayoutConstants.NAME_X);
+        nameFields[counter].setLayoutY(TicketTypeLayoutConstants.LABEL_Y + y);
 
-        reqFields[counter].setLayoutX(requiredX);
-        reqFields[counter].setLayoutY(labelY + y);
+        reqFields[counter].setLayoutX(TicketTypeLayoutConstants.REQUIRED_X);
+        reqFields[counter].setLayoutY(TicketTypeLayoutConstants.LABEL_Y + y);
 
         //valueField[counter].setLayoutX(valueFieldX);
         //valueField[counter].setLayoutY(valueFieldY + y);
 
-        typeFields[counter].setLayoutX(typeX);
-        typeFields[counter].setLayoutY(labelY + y);
+        typeFields[counter].setLayoutX(TicketTypeLayoutConstants.TYPE_X);
+        typeFields[counter].setLayoutY(TicketTypeLayoutConstants.LABEL_Y + y);
 
 
         nameFields[counter].setText(this.fieldName.getText());
@@ -170,7 +162,11 @@ public class AddNewTicketTypeController {
         for (int i = 0; i < counter; i++) {
             ticketStructure.addField(this.nameFields[i].getText(), Boolean.parseBoolean(this.reqFields[i].getText()), this.typeFields[i].getText().toLowerCase());
         }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setContentText("Ticket type has been added");
 
+        alert.showAndWait();
         Stage stage = (Stage) submitButton.getScene().getWindow();
         stage.close();
     }

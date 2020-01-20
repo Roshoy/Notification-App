@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Ticket {
+    public static final int MAX_FIELDS = 10;
     private final int id;
     private final int ticketStructureId;
     private static final String TABLE_NAME = "TICKETS";

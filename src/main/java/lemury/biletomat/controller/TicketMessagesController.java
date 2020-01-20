@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import lemury.biletomat.utils.TicketViewLayoutConstants;
 
 public class TicketMessagesController {
     private User user;
@@ -59,22 +60,15 @@ public class TicketMessagesController {
     private int counterString = 0;
     private int counterDate = 0;
 
-    private final int labelXInt = 320;
-    private final int labelXString = 350;
-    private final int labelXDate = 380;
-
-    private final int labelY = 15;
-    private final int gap = 20;
-
-    private Label labelsInt[] = new Label[10];
-    private Label labelsString[] = new Label[10];
-    private Label labelsDate[] = new Label[10];
+    private Label labelsInt[] = new Label[Ticket.MAX_FIELDS];
+    private Label labelsString[] = new Label[Ticket.MAX_FIELDS];
+    private Label labelsDate[] = new Label[Ticket.MAX_FIELDS];
 
     @FXML
     public void initialize() {
         messageHistoryContainer.vvalueProperty().bind(messageHistoryVBox.heightProperty());
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < Ticket.MAX_FIELDS; i++) {
             labelsInt[i] = new Label();
             labelsString[i] = new Label();
             labelsDate[i] = new Label();
@@ -94,10 +88,10 @@ public class TicketMessagesController {
         int i = 0;
 
         for (IntField intField : intFields) {
-            y = gap * i;
+            y = TicketViewLayoutConstants.GAP * i;
             pane1.getChildren().add(labelsInt[i]);
-            labelsInt[i].setLayoutX(labelXInt);
-            labelsInt[i].setLayoutY(labelY + y);
+            labelsInt[i].setLayoutX(TicketViewLayoutConstants.LABEL_X_INT);
+            labelsInt[i].setLayoutY(TicketViewLayoutConstants.LABEL_Y + y);
 
             labelsInt[i].setText(Integer.toString(intField.value()));
             i++;
@@ -105,10 +99,10 @@ public class TicketMessagesController {
 
         i = 0;
         for (StringField stringField : stringFields) {
-            y = gap * i;
+            y = TicketViewLayoutConstants.GAP * i;
             pane1.getChildren().add(labelsString[i]);
-            labelsString[i].setLayoutX(labelXString);
-            labelsString[i].setLayoutY(labelY + y);
+            labelsString[i].setLayoutX(TicketViewLayoutConstants.LABEL_X_STRING);
+            labelsString[i].setLayoutY(TicketViewLayoutConstants.LABEL_Y + y);
 
             labelsString[i].setText(stringField.value());
             i++;
@@ -116,10 +110,10 @@ public class TicketMessagesController {
 
         i = 0;
         for (DateField dateField : dateFields) {
-            y = gap * i;
+            y = TicketViewLayoutConstants.GAP * i;
             pane1.getChildren().add(labelsDate[i]);
-            labelsDate[i].setLayoutX(labelXDate);
-            labelsDate[i].setLayoutY(labelY + y);
+            labelsDate[i].setLayoutX(TicketViewLayoutConstants.LABEL_X_DATE);
+            labelsDate[i].setLayoutY(TicketViewLayoutConstants.LABEL_Y + y);
 
             labelsDate[i].setText(dateTimeFormatter.format(dateField.value()));
             i++;
