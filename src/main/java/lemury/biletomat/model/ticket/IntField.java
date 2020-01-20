@@ -14,7 +14,7 @@ public class IntField extends Field {
     private static final String PARENT_TABLE_NAME = "TICKET_STRUCTURE_DETAILS";
 
     private IntField(int id, String name, boolean required, int value) {
-        super(id, name, required, "int");
+        super(id, name, required, FieldType.INT);
         this.value = value;
     }
 

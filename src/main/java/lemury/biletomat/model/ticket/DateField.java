@@ -17,7 +17,7 @@ public class DateField extends Field {
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     private DateField(int id, String name, boolean required, LocalDate value){
-        super(id, name, required, "date");
+        super(id, name, required, FieldType.DATE);
         this.value = value;
     }
 

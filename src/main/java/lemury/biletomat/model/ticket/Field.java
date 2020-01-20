@@ -10,20 +10,20 @@ public class Field {
     private int id;
     private String name;
     private boolean required;
-    private String type;
+    private FieldType type;
 
     private static final String TABLE_NAME = "TICKET_STRUCTURE_DETAILS";
 
-    protected Field(int id, String name, boolean required, String type){
+    protected Field(int id, String name, boolean required, FieldType type){
         this.id = id;
         this.name = name;
         this.required = required;
         this.type = type;
     }
 
-    public static int create(int ticketStructureId, String name, boolean required, String type){
+    public static int create(int ticketStructureId, String name, boolean required, FieldType type){
         String insertSql = String.format("INSERT INTO %s(ticket_structure_id, name, required, type) VALUES (%d, '%s', %b, '%s')",
-                TABLE_NAME, ticketStructureId, name, required, type);
+                TABLE_NAME, ticketStructureId, name, required, type.toString().toLowerCase());
 
         try {
             return QueryExecutor.createAndObtainId(insertSql);
@@ -39,7 +39,7 @@ public class Field {
 
         try {
             ResultSet rs = QueryExecutor.read(findSql);
-            return Optional.of(new Field(id, rs.getString("name"), rs.getBoolean("required"), rs.getString("type")));
+            return Optional.of(new Field(id, rs.getString("name"), rs.getBoolean("required"), FieldType.valueOf(rs.getString("type").toUpperCase())));
         } catch (SQLException e) {
             e.printStackTrace();
         }

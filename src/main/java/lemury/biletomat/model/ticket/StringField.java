@@ -14,7 +14,7 @@ public class StringField extends Field {
     private static final String PARENT_TABLE_NAME = "TICKET_STRUCTURE_DETAILS";
 
     private StringField(int id, String name, boolean required, String value){
-        super(id, name, required, "string");
+        super(id, name, required, FieldType.STRING);
         this.value = value;
     }
 
