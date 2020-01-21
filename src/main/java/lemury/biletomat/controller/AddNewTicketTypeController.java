@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lemury.biletomat.model.departments.Department;
 import lemury.biletomat.model.ticket.TicketStructure;
@@ -33,6 +34,18 @@ public class AddNewTicketTypeController {
     private AnchorPane pane1;
     @FXML
     private RadioButton requiredRadioButton;
+    @FXML
+    private Text chooseDataTypeText;
+    @FXML
+    private Text nameOfFieldText;
+    @FXML
+    private Text declaredFieldsText;
+    @FXML
+    private Text nameText;
+    @FXML
+    private Text typeText;
+    @FXML
+    private Text requiredText;
 
     private int deptID;
 
@@ -64,7 +77,6 @@ public class AddNewTicketTypeController {
             nameFields[i] = new Label();
             typeFields[i] = new Label();
             reqFields[i] = new Label();
-            //valueField[i] = new TextField();
         }
 
         dataTypeField.setItems(TYPE_OPTIONS);
@@ -73,6 +85,13 @@ public class AddNewTicketTypeController {
         this.dataTypeField.setVisible(false);
         this.addNewFieldButton.setVisible(false);
         this.submitButton.setVisible(false);
+
+        this.chooseDataTypeText.setVisible(false);
+        this.nameOfFieldText.setVisible(false);
+        this.declaredFieldsText.setVisible(false);
+        this.nameText.setVisible(false);
+        this.typeText.setVisible(false);
+        this.requiredText.setVisible(false);
     }
 
     @FXML
@@ -90,6 +109,13 @@ public class AddNewTicketTypeController {
             this.dataTypeField.setVisible(true);
             this.addNewFieldButton.setVisible(true);
             this.submitButton.setVisible(true);
+
+            this.chooseDataTypeText.setVisible(true);
+            this.nameOfFieldText.setVisible(true);
+            this.declaredFieldsText.setVisible(true);
+            this.nameText.setVisible(true);
+            this.typeText.setVisible(true);
+            this.requiredText.setVisible(true);
         }
     }
 

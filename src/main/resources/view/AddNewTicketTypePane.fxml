@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="pane1" prefHeight="570.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.biletomat.controller.AddNewTicketTypeController">
+<AnchorPane fx:id="pane1" prefHeight="570.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lemury.biletomat.controller.AddNewTicketTypeController">
    <children>
       <ChoiceBox fx:id="departmentField" layoutX="275.0" layoutY="45.0" prefWidth="150.0" />
       <Button fx:id="addButton" layoutX="456.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleAddAction" text="Add" />
       <TextField fx:id="ticketTypeName" layoutX="26.0" layoutY="45.0" />
-      <Text layoutX="54.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name of ticket type" />
+      <Text layoutX="47.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name of ticket type" />
       <Button fx:id="submitButton" layoutX="514.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleSubmitAction" text="Submit" />
       <ChoiceBox fx:id="dataTypeField" layoutX="275.0" layoutY="118.0" prefWidth="150.0" />
-      <TextField fx:id="fieldName" layoutX="32.0" layoutY="118.0" />
-      <Text layoutX="284.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose department" />
-      <Text layoutX="292.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose data type" />
-      <Button fx:id="addNewFieldButton" layoutX="465.0" layoutY="117.0" mnemonicParsing="false" onAction="#handleAddFieldAction" text="Add new field" />
-      <Text layoutX="80.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name of field" />
-      <RadioButton fx:id="requiredRadioButton" layoutX="300.0" layoutY="170.0" mnemonicParsing="false" text="Required" />
+      <TextField fx:id="fieldName" layoutX="26.0" layoutY="118.0" />
+      <Text layoutX="285.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose department" />
+      <Text fx:id="chooseDataTypeText" layoutX="292.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose data type" />
+      <Button fx:id="addNewFieldButton" layoutX="456.0" layoutY="118.0" mnemonicParsing="false" onAction="#handleAddFieldAction" prefHeight="26.0" prefWidth="121.0" text="Add new field" />
+      <Text fx:id="nameOfFieldText" layoutX="67.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name of field" />
+      <RadioButton fx:id="requiredRadioButton" layoutX="308.0" layoutY="175.0" mnemonicParsing="false" text="Required" />
+      <Text fx:id="declaredFieldsText" layoutX="26.0" layoutY="206.0" text="Declared fields:" />
+      <Text fx:id="nameText" layoutX="57.0" layoutY="228.0" text="Name" />
+      <Text fx:id="typeText" layoutX="178.0" layoutY="228.0" text="Type" />
+      <Text fx:id="requiredText" layoutX="269.0" layoutY="227.0" text="Required" />
    </children>
 </AnchorPane>
