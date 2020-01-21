@@ -10,7 +10,6 @@ import lemury.biletomat.query.QueryExecutor;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -103,7 +102,9 @@ public class TicketStructure {
         while(rs.next()){
             nameFields[i].setText(rs.getString("name"));
             typeFields[i].setText(rs.getString("type"));
-            reqFields[i].setText(rs.getString("required"));
+            boolean required = rs.getBoolean("required");
+            if(required) reqFields[i].setText("required");
+            else reqFields[i].setText("");
             i++;
         }
 
@@ -114,27 +115,6 @@ public class TicketStructure {
         ResultSet rs = QueryExecutor.read(query);
         return QueryExecutor.readIdFromResultSet(rs);
     }
-
-/*
-    public int insertToDb(){
-        String insertSql = String.format("INSERT INTO %s(name, department_id) VALUES ('%s', %d)", TABLE_NAME, this.name, this.department.id());
-        int ticketStructureId = 0;
-        try {
-            ticketStructureId = QueryExecutor.createAndObtainId(insertSql);
-
-            //return findTicketById(id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        if(ticketStructureId != 0) {
-            for (int i = 0; i < fields.size(); i++) {
-                this.fields.get(i).insertToDb(ticketStructureId);
-            }
-        };
-
-        return ticketStructureId;
-    }
-*/
 
     public void addField(String name, boolean required, String type){
         int fieldId = Field.create(this.id, name, required, FieldType.valueOf(type.toUpperCase()));

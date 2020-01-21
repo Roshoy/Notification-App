@@ -21,6 +21,10 @@ public class Field {
         this.type = type;
     }
 
+    public String name() {
+        return this.name + ":";
+    }
+
     public static int create(int ticketStructureId, String name, boolean required, FieldType type){
         String insertSql = String.format("INSERT INTO %s(ticket_structure_id, name, required, type) VALUES (%d, '%s', %b, '%s')",
                 TABLE_NAME, ticketStructureId, name, required, type.toString().toLowerCase());

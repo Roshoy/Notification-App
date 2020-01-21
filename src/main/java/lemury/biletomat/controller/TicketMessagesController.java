@@ -60,9 +60,10 @@ public class TicketMessagesController {
     private int counterString = 0;
     private int counterDate = 0;
 
-    private Label labelsInt[] = new Label[Ticket.MAX_FIELDS];
-    private Label labelsString[] = new Label[Ticket.MAX_FIELDS];
-    private Label labelsDate[] = new Label[Ticket.MAX_FIELDS];
+    private Label[] labelsInt = new Label[Ticket.MAX_FIELDS];
+    private Label[] labelsString = new Label[Ticket.MAX_FIELDS];
+    private Label[] labelsDate = new Label[Ticket.MAX_FIELDS];
+    private Label[] labelsNames = new Label[Ticket.MAX_FIELDS];
 
     @FXML
     public void initialize() {
@@ -72,7 +73,15 @@ public class TicketMessagesController {
             labelsInt[i] = new Label();
             labelsString[i] = new Label();
             labelsDate[i] = new Label();
+            labelsNames[i] = new Label();
         }
+    }
+
+    private void addNameLabel(int index, int y, String text) {
+        this.pane1.getChildren().add(labelsNames[index]);
+        labelsNames[index].setLayoutX(TicketViewLayoutConstants.LABEL_X_NAME);
+        labelsNames[index].setLayoutY(TicketViewLayoutConstants.LABEL_Y + y);
+        labelsNames[index].setText(text);
     }
 
     public void actualiseView() {
@@ -92,30 +101,31 @@ public class TicketMessagesController {
             pane1.getChildren().add(labelsInt[i]);
             labelsInt[i].setLayoutX(TicketViewLayoutConstants.LABEL_X_INT);
             labelsInt[i].setLayoutY(TicketViewLayoutConstants.LABEL_Y + y);
-
             labelsInt[i].setText(Integer.toString(intField.value()));
+            addNameLabel(i, y, intField.name());
+
             i++;
         }
 
-        i = 0;
         for (StringField stringField : stringFields) {
             y = TicketViewLayoutConstants.GAP * i;
             pane1.getChildren().add(labelsString[i]);
             labelsString[i].setLayoutX(TicketViewLayoutConstants.LABEL_X_STRING);
             labelsString[i].setLayoutY(TicketViewLayoutConstants.LABEL_Y + y);
-
             labelsString[i].setText(stringField.value());
+            addNameLabel(i, y, stringField.name());
+
             i++;
         }
 
-        i = 0;
         for (DateField dateField : dateFields) {
             y = TicketViewLayoutConstants.GAP * i;
             pane1.getChildren().add(labelsDate[i]);
             labelsDate[i].setLayoutX(TicketViewLayoutConstants.LABEL_X_DATE);
             labelsDate[i].setLayoutY(TicketViewLayoutConstants.LABEL_Y + y);
-
             labelsDate[i].setText(dateTimeFormatter.format(dateField.value()));
+            addNameLabel(i, y, dateField.name());
+
             i++;
         }
     }
