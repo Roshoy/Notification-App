@@ -8,6 +8,7 @@ import lemury.biletomat.query.QueryExecutor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -16,12 +17,11 @@ public class Department {
     public static final String TABLE_NAME = "DEPARTMENTS";
 
     private String Name;
-    private Set<Coordinator> coordinators;
+    private ObservableList<Coordinator> coordinators;
 
-    public Department(int id, String name) {
+    private Department(int id, String name) {
         this.id = id;
         this.Name = name;
-        this.coordinators = new HashSet<>();
     }
 
     public int id() {
@@ -31,6 +31,8 @@ public class Department {
     public String name() {
         return Name;
     }
+
+    public ObservableList<Coordinator> coordinators() { return coordinators; }
 
     /*
     public ticket CreateNewTicket(){ //Is it SRP friendly?
@@ -68,6 +70,10 @@ public class Department {
         return result;
     }
 
+    public void updateCoordinators() {
+        this.coordinators = Coordinator.findCoordinatorsByDepartmentId(this.id);
+    }
+
     public static Optional<Department> findById(final int id) {
         String findByIdSql = String.format("SELECT * FROM %s WHERE id = %d", TABLE_NAME, id);
         try {
@@ -88,5 +94,19 @@ public class Department {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Department that = (Department) o;
+        return id == that.id &&
+                Name.equals(that.Name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, Name);
     }
 }

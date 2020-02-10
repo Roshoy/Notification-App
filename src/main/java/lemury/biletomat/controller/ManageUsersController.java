@@ -1,26 +1,26 @@
 package lemury.biletomat.controller;
 
-import javafx.scene.Node;
-import lemury.biletomat.model.ticket.Ticket;
-import lemury.biletomat.model.users.Coordinator;
-import lemury.biletomat.model.users.User;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import lemury.biletomat.model.users.Coordinator;
+import lemury.biletomat.model.users.User;
 
 import java.io.IOException;
 
 
-public class ManageUsersController extends CoordinatorController {
+public class ManageUsersController {
+    private User user;
     private ObservableList<User> users;
     private ObservableList<Coordinator> coordinators;
 
@@ -80,32 +80,43 @@ public class ManageUsersController extends CoordinatorController {
         deleteUserButton.disableProperty().bind(Bindings.isEmpty(usersTable.getSelectionModel().getSelectedItems()));
         deleteCoordinatorButton.disableProperty().bind(Bindings.isEmpty(coordinatorsTable.getSelectionModel().getSelectedItems()));
 
-        users = User.getUsersList();
-        usersTable.setItems(users);
-
-        coordinators = Coordinator.getCoordinatorsList();
-        coordinatorsTable.setItems(coordinators);
+        setUsers(User.getUsersList());
+        setCoordinators(Coordinator.getCoordinatorsList());
     }
 
-    public void setUsers(ObservableList<User> users) {
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    private void setUsers(ObservableList<User> users) {
         this.users = users;
         usersTable.setItems(users);
     }
 
-    public void setCoordinators(ObservableList<Coordinator> coordinators) {
+    private void setCoordinators(ObservableList<Coordinator> coordinators) {
         this.coordinators = coordinators;
         coordinatorsTable.setItems(coordinators);
     }
 
-    protected void setAdministrator(User administrator){
-        this.user = Coordinator.findCoordinatorById(administrator.id()).get();
+    @FXML
+    public void handleLogoutAction() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LoggingPane.fxml"));
+        Parent logging = loader.load();
+        Stage stage = (Stage) logoutButton.getScene().getWindow();
+        stage.close();
+
+        Scene scene = new Scene(logging);
+        Stage appStage = new Stage();
+        appStage.setScene(scene);
+        appStage.show();
     }
 
     @FXML
     private void handleUserDeleteAction(ActionEvent actionEvent) {
         ObservableList<User> toRemove = usersTable.getSelectionModel().getSelectedItems();
 
-        for(User user : toRemove) {
+        for (User user : toRemove) {
             User.deleteUserById(user.id());
         }
         this.users.removeAll(toRemove);
@@ -115,7 +126,7 @@ public class ManageUsersController extends CoordinatorController {
     private void handleCoordinatorDeleteAction(ActionEvent actionEvent) {
         ObservableList<Coordinator> toRemove = coordinatorsTable.getSelectionModel().getSelectedItems();
 
-        for(Coordinator coordinator : toRemove) {
+        for (Coordinator coordinator : toRemove) {
             User.deleteUserById(coordinator.id());
         }
         this.coordinators.removeAll(toRemove);
@@ -134,5 +145,17 @@ public class ManageUsersController extends CoordinatorController {
         Stage appStage = new Stage();
         appStage.setScene(scene);
         appStage.show();
+    }
+
+    @FXML
+    protected void handleBackAction(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UserPane.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+        stage.setScene(new Scene(loader.load()));
+        UserController userController = loader.<UserController>getController();
+        userController.setUser(user);
+        //userController.setTickets(Ticket.getTicketsList(user));
+        stage.show();
     }
 }

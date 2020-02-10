@@ -36,6 +36,54 @@ public final class QueryExecutor {
                     "FOREIGN KEY(department_id) references DEPARTMENTS(id) " +
                     ");");
 
+            LOGGER.info("Creating table ticket_structure");
+            create("CREATE TABLE IF NOT EXISTS TICKET_STRUCTURE (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "name VARCHAR(50) NOT NULL, " +
+                    "department_id INTEGER NOT NULL, " +
+                    "FOREIGN KEY(department_id) references DEPARTMENTS(id)" +
+                    ");");
+
+            LOGGER.info("Creating table ticket_structure_details");
+            create("CREATE TABLE IF NOT EXISTS TICKET_STRUCTURE_DETAILS (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "ticket_structure_id INTEGER NOT NULL, " +
+                    "name VARCHAR(50) NOT NULL, " +
+                    "required BOOLEAN NOT NULL, " +
+                    "type VARCHAR(50), " +
+                    "FOREIGN KEY(ticket_structure_id) references TICKET_STRUCTURE(id)" +
+                    ");");
+
+            LOGGER.info("Creating table ticket_details_date");
+            create("CREATE TABLE IF NOT EXISTS TICKET_DETAILS_DATE (" +
+                    "field_id INTEGER NOT NULL, " +
+                    "ticket_id INTEGER NOT NULL, " +
+                    "value DATE, " +
+                    "PRIMARY KEY(field_id, ticket_id), " +
+                    "FOREIGN KEY(field_id) references TICKET_STRUCTURE_DETAILS(id), " +
+                    "FOREIGN KEY(ticket_id) references TICKETS(id)" +
+                    ");");
+
+            LOGGER.info("Creating table ticket_details_int");
+            create("CREATE TABLE IF NOT EXISTS TICKET_DETAILS_INT (" +
+                    "field_id INTEGER NOT NULL, " +
+                    "ticket_id INTEGER NOT NULL, " +
+                    "value INTEGER, " +
+                    "PRIMARY KEY(field_id, ticket_id), " +
+                    "FOREIGN KEY(field_id) references TICKET_STRUCTURE_DETAILS(id), " +
+                    "FOREIGN KEY(ticket_id) references TICKETS(id)" +
+                    ");");
+
+            LOGGER.info("Creating table ticket_details_string");
+            create("CREATE TABLE IF NOT EXISTS TICKET_DETAILS_STRING (" +
+                    "field_id INTEGER NOT NULL, " +
+                    "ticket_id INTEGER NOT NULL, " +
+                    "value VARCHAR(100), " +
+                    "PRIMARY KEY(field_id, ticket_id), " +
+                    "FOREIGN KEY(field_id) references TICKET_STRUCTURE_DETAILS(id), " +
+                    "FOREIGN KEY(ticket_id) references TICKETS(id)" +
+                    ");");
+
             LOGGER.info("Creating table Tickets");
             create("CREATE TABLE IF NOT EXISTS TICKETS (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -45,16 +93,11 @@ public final class QueryExecutor {
                     "description VARCHAR(500) NOT NULL, " +
                     "status CHAR(15) NOT NULL, " +
                     "release_notes VARCHAR(500), " +
-                    "date DATE NOT NULL," +
+                    "date DATE NOT NULL, " +
+                    "ticket_structure_id INT, " +
                     "FOREIGN KEY(coordinator_id) references USERS(id), " +
-                    "FOREIGN KEY(user_id) references USERS(id) " +
-                    ");");
-
-            LOGGER.info("Creating table ITTickets");
-            create("CREATE TABLE IF NOT EXISTS ITTICKETS (" +
-                    "id INTEGER PRIMARY KEY, " +
-                    "computer_no INTEGER NOT NULL," +
-                    "FOREIGN KEY(id) references TICKETS(id)" +
+                    "FOREIGN KEY(user_id) references USERS(id), " +
+                    "FOREIGN KEY(ticket_structure_id) references TICKET_STRUCTURE(id) " +
                     ");");
 
             LOGGER.info("Creating table Messages");

@@ -21,8 +21,7 @@ public class User {
     private final String userType;
     private String password;
 
-    private List<Ticket> submittedTickets;
-
+    private ObservableList<Ticket> submittedTickets;
 
     protected User(int id, String firstName, String lastName, String login, String password, String userType) {
         this.id = id;
@@ -30,9 +29,7 @@ public class User {
         this.lastName = lastName;
         this.login = login;
         this.password = password;
-        this.submittedTickets = null;
         this.userType = userType;
-
     }
 
     public int id() {
@@ -55,6 +52,14 @@ public class User {
 
     public String getUserType(){return userType;}
 
+    public ObservableList<Ticket> getSubmittedTickets() {
+        return submittedTickets;
+    }
+
+    public void updateTickets(){
+        this.submittedTickets = Ticket.getTicketsList(this);
+    }
+
     public static Optional<User> createUserAccount(String login, String firstName, String lastName, String password){
         if(login.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || password.isEmpty()){
             System.out.println("IN user create empty string ");
@@ -64,7 +69,7 @@ public class User {
 
         Optional<User> user = User.findByLogin(login);
         if(!user.equals(Optional.empty())){
-            System.out.println("User with that id already exists");
+            System.out.println("User with that login already exists");
             return Optional.empty();
         }
 
@@ -87,13 +92,13 @@ public class User {
     }
 
     public static Optional<User> findByLogin(final String login, final String password){
-        String findByLoginSql = String.format("SELECT * FROM '%s' WHERE login='%s' AND password='%s'", User.TABLE_NAME,
+        String findByLoginSql = String.format("SELECT * FROM %s WHERE login = '%s' AND password = '%s';", User.TABLE_NAME,
                 login, password);
         return getUser(findByLoginSql);
     }
 
     public static Optional<User> findByLogin(String login){
-        String findByLoginSql = String.format("SELECT * FROM '%s' WHERE login='%s'", User.TABLE_NAME,
+        String findByLoginSql = String.format("SELECT * FROM %s WHERE login = '%s';", User.TABLE_NAME,
                 login);
         return getUser(findByLoginSql);
     }
@@ -101,9 +106,11 @@ public class User {
     private static Optional<User> getUser(String findByLoginSql) {
         try {
             ResultSet rs = QueryExecutor.read(findByLoginSql);
-            return Optional.of(new User(rs.getInt("id"), rs.getString("first_name"),
-                    rs.getString("last_name"), rs.getString("login"),
-                    rs.getString("password"), rs.getString("user_type")));
+            if(rs.next()) {
+                return Optional.of(new User(rs.getInt("id"), rs.getString("first_name"),
+                        rs.getString("last_name"), rs.getString("login"),
+                        rs.getString("password"), rs.getString("user_type")));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

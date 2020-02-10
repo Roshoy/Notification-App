@@ -15,13 +15,14 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 public class Ticket {
+    public static final int MAX_FIELDS = 10;
     private final int id;
+    private final int ticketStructureId;
     private static final String TABLE_NAME = "TICKETS";
+    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private ObjectProperty<Coordinator> owner; //if feels wierd, change (guy who takes care of this ticket, coordinator)
     private ObjectProperty<User> submitter;
@@ -31,7 +32,10 @@ public class Ticket {
     private ObjectProperty<TicketStatus> status;
     private ObjectProperty<Date> date;
 
-    protected Ticket(int id, Coordinator owner, User submitter, String title, String description, TicketStatus status, Date date) {
+    private List<Message> ticketMessages;
+
+    protected Ticket(int id, Coordinator owner, User submitter, String title, String description,
+                     TicketStatus status, Date date, int ticketStructureId) {
         this.id = id;
         this.owner = new SimpleObjectProperty<>(owner);
         this.submitter = new SimpleObjectProperty<>(submitter);
@@ -39,6 +43,9 @@ public class Ticket {
         this.description = new SimpleStringProperty(description);
         this.status = new SimpleObjectProperty<>(status);
         this.date = new SimpleObjectProperty<>(date);
+        this.ticketMessages = Message.getMessagesForTicket(this);
+        this.status.addListener(c->updateTicket());
+        this.ticketStructureId = ticketStructureId;
     }
 
     public int id() {
@@ -79,39 +86,41 @@ public class Ticket {
 
     public ObjectProperty<Date> getDateProperty() { return this.date; }
 
+    public List<Message> ticketMessages() { return this.ticketMessages; }
+
     //Changet type of returning value from Oprional<ticket> to int
-    public static int create(int coordinatorID, int userID, String title, String description) {
+    public static int create(int coordinatorID, int userID, String title, String description, int ticketStructureId) {
         Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         String dateString = dateFormat.format(date);
-        String insertSql = String.format("INSERT INTO %s (COORDINATOR_ID, USER_ID, TITLE, DESCRIPTION, STATUS, DATE) VALUES (%d, %d, '%s', '%s', 'WAITING', '%s');",
-                TABLE_NAME, coordinatorID, userID, title, description, dateString);
+        String insertSql = String.format("INSERT INTO %s (COORDINATOR_ID, USER_ID, TITLE, DESCRIPTION, STATUS, DATE, TICKET_STRUCTURE_ID) VALUES (%d, %d, '%s', '%s', 'WAITING', '%s', %d);",
+                TABLE_NAME, coordinatorID, userID, title, description, dateString, ticketStructureId);
         int ticketID = 0;
 
-        try {
-            ticketID = QueryExecutor.createAndObtainId(insertSql);
+        if(Coordinator.findById(coordinatorID).isPresent() && User.findById(userID).isPresent()) {
+            try {
+                ticketID = QueryExecutor.createAndObtainId(insertSql);
 
-            //return findTicketById(id);
-        } catch (SQLException e) {
-            e.printStackTrace();
+                //return findTicketById(id);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return ticketID;
-
-        //return Optional.empty();
     }
 
     public static Optional<Ticket> findTicketById(final int id) {
         String findBySql = String.format("SELECT * FROM %s WHERE id = %d;", TABLE_NAME, id);
         try {
             ResultSet rs = QueryExecutor.read(findBySql);
-            Date ticketDate = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").parse(rs.getString("DATE"));
+            Date ticketDate = dateFormat.parse(rs.getString("DATE"));
+            System.out.println(ticketDate);
             return Optional.of(new Ticket(id, Coordinator.findCoordinatorById(rs.getInt("coordinator_id")).get(),
                     User.findById(rs.getInt("user_id")).get(),
                     rs.getString("title"),
                     rs.getString("description"),
                     TicketStatus.valueOf(rs.getString("status")),
-                    ticketDate));
+                    ticketDate, rs.getInt("ticket_structure_id")) ); // changed
         } catch (SQLException e) {
             e.printStackTrace();
         } catch(ParseException e) {
@@ -125,49 +134,36 @@ public class Ticket {
     public static ObservableList<Ticket> getTicketsList(User user) {
         ObservableList<Ticket> result = FXCollections.observableArrayList();
         String sqlQuery = String.format("SELECT * FROM %s WHERE user_id = %d;", Ticket.TABLE_NAME, user.id());
-        return getTickets(result, sqlQuery);
-    }
-
-    public static ObservableList<Ticket> filterTicketList(User user, boolean waiting, boolean inProgress, boolean done){
-        StringBuilder search = new StringBuilder();
-
-        if(waiting){
-            search.append(",'WAITING'");
-        }
-        if(inProgress){
-            search.append(",'IN_PROGRESS'");
-        }
-        if(done){
-            search.append(",'DONE'");
-        }
-        if(search.length() > 0){
-            search.deleteCharAt(0); // remove unnecessary coma
-        }
-
-        ObservableList<Ticket> result = FXCollections.observableArrayList();
-        String sqlQuery = String.format("SELECT * FROM %s WHERE user_id = %d AND status IN (%s)",
-                Ticket.TABLE_NAME, user.id(), search.toString());
-        return getTickets(result, sqlQuery);
+        return getTickets(result, sqlQuery, user, null);
     }
 
     public static ObservableList<Ticket> getTicketsListOfCoordinator(Coordinator coordinator) {
         ObservableList<Ticket> result = FXCollections.observableArrayList();
-        String sqlQuery = String.format("SELECT * FROM %s WHERE coordinator_id = %d;", Ticket.TABLE_NAME, coordinator.id());
+        String sqlQuery = String.format("SELECT * FROM %s WHERE coordinator_id = %d;",
+                Ticket.TABLE_NAME, coordinator.id());
 
-        return getTickets(result, sqlQuery);
+        return getTickets(result, sqlQuery, null, coordinator);
     }
 
-    private static ObservableList<Ticket> getTickets(ObservableList<Ticket> result, String sqlQuery) {
+    private static ObservableList<Ticket> getTickets(ObservableList<Ticket> result, String sqlQuery, User submitter,
+                                                     Coordinator owner) {
         try {
             ResultSet rs = QueryExecutor.read(sqlQuery);
             while(rs.next()) {
-                Date ticketDate = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").parse(rs.getString("DATE"));
+                Date ticketDate = dateFormat.parse(rs.getString("DATE"));
+                if(submitter == null){
+                    submitter = User.findById(rs.getInt("user_id")).get();
+                }
+                if(owner == null){
+                    owner = (Coordinator)Coordinator.findById(rs.getInt("coordinator_id")).get();
+                }
+
                 Ticket ticket = new Ticket(rs.getInt("id"),
-                        (Coordinator)Coordinator.findById(rs.getInt("coordinator_id")).get(),
-                        User.findById(rs.getInt("user_id")).get(), rs.getString("title"),
+                        owner, submitter, rs.getString("title"),
                         rs.getString("description"),
                         TicketStatus.valueOf(rs.getString("status")),
-                        ticketDate);
+                        ticketDate, rs.getInt("ticket_structure_id"));
+
                 result.add(ticket);
             }
         } catch(SQLException e) {
@@ -180,6 +176,27 @@ public class Ticket {
         return result;
     }
 
+    public static void deleteTicketById(int ticketId) {
+        String sqlQuery = String.format("DELETE FROM %s WHERE id = %d;", TABLE_NAME, ticketId);
+
+        try {
+            QueryExecutor.delete(sqlQuery);
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateTicket(){
+        String sqlQuery = String.format(
+                "UPDATE %s SET COORDINATOR_ID = %d, USER_ID = %d, TITLE = '%s', DESCRIPTION = '%s', STATUS = '%s' WHERE ID = %d;",
+                TABLE_NAME, this.owner.get().id(), this.submitter.get().id(), this.title, this.description, this.status.get(), this.id);
+        try {
+            QueryExecutor.create(sqlQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setTicketStatus(TicketStatus newTicketStatus) {
         String sqlQuery = String.format("UPDATE %s SET STATUS = '%s' WHERE ID = %d;", TABLE_NAME, newTicketStatus.toString(), this.id);
         try {
@@ -189,5 +206,24 @@ public class Ticket {
         }
 
         this.status.set(newTicketStatus);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ticket ticket = (Ticket) o;
+        return id == ticket.id() &&
+                this.owner().equals(ticket.owner()) &&
+                this.submitter().equals(ticket.submitter()) &&
+                this.title().equals(ticket.title()) &&
+                this.description().equals(ticket.description()) &&
+                this.status().equals(ticket.status()) &&
+                this.date().equals(ticket.date());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, owner, submitter, title, description, status, date);
     }
 }

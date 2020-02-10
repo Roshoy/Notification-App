@@ -12,11 +12,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Message {
     private final int id;
     private static final String TABLE_NAME = "MESSAGES";
+    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private Date date;
     private Ticket referencedTicket;
@@ -60,7 +62,6 @@ public class Message {
         }
 
         Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         String dateString = dateFormat.format(date);
         System.out.println("Date: " + date);
         System.out.println("Date string: " + dateString);
@@ -81,7 +82,7 @@ public class Message {
 
         try {
             ResultSet rs = QueryExecutor.read(findByIdSql);
-            Date msgDate = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").parse(rs.getString("DATE"));
+            Date msgDate = dateFormat.parse(rs.getString("DATE"));
             Optional<Ticket> referencedTicketOpt = Ticket.findTicketById(rs.getInt("TICKET_ID"));
             Optional<User> msgAuthorOpt = User.findById(rs.getInt("AUTHOR_ID"));
 
@@ -106,7 +107,7 @@ public class Message {
         try {
             ResultSet rs = QueryExecutor.read(sqlQuery);
             while (rs.next()) {
-                Date msgDate = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").parse(rs.getString("DATE"));
+                Date msgDate = dateFormat.parse(rs.getString("DATE"));
                 Optional<User> msgAuthorOpt = User.findById(rs.getInt("AUTHOR_ID"));
 
                 if(msgAuthorOpt.isPresent()) {
@@ -121,5 +122,22 @@ public class Message {
         }
 
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Message message = (Message) o;
+        return id == message.id &&
+                date.equals(message.date) &&
+                referencedTicket.equals(message.referencedTicket) &&
+                author.equals(message.author) &&
+                text.equals(message.text);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, date, referencedTicket, author, text);
     }
 }
